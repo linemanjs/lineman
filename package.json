@@ -21,19 +21,17 @@
       "url": "http://mit-license.org"
     }
   ],
-  "bin": {
-    "groan": "bin/groan"
+  "bin" : {
+    "groan" : "./cli.js"
   },
   "engines": {
     "node": "*"
   },
   "dependencies": {
-    "grunt": "~0.3.10",
-    "handlebars": "~1.0.4"
+    "grunt": "~0.3.10"
   },
   "devDependencies": {
-    "grunt": "~0.3.10",
-    "handlebars": "~1.0.4"
+    "grunt": "~0.3.10"
   },
   "keywords": [
     "groan"
