@@ -1,0 +1,11 @@
+{
+  "name": "my-groan-app",
+  "title": "An HTML/JS/CSS app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-contrib": "~0.1.1",
+    "groan": "~0.0.1"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "groan",
+  "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
+  "version": "0.0.1",
+  "homepage": "https://github.com/testdouble/groan",
+  "author": {
+    "name": "Justin Searls",
+    "company": "Test Double",
+    "email": "justin@testdouble.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/testdouble/groan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/testdouble/groan/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://mit-license.org"
+    }
+  ],
+  "bin": {
+    "groan": "bin/groan"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "grunt": "~0.3.10",
+    "handlebars": "~1.0.4"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.10",
+    "handlebars": "~1.0.4"
+  },
+  "keywords": [
+    "groan"
+  ]
+}
