@@ -31,8 +31,8 @@ module.exports = {
   },
 
   template: {
-    handlebars: "app/templates/**/*.handlebar",
-    underscore: "app/templates/**/*.us",
+    handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"],
+    underscore: ["app/templates/**/*.underscore", "app/templates/**/*.us"],
     generated: "generated/template/**/*.js"
   },
 
