@@ -63,7 +63,7 @@ module.exports = {
         namespace: "JST"
       },
       files: {
-        "generated/js/templates/handlebars.js": '<config:files.template.handlebars>'
+        "generated/template/handlebars.js": '<config:files.template.handlebars>'
       }
     }
   },
@@ -73,7 +73,7 @@ module.exports = {
         namespace: "JST"
       },
       files: {
-        "generated/js/templates/underscore.js": '<config:files.template.underscore>'
+        "generated/template/underscore.js": '<config:files.template.underscore>'
       }
     }
   },
@@ -99,9 +99,9 @@ module.exports = {
 
 
   //distribution
-  concat: {
+  concat:{
     js: {
-      src: ['<banner:meta.banner>', '<config:files.js.vendor>', '<config:files.coffee.generated>', '<config:files.js.app>'],
+      src: ['<banner:meta.banner>', '<config:files.js.vendor>', '<config:files.template.generated>', '<config:files.coffee.generated>', '<config:files.js.app>'],
       dest: 'generated/js/app.js'
     },
     css: {
@@ -136,7 +136,7 @@ module.exports = {
     }
   },
   homepage: {
-    template: 'app/templates/homepage.handlebar',
+    template: 'app/templates/homepage.us',
     dev: {
       dest: 'generated/index.html',
       context: {

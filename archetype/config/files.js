@@ -38,7 +38,8 @@ module.exports = {
 
   template: {
     handlebars: "app/templates/**/*.handlebar",
-    underscore: "app/templates/**/*.us"
+    underscore: "app/templates/**/*.us",
+    generated: "generated/template/**/*.js"
   },
 
   img: {
