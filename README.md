@@ -64,7 +64,7 @@ When you're ready to send your application off to a remote server, just run the 
 $ grunt
 ```
 
-The above run a default task that produces a deployable web application in the project's `dist/` directory, ready to be deployed to production.
+The above runs a default task that produces a deployable web application in the project's `dist/` directory, ready to be deployed to production.
 
 ### Cleaning
 
