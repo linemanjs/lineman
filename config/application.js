@@ -115,10 +115,10 @@ module.exports = {
       "vendor/img/": "<config:files.img.vendor>"
     },
     dev: {
-      dest: "generated"
+      dest: "generated/img"
     },
     dist: {
-      dest: "dist"
+      dest: "dist/img"
     }
   },
   homepage: {
