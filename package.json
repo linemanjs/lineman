@@ -30,10 +30,10 @@
   },
   "dependencies": {
     "grunt": "~0.3.10",
-    "whet.extend": "~0.9.7"
+    "whet.extend": "~0.9.7",
+    "handlebars": "~1.0.4"
   },
   "devDependencies": {
-    "grunt": "~0.3.10"
   },
   "keywords": [
     "lineman"
