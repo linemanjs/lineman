@@ -9,41 +9,5 @@
  *  lifecycle.
  */
 
-module.exports = {
-  editable: {
-    app: "app/**/*.*",
-    spec: "spec/**/*.*",
-    vendor: "vendor/**/*.*"
-  },
-
-  coffee: {
-    app: "app/js/**/*.coffee",
-    spec: "spec/js/**/*.coffee",
-    generated: "generated/js/app.coffee.js"
-  },
-  js: {
-    vendor: "vendor/js/**/*.js",
-    app: "app/js/**/*.js",
-    spec: ["spec/js/**/*.js", "generated/js/spec.coffee.js"]
-  },
-
-  less: {
-    app: "app/css/**/*.less",
-    generated: "generated/css/app.less.css"
-  },
-  css: {
-    vendor: "vendor/css/**/*.css",
-    app: "app/css/**/*.css"
-  },
-
-  template: {
-    handlebars: "app/templates/**/*.handlebar",
-    underscore: "app/templates/**/*.us",
-    generated: "generated/template/**/*.js"
-  },
-
-  img: {
-    app: "app/img/**/*",
-    vendor: "vendor/img/**/*"
-  }
-};
+module.exports = require('lineman').config.extend('files', {
+});

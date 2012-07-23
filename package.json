@@ -29,7 +29,8 @@
     "node": "*"
   },
   "dependencies": {
-    "grunt": "~0.3.10"
+    "grunt": "~0.3.10",
+    "whet.extend": "~0.9.7"
   },
   "devDependencies": {
     "grunt": "~0.3.10"
