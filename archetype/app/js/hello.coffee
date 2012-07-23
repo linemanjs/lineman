@@ -1,6 +1,8 @@
 window.hello = ->
   html = JST['app/templates/hello.us'](text: 'Hello, World!')
-  $('body').append(html)
+  document.body.innerHTML += html
 
-$ ->
-  hello()
+if window.addEventListener
+  window.addEventListener('load', hello, false)
+else
+  window.attachEvent('load', hello)
