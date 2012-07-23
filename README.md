@@ -50,6 +50,10 @@ $ grunt run
 
 Grunt's watch task will monitor for file changes and Lineman's configuration will make sure that any requisite compilation & concatenation will occur based on the type of change.
 
+With any luck, visiting the server in your browser will yield something as beautiful as this:
+
+![Development Screenshot](http://i.minus.com/i1vI8cdB0tRPK.png)
+
 ### Production
 
 When you want to do a full build & deploy, just run the default grunt task.
