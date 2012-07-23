@@ -1,10 +1,10 @@
 # Lineman
 
-Lineman is a tool for bootstrapping web application projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
+Lineman is a tool for bootstrapping fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
 
 ## Do I need Lineman?
 
-If you're starting a new project that will be deployed as static web assets, Lineman might be a great fit for you. 
+If you're starting a new project that will be deployed as static web assets, Lineman might be a great fit for you.
 
 Some things it helps with:
 
@@ -30,11 +30,19 @@ $ lineman my-new-project
 
 This will create a new directory named "my-new-project" and copy Lineman's [archetypal project](https://github.com/testdouble/lineman/tree/master/archetype) in.
 
+Your new project will, by default, have Lineman and [grunt-contrib](https://github.com/gruntjs/grunt-contrib) as development dependencies. To install them:
+
+``` bash
+$ cd my-new-project; npm install
+```
+
+Finally, you'll probably want to crack open your project' package.json file; that is, unless you want to give [John Doe](https://github.com/testdouble/lineman/blob/master/archetype/package.json) all the credit.
+
 ## Application lifecycle
 
 ### Development
 
-From the project directory, you can start a server at [http://localhost:8000](localhost:8000): 
+From the project directory, you can start a server at [http://localhost:8000](localhost:8000):
 
 ``` bash
 $ grunt run
@@ -68,7 +76,7 @@ Lineman generates a very particular directory structure. It looks like this:
 .
 ├── app
 │   ├── js                  # <-- JS & CoffeeScript
-│   ├── img                 # <-- images (are merged into the root of generated & dist)        
+│   ├── img                 # <-- images (are merged into the root of generated & dist)
 │   └── templates           # <-- client-side templates
 │       ├── homepage.us     # <-- a template used to produce the application's index.html
 │       ├── other.us        # <-- other templates will be compiled to a window.JST object
@@ -84,7 +92,7 @@ Lineman generates a very particular directory structure. It looks like this:
 └── vendor                  # <-- 3rd-party assets will be prepended or merged into the application
     ├── js                  # <-- 3rd-party Javascript
     │   └── underscore.js   # <-- Underscore, because underscore is fantastic.
-    ├── img                 # <-- 3rd-party images (are merged into the root of generated & dist)        
+    ├── img                 # <-- 3rd-party images (are merged into the root of generated & dist)
     └── css                 # <-- 3rd-party CSS
 
 ```
