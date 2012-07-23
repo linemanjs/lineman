@@ -45,7 +45,7 @@ var src = __dirname+"/archetype/",
 
 copyDir(src, dest);
 
-console.log('Created a new project in "'+name+'" -- Yay!\n'+
+console.log('Created a new project in "'+name+'/" with Lineman. Yay!\n'+
             '\n'+
             'Getting started:\n'+
             '  1. Run `cd '+name+'` to change into your new project directory\n'+
