@@ -42,7 +42,7 @@ Finally, you'll probably want to crack open your project' package.json file; tha
 
 ### Development
 
-From the project directory, you can start a server at [http://localhost:8000](localhost:8000):
+From the project directory, you can start a server at [localhost:8000](http://localhost:8000):
 
 ``` bash
 $ grunt run
