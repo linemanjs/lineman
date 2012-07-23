@@ -38,7 +38,7 @@ $ cd my-new-project; npm install
 
 Finally, you'll probably want to crack open your project' package.json file; that is, unless you want to give [John Doe](https://github.com/testdouble/lineman/blob/master/archetype/package.json) all the credit.
 
-## Application lifecycle
+## Working with Lineman
 
 ### Development
 
@@ -48,7 +48,7 @@ From the project directory, you can start a server at [localhost:8000](http://lo
 $ grunt run
 ```
 
-Grunt's watch task will monitor for file changes and Lineman's configuration will make sure that any requisite compilation & concatenation will occur based on the type of change.
+Grunt's `watch` task will monitor for file changes and Lineman will make sure that any requisite compilation & concatenation will occur, based on the type and location of the file change.
 
 With any luck, visiting the server in your browser will yield something as beautiful as this:
 
@@ -62,7 +62,7 @@ When you want to do a full build & deploy, just run the default grunt task.
 $ grunt
 ```
 
-The above run all of the defined tasks and produce a deployable web application in the project's `dist/` directory.
+The above run all of the defined tasks and produce a deployable web application in the project's `dist/` directory, ready to be deployed to production.
 
 ### Cleaning
 
@@ -100,3 +100,21 @@ Lineman generates a very particular directory structure. It looks like this:
     └── css                 # <-- 3rd-party CSS
 
 ```
+
+# About
+
+## the name
+
+Lineman got its name from finding that the word "grunt" was first used to describe unskilled railroad workers. Grunts that made the cut were promoted to linemen.
+
+## the motivation
+
+Most fat-client web applications are still written as second-class denizens within server-side project directories. This has inhibited the formation of a coherent community of people who write applications HTML, CSS, and JavaScript, because the server-side technology is dominant. Front-end work on a Rails project differs greatly from front-end work on a Java project, even though they're building the same thing!
+
+All we wanted was a cozy & productive application development tool that didn't saddle our client-side code with a particular server-side technology. Intentionally dividing backend and front-end projects applies a healthy pressure to decouple the two.
+
+It doesn't hurt that with Lineman, we're able to bootstrap new client-side apps faster than we ever have before.
+
+## the terms
+
+Lineman was created by [test double](http://testdouble.com), a software studio in Columbus, Ohio. It's distributed under the [MIT license](http://mit-license.org).
