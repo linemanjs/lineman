@@ -37,7 +37,7 @@ module.exports = {
   },
 
   img: {
-    app: "app/img/**/*",
-    vendor: "vendor/img/**/*"
+    app: "app/img/**/*.*",
+    vendor: "vendor/img/**/*.*"
   }
 };

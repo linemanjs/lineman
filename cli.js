@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-var grunt = require('grunt'),
-    fs = require('fs'),
-    _ = grunt.utils._,
+var files = require(__dirname+"/lib/file-utils.js"),
     name = process.argv[2];
 
 if(!name) {
@@ -9,41 +7,10 @@ if(!name) {
   process.exit(1);
 }
 
-var mkdirIfNecessary = function(src, dest) {
-  var checkDir = fs.statSync(src);
-  try {
-    fs.mkdirSync(dest, checkDir.mode);
-  } catch (e) {
-    if (e.code !== 'EEXIST') {
-      throw e;
-    }
-  }
-};
-
-var copyDir = function(src, dest) {
-  mkdirIfNecessary(src, dest);
-  var paths = fs.readdirSync(src);
-
-  _(paths).each(function(path) {
-    var path = "/" + path,
-        srcPath = src + path,
-        destPath = dest + path,
-        file = fs.lstatSync(srcPath);
-
-    if(file.isDirectory()) {
-      copyDir(srcPath, destPath);
-    } else if(file.isSymbolicLink()) {
-      fs.symlinkSync(fs.readlinkSync(srcPath), destPath);
-    } else {
-      fs.writeFileSync(destPath, fs.readFileSync(srcPath));
-    }
-  });
-};
-
 var src = __dirname+"/archetype/",
     dest = process.cwd() + "/" + name;
 
-copyDir(src, dest);
+files.copyDir(src, dest);
 
 console.log('Created a new project in "'+name+'/" with Lineman. Yay!\n'+
             '\n'+
