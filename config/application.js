@@ -109,20 +109,6 @@ module.exports = {
       dest: 'generated/css/app.css'
     }
   },
-  uglify: {},
-  min: {
-    dist: {
-      src: ['<banner:meta.banner>', '<config:concat.js.dest>'],
-      dest: 'dist/js/app.min.js'
-    }
-  },
-  mincss: {
-    compress: {
-      files: {
-        "dist/css/app.min.css": "<config:concat.css.dest>"
-      }
-    }
-  },
   images: {
     files: {
       "app/img/": "<config:files.img.app>",
@@ -149,6 +135,22 @@ module.exports = {
       context: {
         js: 'js/app.min.js',
         css: 'css/app.min.css'
+      }
+    }
+  },
+
+  //optimizing
+  uglify: {},
+  min: {
+    dist: {
+      src: ['<banner:meta.banner>', '<config:concat.js.dest>'],
+      dest: 'dist/js/app.min.js'
+    }
+  },
+  mincss: {
+    compress: {
+      files: {
+        "dist/css/app.min.css": "<config:concat.css.dest>"
       }
     }
   },

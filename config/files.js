@@ -10,12 +10,6 @@
  */
 
 module.exports = {
-  editable: {
-    app: "app/**/*.*",
-    spec: "spec/**/*.*",
-    vendor: "vendor/**/*.*"
-  },
-
   coffee: {
     app: "app/js/**/*.coffee",
     spec: "spec/js/**/*.coffee",
