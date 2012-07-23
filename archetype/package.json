@@ -9,7 +9,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "grunt": "~0.3.10",
     "grunt-contrib": "~0.1.1",
-    "lineman": "~0.0.1"
+    "lineman": "~0.0.3"
   }
 }

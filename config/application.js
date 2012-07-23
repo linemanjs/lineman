@@ -193,11 +193,11 @@ module.exports = {
 
     handlebars: {
       files: '<config:files.template.handlebars>',
-      tasks: 'handlebars configure'
+      tasks: 'handlebars configure concat:js'
     },
     underscore: {
       files: '<config:files.template.underscore>',
-      tasks: 'jst configure'
+      tasks: 'jst configure concat:js'
     },
 
     images: {
