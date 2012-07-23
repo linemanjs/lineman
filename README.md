@@ -16,19 +16,19 @@ Just think of it as a handful of conventions and tasks that can help you get up-
 
 ## Getting started
 
-To get started, install lineman globally:
+To get started, install Lineman globally:
 
 ``` bash
 $ npm install -g lineman
 ```
 
-To create a new project, run the lineman binary where you'd like the project to go:
+To create a new project, run the `lineman` binary where you'd like the project to go:
 
 ``` bash
 $ lineman my-new-project
 ```
 
-This will create a new directory named "my-new-project" and copy Lineman's [archetypal project](https://github.com/testdouble/lineman/tree/master/archetype) in.
+This will create a new directory named "my-new-project" and copy in Lineman's [archetypal project](https://github.com/testdouble/lineman/tree/master/archetype).
 
 Your new project will, by default, have Lineman and [grunt-contrib](https://github.com/gruntjs/grunt-contrib) as development dependencies. To install them:
 
@@ -36,7 +36,7 @@ Your new project will, by default, have Lineman and [grunt-contrib](https://gith
 $ cd my-new-project; npm install
 ```
 
-Finally, you'll probably want to crack open your project' package.json file; that is, unless you want to give [John Doe](https://github.com/testdouble/lineman/blob/master/archetype/package.json) all the credit.
+Finally, you'll probably want to crack open your project' package.json file. That is, of course, unless you plan to give [John Doe](https://github.com/testdouble/lineman/blob/master/archetype/package.json) all the credit.
 
 ## Working with Lineman
 
@@ -48,21 +48,23 @@ From the project directory, you can start a server at [localhost:8000](http://lo
 $ grunt run
 ```
 
-Grunt's `watch` task will monitor for file changes and Lineman will make sure that any requisite compilation & concatenation will occur, based on the type and location of the file change.
+Grunt's `watch` task will monitor for file changes and Lineman will make sure that any requisite compilation & concatenation occur, based on the type and location of the file change.
 
-With any luck, visiting the server in your browser will yield something as beautiful as this:
+With any luck, visiting the server in your browser will yield something as *beautiful* as this:
 
 ![Development Screenshot](http://i.minus.com/i1vI8cdB0tRPK.png)
 
+The Hello World code shows off JST compilation, CoffeeScript, and Less. When you edit a source file, your changes are usually reflected by the time you can refresh your browser.
+
 ### Production
 
-When you want to do a full build & deploy, just run the default grunt task.
+When you're ready to send your application off to a remote server, just run the default grunt task.
 
 ``` bash
 $ grunt
 ```
 
-The above run all of the defined tasks and produce a deployable web application in the project's `dist/` directory, ready to be deployed to production.
+The above run a default task that produces a deployable web application in the project's `dist/` directory, ready to be deployed to production.
 
 ### Cleaning
 
