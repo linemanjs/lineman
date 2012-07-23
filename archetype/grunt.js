@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib');
-  grunt.loadNpmTasks('groan');
+  grunt.loadNpmTasks('lineman');
 
   grunt.registerTask('default', defaultAppTasks);
   grunt.registerTask('run', appTasks.common.join(' ')+' server watch');

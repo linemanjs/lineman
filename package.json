@@ -1,8 +1,8 @@
 {
-  "name": "groan",
+  "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
   "version": "0.0.1",
-  "homepage": "https://github.com/testdouble/groan",
+  "homepage": "https://github.com/testdouble/lineman",
   "author": {
     "name": "Justin Searls",
     "company": "Test Double",
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/testdouble/groan.git"
+    "url": "git://github.com/testdouble/lineman.git"
   },
   "bugs": {
-    "url": "https://github.com/testdouble/groan/issues"
+    "url": "https://github.com/testdouble/lineman/issues"
   },
   "licenses": [
     {
@@ -22,8 +22,9 @@
     }
   ],
   "bin" : {
-    "groan" : "./cli.js"
+    "lineman" : "./cli.js"
   },
+  "main": "lineman",
   "engines": {
     "node": "*"
   },
@@ -34,6 +35,6 @@
     "grunt": "~0.3.10"
   },
   "keywords": [
-    "groan"
+    "lineman"
   ]
 }
