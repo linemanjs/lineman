@@ -1,5 +1,5 @@
 {
-  "name": "my-lineman-app",
+  "name": "<%= name %>",
   "title": "An HTML/JS/CSS app",
   "version": "0.0.1",
   "private": true,
@@ -9,8 +9,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.3.10",
-    "grunt-contrib": "~0.1.1",
-    "lineman": "~0.0.3"
+    "grunt": "<%= versions.grunt %>",
+    "grunt-contrib": "<%= versions.gruntContrib %>",
+    "lineman": "<%= versions.lineman %>"
   }
 }

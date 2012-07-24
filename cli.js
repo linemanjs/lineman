@@ -11,6 +11,7 @@ var src = __dirname+"/archetype/",
     dest = process.cwd() + "/" + name;
 
 files.copyDir(src, dest);
+files.overwritePackageJson(dest + "/package.json", name);
 
 console.log('Created a new project in "'+name+'/" with Lineman. Yay!\n'+
             '\n'+
