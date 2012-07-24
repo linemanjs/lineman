@@ -16,10 +16,10 @@ Just think of it as a handful of conventions and tasks that can help you get up-
 
 ## Getting started
 
-To get started, install Lineman globally:
+To get started, install Grunt & Lineman globally:
 
 ``` bash
-$ npm install -g lineman
+$ npm install -g grunt lineman
 ```
 
 To create a new project, run the `lineman` binary where you'd like the project to go:
