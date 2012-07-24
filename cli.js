@@ -16,15 +16,20 @@ files.copyDir(src, dest);
 files.overwritePackageJson(dest + "/package.json", name);
 
 npm.installFrom(dest, function(error){
-  console.info(' - Created a new project in "'+name+'/" with Lineman. Yay!\n'+
-              '\n'+
-              'Getting started:\n'+
-              '  1. `cd '+name+'` into your new project directory\n'+
-              '  2. Start working on your project!\n'+
-              '    * `grunt run` starts a web server at http://localhost:8000\n'+
-              '    * `grunt` bundles a distribution in the "dist" directory\n'+
-              '    * `grunt clean` empties the "dist" and "generated" directories\n'+
-              '\n'+
-              'For more info, check out http://github.com/testdouble/lineman'
-  );
+  if(error) {
+    console.info("Oh no! Please consider opening a new issue with your log output at:\n"+
+                 "\nhttps://github.com/testdouble/lineman/issues \n\n"+
+                 "We're terribly sorry for the inconvenience!");
+  } else {
+    console.info(' - Created a new project in "'+name+'/" with Lineman. Yay!\n'+
+                '\n'+
+                'Getting started:\n'+
+                '  1. `cd '+name+'` into your new project directory\n'+
+                '  2. Start working on your project!\n'+
+                '    * `grunt run` starts a web server at http://localhost:8000\n'+
+                '    * `grunt` bundles a distribution in the "dist" directory\n'+
+                '    * `grunt clean` empties the "dist" and "generated" directories\n'+
+                '\n'+
+                'For more info, check out http://github.com/testdouble/lineman');
+  }
 });
