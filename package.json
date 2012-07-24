@@ -1,7 +1,7 @@
 {
   "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/testdouble/lineman",
   "author": {
     "name": "Justin Searls",
@@ -21,8 +21,8 @@
       "url": "http://mit-license.org"
     }
   ],
-  "bin" : {
-    "lineman" : "./cli.js"
+  "bin": {
+    "lineman": "./cli.js"
   },
   "main": "lineman",
   "engines": {
@@ -34,8 +34,7 @@
     "whet.extend": "~0.9.7",
     "handlebars": "~1.0.4"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "keywords": [
     "lineman"
   ]
