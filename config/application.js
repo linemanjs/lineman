@@ -176,44 +176,44 @@ module.exports = {
   },
   watch: {
     js: {
-      files: ['<config:files.js.vendor>', '<config:files.js.app>'],
-      tasks: 'concat:js'
+      files: ['<config:files.glob.js.vendor>', '<config:files.glob.js.app>'],
+      tasks: 'configure concat:js'
     },
     coffee: {
-      files: '<config:files.coffee.app>',
-      tasks: 'coffee configure concat:js'
+      files: '<config:files.glob.coffee.app>',
+      tasks: 'configure coffee configure concat:js'
     },
 
     css: {
-      files: '<config:files.css.app>',
-      tasks: 'concat:css'
+      files: '<config:files.glob.css.app>',
+      tasks: 'configure concat:css'
     },
     less: {
-      files: '<config:files.less.app>',
-      tasks: 'less configure concat:css'
+      files: '<config:files.glob.less.app>',
+      tasks: 'configure less configure concat:css'
     },
 
     handlebars: {
-      files: '<config:files.template.handlebars>',
-      tasks: 'handlebars configure concat:js'
+      files: '<config:files.glob.template.handlebars>',
+      tasks: 'configure handlebars configure concat:js'
     },
     underscore: {
-      files: '<config:files.template.underscore>',
-      tasks: 'jst configure concat:js'
+      files: '<config:files.glob.template.underscore>',
+      tasks: 'configure jst configure concat:js'
     },
 
     images: {
-      files: ["<config:files.img.app>", "<config:files.img.vendor>"],
-      tasks: 'images:dev'
+      files: ["<config:files.glob.img.app>", "<config:files.glob.img.vendor>"],
+      tasks: 'configure images:dev'
     },
     homepage: {
       files: '<config:homepage.template>',
-      tasks: 'homepage:dev'
+      tasks: 'configure homepage:dev'
     },
 
     lint: {
-      files: '<config:files.js.app>',
-      tasks: 'lint'
+      files: '<config:files.glob.js.app>',
+      tasks: 'configure lint'
     }
   }
 };
