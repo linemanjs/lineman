@@ -18,7 +18,7 @@ module.exports = {
   js: {
     vendor: "vendor/js/**/*.js",
     app: "app/js/**/*.js",
-    spec: ["spec/js/**/*.js", "generated/js/spec.coffee.js"]
+    spec: ["spec/**/*.js"]//, "generated/js/spec.coffee.js"]
   },
 
   less: {
