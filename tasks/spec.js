@@ -17,8 +17,6 @@ module.exports = function(grunt) {
         ]
       };
 
-
-
   grunt.registerTask('spec', 'run specs', function(target){
     var once = (target || "once") === "once",
         files = grunt.file.expand(grunt.config.get("spec.files")),
@@ -35,7 +33,7 @@ module.exports = function(grunt) {
                   singleRun: once
                 }).extend(grunt.config.get("spec.config"));
 
-    var done = this.async();
+    var done = once ? this.async() : function(){};
     child = fork(__dirname+"/spec/server.js", [path.resolve(__dirname+"/../config/spec.js"), JSON.stringify(options)])
     child.on('exit', function(code, signal){
       if(code !== 0) {

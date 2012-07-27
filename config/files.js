@@ -12,7 +12,7 @@
 module.exports = {
   coffee: {
     app: "app/js/**/*.coffee",
-    spec: "spec/js/**/*.coffee",
+    spec: "spec/**/*.coffee",
     specHelpers: "spec/helpers/**/*.coffee",
     generated: "generated/js/app.coffee.js",
     generatedSpecHelpers: "generated/js/spec-helpers.coffee.js",

@@ -202,6 +202,15 @@ module.exports = {
       tasks: 'configure coffee configure concat:js'
     },
 
+    jsSpecs: {
+      files: ['<config:files.glob.js.specHelpers>', '<config:files.glob.js.spec>'],
+      tasks: 'configure concat:spec'
+    },
+    coffeeSpecs: {
+      files: ['<config:files.glob.coffee.specHelpers>', '<config:files.glob.coffee.spec>'],
+      tasks: 'configure coffee configure concat:spec'
+    },
+
     css: {
       files: '<config:files.glob.css.app>',
       tasks: 'configure concat:css'
