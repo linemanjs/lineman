@@ -94,7 +94,7 @@ module.exports = {
     ]
   },
   lint: {
-    files: ['<config:files.js.app>', '<config:files.js.spec>']
+    files: ['<config:files.js.app>']
   },
   jshint: {
     options: {
