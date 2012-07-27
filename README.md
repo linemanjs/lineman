@@ -16,7 +16,9 @@ Just think of it as a handful of conventions and tasks that can help you get up-
 
 ## Getting started
 
-To get started, install Grunt & Lineman globally:
+First, you'll need [PhantomJS](http://phantomjs.org) to run tests. Here's are [some instructions](https://github.com/cowboy/grunt/blob/master/docs/faq.md#why-does-grunt-complain-that-phantomjs-isnt-installed).
+
+Next, you'll need to install Grunt & Lineman globally:
 
 ``` bash
 $ npm install -g grunt lineman
@@ -55,6 +57,8 @@ With any luck, visiting the server in your browser will yield something as *beau
 ![Development Screenshot](http://i.minus.com/i1vI8cdB0tRPK.png)
 
 The Hello World code shows off JST compilation, CoffeeScript, and Less. When you edit a source file, your changes are usually reflected by the time you can refresh your browser.
+
+Additionally, while `grunt run` is running, [testacular](http://vojtajina.github.com/testacular/) will be monitoring any changes to the application, and will re-execute the specs as needed.
 
 ### Production
 
@@ -95,6 +99,9 @@ Lineman generates a very particular directory structure. It looks like this:
 ├── grunt.js                # <-- gruntfile defines app's task config
 ├── package.json            # <-- Project's package.json
 ├── tasks                   # <-- Custom grunt tasks can be defined here
+├── spec
+│   ├── helpers             # <-- Spec helpers (loaded before other specs)
+│   └── some-spec.coffee    # <-- All the Jasmine specs you can write (JS or Coffee)
 └── vendor                  # <-- 3rd-party assets will be prepended or merged into the application
     ├── js                  # <-- 3rd-party Javascript
     │   └── underscore.js   # <-- Underscore, because underscore is fantastic.
