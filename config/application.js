@@ -22,11 +22,18 @@ module.exports = {
       'jst',
       'configure',
       'concat:js',
+      'concat:spec',
       'concat:css',
       'images:dev',
       'homepage:dev'
     ],
+    watch: [
+      'spec:watch',
+      'server',
+      'watch'
+    ],
     dist: [
+      'spec:once',
       'min',
       'mincss',
       'images:dist',
@@ -40,6 +47,7 @@ module.exports = {
       files: {
         "generated/js/app.coffee.js": "<config:files.coffee.app>",
         "generated/js/spec.coffee.js": "<config:files.coffee.spec>",
+        "generated/js/spec-helpers.coffee.js": "<config:files.coffee.specHelpers>"
       }
     }
   },
@@ -79,6 +87,12 @@ module.exports = {
   },
 
   //quality
+  spec: {
+    files: [
+      '<config:files.glob.js.concatenated>',
+      '<config:files.glob.js.concatenatedSpec>'
+    ]
+  },
   lint: {
     files: ['<config:files.js.app>', '<config:files.js.spec>']
   },
@@ -102,11 +116,15 @@ module.exports = {
   concat:{
     js: {
       src: ['<banner:meta.banner>', '<config:files.js.vendor>', '<config:files.template.generated>', '<config:files.coffee.generated>', '<config:files.js.app>'],
-      dest: 'generated/js/app.js'
+      dest: '<config:files.glob.js.concatenated>'
+    },
+    spec: {
+      src: ['<config:files.js.specHelpers>', '<config:files.coffee.generatedSpecHelpers>', '<config:files.js.spec>', '<config:files.coffee.generatedSpec>'],
+      dest: '<config:files.glob.js.concatenatedSpec>'
     },
     css: {
       src: ['<config:files.css.vendor>', '<config:files.less.generated>', '<config:files.css.app>'],
-      dest: 'generated/css/app.css'
+      dest: '<config:files.glob.css.concatenated>'
     }
   },
   // notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
@@ -146,7 +164,7 @@ module.exports = {
   min: {
     dist: {
       src: ['<banner:meta.banner>', '<config:concat.js.dest>'],
-      dest: 'dist/js/app.min.js'
+      dest: "<config:files.glob.js.minified>"
     }
   },
   mincss: {
@@ -160,10 +178,10 @@ module.exports = {
   //cleaning
   clean: {
     js: {
-      src: 'generated/js/app.js'
+      src: '<config:files.js.concatenated>'
     },
     css: {
-      src: 'generated/css/app.css'
+      src: '<config:files.css.concatenated>'
     },
     dist: {
       src: ["dist", "generated"]

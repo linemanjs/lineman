@@ -13,12 +13,19 @@ module.exports = {
   coffee: {
     app: "app/js/**/*.coffee",
     spec: "spec/js/**/*.coffee",
-    generated: "generated/js/app.coffee.js"
+    specHelpers: "spec/helpers/**/*.coffee",
+    generated: "generated/js/app.coffee.js",
+    generatedSpecHelpers: "generated/js/spec-helpers.coffee.js",
+    generatedSpec: "generated/js/spec.coffee.js"
   },
   js: {
     vendor: "vendor/js/**/*.js",
     app: "app/js/**/*.js",
-    spec: ["spec/**/*.js"]//, "generated/js/spec.coffee.js"]
+    spec: "spec/**/*.js",
+    specHelpers: "spec/helpers/**/*.js",
+    concatenated: "generated/js/app.js",
+    concatenatedSpec: "generated/js/spec.js",
+    minified: "dist/js/app.min.js"
   },
 
   less: {
@@ -27,7 +34,8 @@ module.exports = {
   },
   css: {
     vendor: "vendor/css/**/*.css",
-    app: "app/css/**/*.css"
+    app: "app/css/**/*.css",
+    concatenated: "generated/css/app.css"
   },
 
   template: {
