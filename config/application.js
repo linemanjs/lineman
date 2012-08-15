@@ -163,14 +163,14 @@ module.exports = {
   uglify: {},
   min: {
     dist: {
-      src: ['<banner:meta.banner>', '<config:concat.js.dest>'],
+      src: ['<banner:meta.banner>', 'generated/js/app.js'],
       dest: "<config:files.glob.js.minified>"
     }
   },
   mincss: {
     compress: {
       files: {
-        "dist/css/app.min.css": "<config:concat.css.dest>"
+        "dist/css/app.min.css": "generated/css/app.css"
       }
     }
   },
