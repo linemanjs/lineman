@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "grunt": "~0.3.10",
-    "grunt-contrib": "~0.1.1",
+    "grunt-contrib": "~0.1.7",
     "whet.extend": "~0.9.7",
     "handlebars": "~1.0.4",
     "testacular": "~0.0.16"
