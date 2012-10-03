@@ -11,6 +11,7 @@ Some things it helps with:
 * Immediately compile CoffeeScript, Less, and client-side templates as you edit source files
 * Provide a development server for fast feedback
 * Concatenate & minify all your CSS & JavaScript for production
+* Run specs on demand with `lineman test` using [Testem](https://github.com/airportyh/testem)
 
 Just think of it as a handful of conventions and tasks that can help you get up-and-running more quickly than deciding on path names and configuring all the requisite grunt tasks yourself.
 
@@ -24,19 +25,15 @@ Next, you'll need to install Grunt & Lineman globally:
 $ npm install -g grunt lineman
 ```
 
-To create a new project, run the `lineman` binary where you'd like the project to go:
+To create a new project, run the `lineman` binary with the `new` command and tell it where you'd like the project to go:
 
 ``` bash
-$ lineman my-new-project
+$ lineman new my-project
 ```
 
-This will create a new directory named "my-new-project" and copy in Lineman's [archetypal project](https://github.com/testdouble/lineman/tree/master/archetype).
+This will create a new directory named "my-project" and copy in Lineman's [archetypal project](https://github.com/testdouble/lineman/tree/master/archetype).
 
-Your new project will, by default, have Lineman and [grunt-contrib](https://github.com/gruntjs/grunt-contrib) as development dependencies. To install them:
-
-``` bash
-$ cd my-new-project; npm install
-```
+Your new project will, by default, have Lineman and [grunt-contrib](https://github.com/gruntjs/grunt-contrib) as development dependencies.
 
 Finally, you'll probably want to crack open your project' package.json file. That is, of course, unless you plan to give [John Doe](https://github.com/testdouble/lineman/blob/master/archetype/package.json) all the credit.
 
@@ -44,13 +41,19 @@ Finally, you'll probably want to crack open your project' package.json file. Tha
 
 ### Development
 
+To see all of the options available to you in the terminal use the `-h` or `--help` option:
+
+``` bash
+$ lineman --help
+```
+
 From the project directory, you can start a server at [localhost:8000](http://localhost:8000):
 
 ``` bash
-$ grunt run
+$ lineman run
 ```
 
-Grunt's `watch` task will monitor for file changes and Lineman will make sure that any requisite compilation & concatenation occur, based on the type and location of the file change.
+Internally, Grunt's `watch` task will monitor for file changes and Lineman will make sure that any requisite compilation & concatenation occur, based on the type and location of the file change.
 
 With any luck, visiting the server in your browser will yield something as *beautiful* as this:
 
@@ -60,22 +63,36 @@ The Hello World code shows off JST compilation, CoffeeScript, and Less. When you
 
 Additionally, while `grunt run` is running, [testacular](http://vojtajina.github.com/testacular/) will be monitoring any changes to the application, and will re-execute the specs as needed.
 
-### Production
+### Unit Tests
 
-When you're ready to send your application off to a remote server, just run the default grunt task.
+Lineman has a simple test wrapper that runs [Testem](https://github.com/airportyh/testem) with some default configuration:
 
 ``` bash
-$ grunt
+$ lineman test
 ```
 
-The above runs a default task that produces a deployable web application in the project's `dist/` directory, ready to be deployed to production.
+Testem supports Safari, Chrome, Firefox, Opera, PhantomJS and (IE9, IE8, IE7 if on Windows). By default we have configured Testem to launch Chrome for tests. 
+
+You can override this by modifying the `launch_in_dev` property within `config/spec.json`
+
+We have found that running tests in Chrome during development is ideal as it enables the insertion of `debugger;` statements into javascript which allows debugging in the browser.
+
+### Production
+
+When you're ready to send your application off to a remote server, just run the `lineman build` task.
+
+``` bash
+$ lineman build
+```
+
+The above runs a task that produces a production-ready web application in the project's `dist/` directory.
 
 ### Cleaning
 
 To clean the two build directories (`dist` and `generated`), just run the clean task:
 
 ``` bash
-$ grunt clean
+$ lineman clean
 ```
 
 ## Project directory structure

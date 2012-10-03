@@ -28,12 +28,10 @@ module.exports = {
       'homepage:dev'
     ],
     watch: [
-      'spec:watch',
       'server',
       'watch'
     ],
     dist: [
-      'spec:once',
       'min',
       'mincss',
       'images:dist',
