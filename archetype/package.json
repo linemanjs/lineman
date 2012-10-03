@@ -12,6 +12,6 @@
     "grunt": "<%= versions.grunt %>",
     "grunt-contrib": "<%= versions.gruntContrib %>",
     "lineman": "<%= versions.lineman %>",
-    "testacular": "<%= versions.testacular %>"
+    "testem": "<%= versions.testem %>"
   }
 }

@@ -4,13 +4,9 @@ var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require(__dirname + '/lib/file-utils.js'),
     npm      = require(__dirname + '/lib/npm-utils.js'),
+    appTasks = require(__dirname + '/config/application.js').appTasks,
     _        = grunt.utils._,
-    appTasks = require(process.cwd() + '/config/application.js').appTasks,
-    cli      =  require('grunt/lib/grunt/cli');
-
-grunt.loadTasks('tasks');
-grunt.loadNpmTasks('grunt-contrib');
-grunt.loadNpmTasks('lineman');
+    cli      = require('grunt/lib/grunt/cli');
 
 program.version(require(__dirname + '/package').version);
     
