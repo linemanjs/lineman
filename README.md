@@ -62,8 +62,6 @@ With any luck, visiting the server in your browser will yield something as *beau
 
 The Hello World code shows off JST compilation, CoffeeScript, and Less. When you edit a source file, your changes are usually reflected by the time you can refresh your browser.
 
-Additionally, while `grunt run` is running, [testacular](http://vojtajina.github.com/testacular/) will be monitoring any changes to the application, and will re-execute the specs as needed.
-
 ### Specs
 
 Lineman has a simple test wrapper that runs [Testem](https://github.com/airportyh/testem) with some default configuration:
@@ -122,6 +120,7 @@ Lineman generates a very particular directory structure. It looks like this:
 ├── config
 │   ├── application.js      # <-- Override application configuration
 │   └── files.js            # <-- Override named file patterns
+│   └── spec.json           # <-- Override spec run configurations
 ├── dist                    # <-- Generated, production-ready app assets
 ├── generated               # <-- Generated, pre-production app assets
 ├── grunt.js                # <-- gruntfile defines app's task config
