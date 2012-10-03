@@ -37,7 +37,7 @@ program
                           '    * `lineman run` starts a web server at http://localhost:8000\n'+
                           '    * `lineman build` bundles a distribution in the "dist" directory\n'+
                           '    * `lineman clean` empties the "dist" and "generated" directories\n'+
-                          '    * `lineman test` runs specs from the "specs" directory using testem'+
+                          '    * `lineman spec` runs specs from the "specs" directory using testem'+
                           '\n'+
                           'For more info, check out http://github.com/testdouble/lineman');
             }
@@ -61,10 +61,18 @@ program
     });
     
 program
-    .command('test')
-    .description(' - runs unit tests in Chrome, override in config/spec.json')
+    .command('spec')
+    .description(' - runs specs in Chrome, override in config/spec.json')
     .action(function() {
       cli.tasks = ["spec"];
+      grunt.cli();
+    });
+    
+program
+    .command('spec-ci')
+    .description(' - runs specs in a single pass using PhantomJS and outputs in TAP13 format, override in config/spec.json')
+    .action(function() {
+      cli.tasks = _.union(appTasks.common, ["spec-ci"]).join(' ');
       grunt.cli();
     });
     

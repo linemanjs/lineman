@@ -11,7 +11,8 @@ Some things it helps with:
 * Immediately compile CoffeeScript, Less, and client-side templates as you edit source files
 * Provide a development server for fast feedback
 * Concatenate & minify all your CSS & JavaScript for production
-* Run specs on demand with `lineman test` using [Testem](https://github.com/airportyh/testem)
+* Run specs on demand with `lineman spec` using [Testem](https://github.com/airportyh/testem)
+* Run specs with output suitable for your CI server using `lineman spec-ci`
 
 Just think of it as a handful of conventions and tasks that can help you get up-and-running more quickly than deciding on path names and configuring all the requisite grunt tasks yourself.
 
@@ -63,12 +64,12 @@ The Hello World code shows off JST compilation, CoffeeScript, and Less. When you
 
 Additionally, while `grunt run` is running, [testacular](http://vojtajina.github.com/testacular/) will be monitoring any changes to the application, and will re-execute the specs as needed.
 
-### Unit Tests
+### Specs
 
 Lineman has a simple test wrapper that runs [Testem](https://github.com/airportyh/testem) with some default configuration:
 
 ``` bash
-$ lineman test
+$ lineman spec
 ```
 
 Testem supports Safari, Chrome, Firefox, Opera, PhantomJS and (IE9, IE8, IE7 if on Windows). By default we have configured Testem to launch Chrome for tests. 
@@ -76,6 +77,16 @@ Testem supports Safari, Chrome, Firefox, Opera, PhantomJS and (IE9, IE8, IE7 if 
 You can override this by modifying the `launch_in_dev` property within `config/spec.json`
 
 We have found that running tests in Chrome during development is ideal as it enables the insertion of `debugger;` statements into javascript which allows debugging in the browser.
+
+### Continuous Integration Specs
+
+You can also run specs with output generated for your CI environment in [TAP 13](http://en.wikipedia.org/wiki/Test_Anything_Protocol) format:
+
+``` bash
+$ lineman spec-ci
+```
+
+This configuration executes specs headlessly using only PhantomJS. You can override this by modifying the `launch_in_ci` property within `config/spec.json`
 
 ### Production
 
