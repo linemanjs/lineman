@@ -11,6 +11,8 @@
   "devDependencies": {
     "grunt": "<%= versions.grunt %>",
     "grunt-contrib": "<%= versions.gruntContrib %>",
+    "grunt-contrib-lib": "<%= versions.gruntContribLib %>",
+    "grunt-sass": "<%= versions.gruntSass %>",
     "lineman": "<%= versions.lineman %>",
     "testem": "<%= versions.testem %>"
   }

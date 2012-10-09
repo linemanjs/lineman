@@ -32,6 +32,10 @@ module.exports = {
     app: "app/css/**/*.less",
     generated: "generated/css/app.less.css"
   },
+  sass: {
+    app: "app/css/**/*.scss", //Right now, only SCSS is supported
+    generated: "generated/css/app.sass.css"
+  },
   css: {
     vendor: "vendor/css/**/*.css",
     app: "app/css/**/*.css",

@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib');
+  grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('lineman');
 
   grunt.registerTask('default', _.union(appTasks.common, appTasks.dist).join(' '));
