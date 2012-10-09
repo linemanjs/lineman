@@ -132,6 +132,7 @@ module.exports = {
       "app/img/": "<config:files.img.app>",
       "vendor/img/": "<config:files.img.vendor>"
     },
+    root: "<config:files.glob.img.root>",
     dev: {
       dest: "generated"
     },

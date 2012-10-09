@@ -46,6 +46,7 @@ module.exports = {
 
   img: {
     app: "app/img/**/*.*",
-    vendor: "vendor/img/**/*.*"
+    vendor: "vendor/img/**/*.*",
+    root: "img"
   }
 };

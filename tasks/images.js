@@ -1,8 +1,11 @@
 /**
  * Task: images
- * Description: copy images to dist/img
+ * Description: copy images from 'app/img' & 'vendor/img' to 'generated' & 'dist'
  * Dependencies: grunt
  * Contributor: @searls
+ *
+ * Configuration:
+ *   "root" - the path to which images will be copied under 'generated' and 'dist' (default: "img")
  */
 
 module.exports = function(grunt) {
@@ -15,11 +18,15 @@ module.exports = function(grunt) {
     this.requiresConfig("images.files");
     this.requiresConfig("images."+target);
 
-    var targetConfig = grunt.config.get("images."+target);
+    var taskConfig = grunt.config.get("images"),
+        targetConfig = grunt.config.get("images."+target),
+        destinationPath = targetConfig.dest+'/'+taskConfig.root;
 
-    _(grunt.config.get("images.files")).each(function(files, basePath) {
+    grunt.log.writeln("Copying images to '"+destinationPath+"'");
+
+    _(taskConfig.files).each(function(files, basePath) {
       _(grunt.file.expand(files)).each(function(src) {
-        var dest = targetConfig.dest+'/'+src.replace(basePath,"");
+        var dest = destinationPath+'/'+src.replace(basePath,"");
         copy(src, dest);
       });
     });
