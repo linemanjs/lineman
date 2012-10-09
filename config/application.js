@@ -17,6 +17,7 @@ module.exports = {
     common: [
       'coffee',
       'less',
+      'sass',
       'lint',
       'handlebars',
       'jst',
@@ -58,6 +59,13 @@ module.exports = {
       },
       files: {
         "generated/css/app.less.css": "<config:files.less.app>"
+      }
+    }
+  },
+  sass: {
+    compile: {
+      files: {
+        "generated/css/app.sass.css": "<config:files.sass.app>"
       }
     }
   },
@@ -121,7 +129,7 @@ module.exports = {
       dest: '<config:files.glob.js.concatenatedSpec>'
     },
     css: {
-      src: ['<config:files.css.vendor>', '<config:files.less.generated>', '<config:files.css.app>'],
+      src: ['<config:files.css.vendor>', '<config:files.less.generated>', '<config:files.sass.generated>', '<config:files.css.app>'],
       dest: '<config:files.glob.css.concatenated>'
     }
   },
@@ -212,6 +220,10 @@ module.exports = {
     css: {
       files: '<config:files.glob.css.app>',
       tasks: 'configure concat:css'
+    },
+    sass: {
+      files: '<config:files.glob.sass.app>',
+      tasks: 'configure sass configure concat:css'
     },
     less: {
       files: '<config:files.glob.less.app>',
