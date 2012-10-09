@@ -66,7 +66,8 @@ module.exports = {
   handlebars: {
     compile: {
       options: {
-        namespace: "JST"
+        namespace: "JST",
+        wrapped: true
       },
       files: {
         "generated/template/handlebars.js": '<config:files.template.handlebars>'
