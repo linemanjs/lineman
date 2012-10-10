@@ -112,11 +112,12 @@ Lineman generates a very particular directory structure. It looks like this:
 .
 ├── app
 │   ├── js                  # <-- JS & CoffeeScript
-│   ├── img                 # <-- images (are merged into the root of generated & dist)
+│   ├── img                 # <-- images (are merged into the 'img' folder inside of generated & dist)
 │   └── templates           # <-- client-side templates
 │       ├── homepage.us     # <-- a template used to produce the application's index.html
 │       ├── other.us        # <-- other templates will be compiled to a window.JST object
-│       └── thing.handlebar # <-- underscore & handlebars are both already set up
+│       └── thing.hb        # <-- underscore & handlebars are both already set up
+│       └── _partial.hb     # <-- a handlebars partial, usable from within other handlebars templates
 ├── config
 │   ├── application.js      # <-- Override application configuration
 │   └── files.js            # <-- Override named file patterns
@@ -132,7 +133,7 @@ Lineman generates a very particular directory structure. It looks like this:
 └── vendor                  # <-- 3rd-party assets will be prepended or merged into the application
     ├── js                  # <-- 3rd-party Javascript
     │   └── underscore.js   # <-- Underscore, because underscore is fantastic.
-    ├── img                 # <-- 3rd-party images (are merged into the root of generated & dist)
+    ├── img                 # <-- 3rd-party images (are merged into the 'img' folder inside of generated & dist)
     └── css                 # <-- 3rd-party CSS
 
 ```
