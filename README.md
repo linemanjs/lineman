@@ -64,13 +64,15 @@ The Hello World code shows off JST compilation, CoffeeScript, and Less. When you
 
 ### Specs
 
-Lineman has a simple test wrapper that runs [Testem](https://github.com/airportyh/testem) with some default configuration:
+Lineman provides a way to run your specs constantly as you work on your code with the `lineman spec` command:
 
 ``` bash
 $ lineman spec
 ```
 
-Testem supports Safari, Chrome, Firefox, Opera, PhantomJS and (IE9, IE8, IE7 if on Windows). By default we have configured Testem to launch Chrome for tests. 
+[**Note:** `lineman spec` requires `lineman run` to be running in a different process to monitor file changes..
+
+The `spec` command will launch the fantastic test framework [Testem](https://github.com/airportyh/testem) supports Safari, Chrome, Firefox, Opera, PhantomJS and (IE9, IE8, IE7 if on Windows). By default we have configured Testem to launch Chrome for tests during development.
 
 You can override this by modifying the `launch_in_dev` property within `config/spec.json`
 
