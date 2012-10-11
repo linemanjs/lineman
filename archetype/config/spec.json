@@ -4,7 +4,6 @@
   "launch_in_ci" : ["PhantomJS"],
   "src_files" : [
     "generated/js/app.js",
-    "spec/helpers/*.js",
     "generated/js/spec.js"
   ]
 }
