@@ -29,12 +29,12 @@
     "node": "*"
   },
   "dependencies": {
-    "grunt": "~0.3.10",
-    "grunt-contrib": "~0.2.0",
-    "whet.extend": "~0.9.7",
-    "handlebars": "~1.0.7",
-    "testem": "~0.2.2",
-    "commander": "~1.0.4"
+    "grunt": "0.3.16",
+    "grunt-contrib": "0.2.0",
+    "whet.extend": "0.9.7",
+    "handlebars": "1.0.7",
+    "testem": "0.2.7",
+    "commander": "1.0.5"
   },
   "devDependencies": {},
   "keywords": [
