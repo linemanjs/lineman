@@ -5,6 +5,6 @@ window.hello = ->
   document.body.innerHTML += html
 
 if window.addEventListener
-  window.addEventListener('load', hello, false)
+  window.addEventListener('DOMContentLoaded', hello, false)
 else
   window.attachEvent('load', hello)
