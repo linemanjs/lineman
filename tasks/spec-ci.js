@@ -8,12 +8,12 @@
 module.exports = function(grunt) {
   var _ = grunt.utils._,
       path = require('path'),
-      fork = require('child_process').spawn;
+      spawn = require('child_process').spawn;
 
   grunt.registerTask('spec-ci', 'run specs in ci mode', function(target){
     var done = this.async();
         args = ["ci", "-f", path.resolve(process.cwd()+"/config/spec.json")],
-        child = fork(process.cwd()+"/node_modules/testem/testem.js", args),
+        child = spawn(process.cwd()+"/node_modules/testem/testem.js", args),
         output = "";
 
     child.stdout.on('data', function(chunk){
