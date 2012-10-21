@@ -48,5 +48,10 @@ module.exports = {
     app: "app/img/**/*.*",
     vendor: "vendor/img/**/*.*",
     root: "img"
+  },
+
+  webfonts: {
+    vendor: "vendor/webfonts/**/*.*",
+    root: "webfonts"
   }
 };

@@ -25,6 +25,7 @@ module.exports = {
       'concat:spec',
       'concat:css',
       'images:dev',
+      'webfonts:dev',
       'homepage:dev'
     ],
     watch: [
@@ -35,6 +36,7 @@ module.exports = {
       'min',
       'mincss',
       'images:dist',
+      'webfonts:dist',
       'homepage:dist'
     ]
   },
@@ -134,6 +136,19 @@ module.exports = {
       "vendor/img/": "<config:files.img.vendor>"
     },
     root: "<config:files.glob.img.root>",
+    dev: {
+      dest: "generated"
+    },
+    dist: {
+      dest: "dist"
+    }
+  },
+
+  webfonts: {
+    files: {
+      "vendor/webfonts/" : "<config:files.webfonts.vendor>"
+    },
+    root: "<config:files.glob.webfonts.root>",
     dev: {
       dest: "generated"
     },
