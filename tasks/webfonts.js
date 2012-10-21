@@ -1,5 +1,5 @@
 /**
- * Task: images
+ * Task: webfonts
  * Description: copy webfonts from 'vendor/webfonts' to 'generated' & 'dist'
  * Dependencies: grunt
  * Contributor: @dmosher
