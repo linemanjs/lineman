@@ -18,7 +18,9 @@ Just think of it as a handful of conventions and tasks that can help you get up-
 
 ## Getting started
 
-First, you'll need [PhantomJS](http://phantomjs.org) to run tests. Here's are [some instructions](https://github.com/cowboy/grunt/blob/master/docs/faq.md#why-does-grunt-complain-that-phantomjs-isnt-installed).
+First, you'll need [node.js](http://nodejs.org). You'll also need[PhantomJS](http://phantomjs.org) to run tests.
+
+[Once you have those, [here's a screencast on how to get started](http://searls.testdouble.com/2012/10/13/say-hello-to-lineman/).]
 
 Next, you'll need to install Grunt & Lineman globally:
 
