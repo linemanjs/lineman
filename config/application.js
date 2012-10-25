@@ -82,7 +82,7 @@ module.exports = {
         namespace: "JST"
       },
       files: {
-        "generated/template/underscore.js": '<config:files.template.underscore>'
+        "generated/template/lodash.js": '<config:files.template.lodash>'
       }
     }
   },
@@ -239,8 +239,8 @@ module.exports = {
       files: '<config:files.glob.template.handlebars>',
       tasks: 'configure handlebars configure concat:js'
     },
-    underscore: {
-      files: '<config:files.glob.template.underscore>',
+    lodash: {
+      files: '<config:files.glob.template.lodash>',
       tasks: 'configure jst configure concat:js'
     },
 

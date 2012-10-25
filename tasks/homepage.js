@@ -10,7 +10,7 @@
  *
  * Supported formats:
  *  html - template will merely be copied
- *  underscore (aliases: "us", "jst") - underscore templating
+ *  lodash (aliases: "ld", "us", "underscore", "jst") - lodash templating
  *  handlebar (aliases: "hb", "handlebars") - handlebars templating
  *
  * When the template is processed, it will be passed the grunt configuration object,
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       var source = grunt.file.read(template),
           context = _(grunt.config.get()).extend(targetConfig.context),
           html;
-      if(_(["underscore", "us", "jst"]).include(format)) {
+      if(_(["lodash", "ld", "underscore", "us", "jst"]).include(format)) {
         html = _(source).template()(context);
       } else if(_(["handlebar", "hb", "handlebars"]).include(format)) {
         html = require("handlebars").compile(source)(context);

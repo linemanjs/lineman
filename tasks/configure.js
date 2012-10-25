@@ -3,7 +3,7 @@
  * Description: (Re-)initializes the grunt config by combining the exported config in
  *                /config/application.js & a (re-)expansion of all the filepaths in
  *                /config/files.js
- * Dependencies: grunt, underscore
+ * Dependencies: grunt, lodash
  * Contributor: @searls
  */
 
