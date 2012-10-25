@@ -40,7 +40,7 @@ module.exports = {
 
   template: {
     handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"],
-    underscore: ["app/templates/**/*.underscore", "app/templates/**/*.us"],
+    lodash: ["app/templates/**/*.lodash", "app/templates/**/*.ld", "app/templates/**/*.underscore", "app/templates/**/*.us"],
     generated: "generated/template/**/*.js"
   },
 

@@ -120,7 +120,7 @@ Lineman generates a very particular directory structure. It looks like this:
 │   └── templates           # <-- client-side templates
 │       ├── homepage.us     # <-- a template used to produce the application's index.html
 │       ├── other.us        # <-- other templates will be compiled to a window.JST object
-│       └── thing.hb        # <-- underscore & handlebars are both already set up
+│       └── thing.hb        # <-- lodash/underscore & handlebars are both already set up
 │       └── _partial.hb     # <-- a handlebars partial, usable from within other handlebars templates
 ├── config
 │   ├── application.js      # <-- Override application configuration
@@ -136,7 +136,7 @@ Lineman generates a very particular directory structure. It looks like this:
 │   └── some-spec.coffee    # <-- All the Jasmine specs you can write (JS or Coffee)
 └── vendor                  # <-- 3rd-party assets will be prepended or merged into the application
     ├── js                  # <-- 3rd-party Javascript
-    │   └── underscore.js   # <-- Underscore, because underscore is fantastic.
+    │   └── lodash.js       # <-- Lo-Dash, because Lo-Dash is fantastic.
     ├── img                 # <-- 3rd-party images (are merged into the 'img' folder inside of generated & dist)
     └── css                 # <-- 3rd-party CSS
 
