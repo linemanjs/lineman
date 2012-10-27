@@ -20,6 +20,9 @@ module.exports = {
   jquery: {
     url: "http://code.jquery.com/jquery-latest.js"
   },
+  normalize: {
+    url: "http://necolas.github.com/normalize.css/2.0.1/normalize.css"
+  },
   underscore: {
     url: "http://underscorejs.org/underscore.js"
   }
