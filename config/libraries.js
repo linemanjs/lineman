@@ -1,8 +1,17 @@
 /* Exports an object that defines
  *  all of the downloadable libraries
+ *
+ * Format of each library follows:
+ *
+ * <name>: {
+ *   url: <url_to_asset> //required
+ *   extension: (js|css|png|jpg|jpeg|gif) //optional if the url ends with the right extension
+ * }
+ *
+ *
  */
-
 module.exports = {
+
   backbone: {
     url: "http://backbonejs.org/backbone.js"//,
     // dependsOn: ["underscore"]
