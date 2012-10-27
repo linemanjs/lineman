@@ -34,7 +34,9 @@
     "whet.extend": "0.9.7",
     "handlebars": "1.0.7",
     "testem": "0.2.13",
-    "commander": "1.0.5"
+    "commander": "1.0.5",
+    "temporary": "~0.0.4",
+    "adm-zip": "0.1.8"
   },
   "devDependencies": {},
   "keywords": [
