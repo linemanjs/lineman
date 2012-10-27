@@ -77,8 +77,8 @@ program
     .command('fetch')
     .description(' - downloads a known third-party library (e.g. '+_(libraries).keys().join(', ')+')')
     .action(function() {
-      var args = _(arguments).chain().toArray().initial().value();
-      require(__dirname + '/lib/installs-libraries.js').install(args);
+      var libs = _(arguments).chain().toArray().initial().value();
+      require(__dirname + '/lib/fetches-libraries.js').fetch(libs);
     });
 
 program

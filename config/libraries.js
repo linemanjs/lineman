@@ -4,19 +4,19 @@
 
 module.exports = {
   backbone: {
-    url: "http://backbonejs.org/backbone.js",
-    dependsOn: ["underscore"]
+    url: "http://backbonejs.org/backbone.js"//,
+    // dependsOn: ["underscore"]
   },
-  bootstrap: {
-    url: "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
-    paths: [
-      "css/bootstrap-responsive.css",
-      "css/bootstrap.css",
-      "img/glyphicons-halflings-white.png",
-      "img/glyphicons-halflings.png",
-      "js/bootstrap.js"
-    ]
-  },
+  // bootstrap: {
+  //   url: "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+  //   paths: [
+  //     "css/bootstrap-responsive.css",
+  //     "css/bootstrap.css",
+  //     "img/glyphicons-halflings-white.png",
+  //     "img/glyphicons-halflings.png",
+  //     "js/bootstrap.js"
+  //   ]
+  // },
   jquery: {
     url: "http://code.jquery.com/jquery-latest.js"
   },
