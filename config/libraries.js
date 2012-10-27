@@ -8,7 +8,7 @@ module.exports = {
     dependsOn: ["underscore"]
   },
   bootstrap: {
-    url: "http://twitter.github.com/bootstrap/assets/bootstrap.zip"
+    url: "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
     paths: [
       "css/bootstrap-responsive.css",
       "css/bootstrap.css",
@@ -17,7 +17,7 @@ module.exports = {
       "js/bootstrap.js"
     ]
   },
-  jQuery: {
+  jquery: {
     url: "http://code.jquery.com/jquery-latest.js"
   },
   underscore: {
