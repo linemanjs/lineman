@@ -4,10 +4,6 @@ var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require(__dirname + '/lib/file-utils.js'),
     npm      = require(__dirname + '/lib/npm-utils.js'),
-    appTasks = function() {
-      return require(process.cwd() + '/config/application.js').appTasks;
-    },
-    _        = grunt.utils._,
     cli      = require('grunt/lib/grunt/cli');
 
 program.version(require(__dirname + '/package').version);
@@ -46,7 +42,7 @@ program
     .command('run')
     .description(' - runs the development server from /generated and watches files for updates')
     .action(function() {
-      cli.tasks = _.union(appTasks().common, appTasks().watch).join(' ');
+      cli.tasks = ["common", "watch"];
       grunt.cli();
     });
 
@@ -54,7 +50,7 @@ program
     .command('build')
     .description(' - compiles all assets into a production ready form in the /dist folder')
     .action(function() {
-      cli.tasks = _.union(appTasks().common, appTasks().dist).join(' ');
+      cli.tasks = ["common", "dist"];
       grunt.cli();
     });
 
@@ -70,7 +66,7 @@ program
     .command('spec-ci')
     .description(' - runs specs in a single pass using PhantomJS and outputs in TAP13 format, override in config/spec.json')
     .action(function() {
-      cli.tasks = _.union(appTasks().common, ["spec-ci"]).join(' ');
+      cli.tasks = ["common","spec-ci"];
       grunt.cli();
     });
 

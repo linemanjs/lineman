@@ -2,7 +2,7 @@
  * Task: webfonts
  * Description: copy webfonts from 'vendor/webfonts' to 'generated' & 'dist'
  * Dependencies: grunt
- * Contributor: @dmosher
+ * Contributor: @davemo
  *
  * Configuration:
  *   "root" - the path to which webfonts will be copied under 'generated' and 'dist' (default: "webfonts")
