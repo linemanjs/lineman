@@ -30,6 +30,7 @@ module.exports = {
     ],
     watch: [
       'server',
+      'reload',
       'watch'
     ],
     dist: [
@@ -207,14 +208,22 @@ module.exports = {
   server: {
     base: "generated"
   },
+  reload: {
+    // test at any URL with LR extension enabled
+    port: 35729, // LR default
+    liveReload: {
+      apply_css_live: true,
+      apply_images_live: true
+    }
+  },
   watch: {
     js: {
       files: ['<config:files.glob.js.vendor>', '<config:files.glob.js.app>'],
-      tasks: 'configure concat:js'
+      tasks: 'configure concat:js reload'
     },
     coffee: {
       files: '<config:files.glob.coffee.app>',
-      tasks: 'configure coffee configure concat:js'
+      tasks: 'configure coffee configure concat:js reload'
     },
 
     jsSpecs: {
@@ -228,29 +237,29 @@ module.exports = {
 
     css: {
       files: '<config:files.glob.css.app>',
-      tasks: 'configure concat:css'
+      tasks: 'configure concat:css reload'
     },
     less: {
       files: '<config:files.glob.less.app>',
-      tasks: 'configure less configure concat:css'
+      tasks: 'configure less configure concat:css reload'
     },
 
     handlebars: {
       files: '<config:files.glob.template.handlebars>',
-      tasks: 'configure handlebars configure concat:js'
+      tasks: 'configure handlebars configure concat:js reload'
     },
     underscore: {
       files: '<config:files.glob.template.underscore>',
-      tasks: 'configure jst configure concat:js'
+      tasks: 'configure jst configure concat:js reload'
     },
 
     images: {
       files: ["<config:files.glob.img.app>", "<config:files.glob.img.vendor>"],
-      tasks: 'configure images:dev'
+      tasks: 'configure images:dev reload'
     },
     homepage: {
       files: '<config:homepage.template>',
-      tasks: 'configure homepage:dev'
+      tasks: 'configure homepage:dev reload'
     },
 
     lint: {
