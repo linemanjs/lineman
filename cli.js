@@ -4,7 +4,8 @@ var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require(__dirname + '/lib/file-utils.js'),
     npm      = require(__dirname + '/lib/npm-utils.js'),
-    appTasks = require(__dirname + '/config/application.js').appTasks,
+    lineman = require('lineman')
+    appTasks = lineman.config.application.appTasks,
     _        = grunt.utils._,
     cli      = require('grunt/lib/grunt/cli');
 
