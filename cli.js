@@ -42,7 +42,7 @@ program
     .command('run')
     .description(' - runs the development server from /generated and watches files for updates')
     .action(function() {
-      cli.tasks = ["common", "watch"];
+      cli.tasks = ["common", "dev"];
       grunt.cli();
     });
 

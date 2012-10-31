@@ -28,7 +28,7 @@ module.exports = {
       'webfonts:dev',
       'homepage:dev'
     ],
-    watch: [
+    dev: [
       'server',
       'watch'
     ],
