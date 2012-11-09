@@ -2,6 +2,8 @@
 
 Lineman is a tool for bootstrapping fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
 
+Check out the [demo screencast!](http://www.youtube.com/watch?v=BmZ4XRErYAI)
+
 ## Do I need Lineman?
 
 If you're starting a new project that will be deployed as static web assets, Lineman might be a great fit for you.
