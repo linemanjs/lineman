@@ -154,6 +154,44 @@ Lineman keeps a lot of files open at once. If you're seeing a message that looks
 Try running `sudo launchctl limit maxfiles 2000 2100`. To have this setting persist across reboots, put the following in /etc/launchd.conf: `limit maxfiles 2000 2100`
 
 
+# Deployment
+
+## Heroku (using Ruby)
+
+### Add `Gemfile`
+
+``` ruby
+source :rubygems
+gem 'rack'
+```
+
+### Run `bundle`
+
+### Create `config.ru` file
+
+``` ruby
+use Rack::Static, 
+  :urls => ["/img", "/js", "/css"],
+  :root => "dist"
+
+run lambda { |env|
+  [
+    200,
+    {
+      'Content-Type'  => 'text/html',
+      'Cache-Control' => 'public, max-age=86400'
+    },
+    File.open('dist/index.html', File::RDONLY)
+  ]
+}
+```
+
+### Commit + push to Heroku
+
+With the `config.ru` and generated `Gemfile.lock` in your repository, simply push your directory to Heroku and it will detect it correctly as a Rack app, no Procfile needed.
+
+More info: [Creating Static Sites in Ruby with Rack](https://devcenter.heroku.com/articles/static-sites-ruby).
+
 # About
 
 ## the name
