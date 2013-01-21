@@ -144,16 +144,6 @@ Lineman generates a very particular directory structure. It looks like this:
 
 ```
 
-## Troubleshooting
-
-### Too Many Open Files
-
-Lineman keeps a lot of files open at once. If you're seeing a message that looks like this: 
-    `undefined: [Lundefined:Cundefined] EMFILE, too many open files`
-    
-Try running `sudo launchctl limit maxfiles 2000 2100`. To have this setting persist across reboots, put the following in /etc/launchd.conf: `limit maxfiles 2000 2100`
-
-
 # About
 
 ## the name

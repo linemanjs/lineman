@@ -13,6 +13,13 @@ module.exports = {
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
   },
 
+  shell: {
+    increase_file_descriptor_limit: {
+      command: 'ulimit -n 2560; echo "Temporarily increasing file descriptor limit to `ulimit -n` with ulimit -n";',
+      stdout: true
+    }
+  },
+
   appTasks: {
     common: [
       'coffee',
@@ -29,6 +36,7 @@ module.exports = {
       'homepage:dev'
     ],
     dev: [
+      'shell:increase_file_descriptor_limit',
       'server',
       'watch'
     ],

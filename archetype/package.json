@@ -11,6 +11,7 @@
   "devDependencies": {
     "grunt": "<%= versions.grunt %>",
     "grunt-contrib": "<%= versions.gruntContrib %>",
+    "grunt-shell" : "<%= versions.gruntShell %>",
     "lineman": "<%= versions.lineman %>",
     "testem": "<%= versions.testem %>"
   }
