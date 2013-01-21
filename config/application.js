@@ -13,6 +13,9 @@ module.exports = {
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
   },
 
+  // the default number of file descriptors in OSX is woefully low (256).
+  // this provides a temporary solution increasing that number by a factor of 10
+  // for the duration of the lineman dev tasks.
   shell: {
     increase_file_descriptor_limit: {
       command: 'ulimit -n 2560; echo "Temporarily increasing file descriptor limit to `ulimit -n` with ulimit -n";',
