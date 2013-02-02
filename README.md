@@ -66,6 +66,43 @@ With any luck, visiting the server in your browser will yield something as *beau
 
 The Hello World code shows off JST compilation, CoffeeScript, and Less. When you edit a source file, your changes are usually reflected by the time you can refresh your browser.
 
+#### Server
+
+Lineman has a very narrow focus: helping you build client-side apps as a collection of ready-to-deploy static assets. That said, almost all nontrivial client-side apps require some interaction with a server, and no developer could be expected to write working code without either faking the server-side or plugging the client and server together. Lineman offers supports both!
+
+##### Stubbing server-side endpoints
+
+Lineman projects can define API services using [express](http://expressjs.com) in `config/server.js` by exporting a function named `drawRoutes`. Here's a trivial example:
+
+``` javascript
+module.exports = {
+  drawRoutes: function(app) {
+    app.get('/api/greeting/:message', function(req, res){
+      res.json({ message: "OK, "+req.params.message });
+    });
+  }
+};
+```
+
+With this definition in place, if the client-side app makes a request to "/api/greeting/ahoy!", this route will handle the request and return some JSON.
+
+#### Proxying requests to another server
+
+Lineman also provides a facility to forward any requests that it doesn't know how to respond to a proxy service. Typically, if you're developing a single client-side app in Lineman and a single server-side app (say, in Rails), you could run Rails on port 3000 while running Lineman, and use this feature to successfully send requests to Rails on the same port as Lineman's development server.
+
+To enable proxying, set the `enabled` flag on the `apiProxy` configuration of the `server` task in `config/application.js`, like this:
+
+``` javascript
+  server: {
+    apiProxy: {
+      enabled: true,
+      port: 3000
+    }
+  }
+```
+
+With this feature, you'll be able to develop your client-side and server-side code in concert, while still keeping the codebases cleanly separated.
+
 ### Specs
 
 Lineman provides a way to run your specs constantly as you work on your code with the `lineman spec` command:
@@ -126,7 +163,8 @@ Lineman generates a very particular directory structure. It looks like this:
 │       └── _partial.hb     # <-- a handlebars partial, usable from within other handlebars templates
 ├── config
 │   ├── application.js      # <-- Override application configuration
-│   └── files.js            # <-- Override named file patterns
+│   ├── files.js            # <-- Override named file patterns
+│   ├── server.js           # <-- Define custom server-side endpoints to aid in development
 │   └── spec.json           # <-- Override spec run configurations
 ├── dist                    # <-- Generated, production-ready app assets
 ├── generated               # <-- Generated, pre-production app assets
@@ -148,9 +186,9 @@ Lineman generates a very particular directory structure. It looks like this:
 
 ### Too Many Open Files
 
-Lineman keeps a lot of files open at once. If you're seeing a message that looks like this: 
+Lineman keeps a lot of files open at once. If you're seeing a message that looks like this:
     `undefined: [Lundefined:Cundefined] EMFILE, too many open files`
-    
+
 Try running `sudo launchctl limit maxfiles 2000 2100`. To have this setting persist across reboots, put the following in /etc/launchd.conf: `limit maxfiles 2000 2100`
 
 
@@ -170,7 +208,7 @@ gem 'rack'
 ### Create `config.ru` file
 
 ``` ruby
-use Rack::Static, 
+use Rack::Static,
   :urls => ["/img", "/js", "/css"],
   :root => "dist"
 
