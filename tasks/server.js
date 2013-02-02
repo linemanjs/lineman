@@ -9,12 +9,6 @@
  *   "web.port" - the port from which to run the development server (defaults to 8000, can be overridden with ENV variable WEB_PORT)
  */
 
-var apiProxy = function(host, port, proxy) {
-  return function(req, res, next) {
-    proxy.proxyRequest(req, res, {host: host, port: port});
-  }
-}
-
 module.exports = function(grunt) {
   var _ = grunt.utils._,
       express   = require('express'),
@@ -28,14 +22,11 @@ module.exports = function(grunt) {
         webRoot = grunt.config.get("server.base") || "generated",
         app = express();
 
-    if(apiProxyEnabled) {
-      var proxy = new httpProxy.RoutingProxy();
-    }
 
     app.configure(function() {
       app.use(express.static(process.cwd() + "/" + webRoot));
       if(apiProxyEnabled) {
-        app.use(apiProxy(apiProxyHost, apiPort, proxy));
+        app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()));
       }
       app.use(express.bodyParser());
       app.use(express.errorHandler());
@@ -48,4 +39,16 @@ module.exports = function(grunt) {
     }
     app.listen(webPort);
   });
+
+  var apiProxy = function(host, port, proxy) {
+    proxy.on('proxyError', function(err, req, res){
+      res.statusCode = 500;
+      res.write("API Proxying to `"+req.url+"` failed with: `"+err.toString()+"`");
+      res.end();
+    });
+
+    return function(req, res, next) {
+      proxy.proxyRequest(req, res, {host: host, port: port});
+    }
+  }
 };
