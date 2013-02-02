@@ -66,13 +66,13 @@ With any luck, visiting the server in your browser will yield something as *beau
 
 The Hello World code shows off JST compilation, CoffeeScript, and Less. When you edit a source file, your changes are usually reflected by the time you can refresh your browser.
 
-#### Server
+#### Server-side APIs
 
-Lineman has a very narrow focus: helping you build client-side apps as a collection of ready-to-deploy static assets. That said, almost all nontrivial client-side apps require some interaction with a server, and no developer could be expected to write working code without either faking the server-side or plugging the client and server together. Lineman offers supports both!
+Lineman has a very narrow focus: helping you build client-side apps as a collection of ready-to-deploy static assets. That said, almost all nontrivial client-side apps require some interaction with a server, and no developer could be expected to write working code without either faking the server-side or plugging the client and server together. Lineman offers support for both!
 
 ##### Stubbing server-side endpoints
 
-Lineman projects can define API services using [express](http://expressjs.com) in `config/server.js` by exporting a function named `drawRoutes`. Here's a trivial example:
+Users may define custom HTTP services to aid development in `config/server.js` by exporting a function named `drawRoutes`. Here's a trivial example:
 
 ``` javascript
 module.exports = {
@@ -86,9 +86,11 @@ module.exports = {
 
 With this definition in place, if the client-side app makes a request to "/api/greeting/ahoy!", this route will handle the request and return some JSON.
 
+Because Lineman uses [express](http://expressjs.com) for the development server, please reference its documentation for details on all the nifty things you can do.
+
 #### Proxying requests to another server
 
-Lineman also provides a facility to forward any requests that it doesn't know how to respond to a proxy service. Typically, if you're developing a single client-side app in Lineman and a single server-side app (say, in Rails), you could run Rails on port 3000 while running Lineman, and use this feature to successfully send requests to Rails on the same port as Lineman's development server.
+Lineman also provides a facility to forward any requests that it doesn't know how to respond to a proxy service. Typically, if you're developing a client-side app in Lineman and intend to pair it to a server-side app (written, say, in Ruby on Rails), you could run a local Rails server on port 3000 while running Lineman, and your JavaScript could seamlessly send requests to Rails on the same port as Lineman's development server.
 
 To enable proxying, set the `enabled` flag on the `apiProxy` configuration of the `server` task in `config/application.js`, like this:
 
