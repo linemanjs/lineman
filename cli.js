@@ -2,11 +2,11 @@
 
 var program  = require('commander'),
     grunt    = require('grunt'),
-    files    = require(__dirname + '/lib/file-utils.js'),
-    npm      = require(__dirname + '/lib/npm-utils.js'),
+    files    = require('./lib/file-utils'),
+    npm      = require('./lib/npm-utils'),
     cli      = require('grunt/lib/grunt/cli');
 
-program.version(require(__dirname + '/package').version);
+program.version(require('./package').version);
 
 program
     .command('new')

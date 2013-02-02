@@ -16,7 +16,7 @@ module.exports = function(grunt) {
   var _ = grunt.utils._,
       express   = require('express'),
       httpProxy = require('http-proxy'),
-      loadConfigurationFile = require("./../lib/file-utils.js").loadConfigurationFile;
+      loadConfigurationFile = require("./../lib/file-utils").loadConfigurationFile;
 
   grunt.registerTask('server', 'static file & api proxy development server', function() {
     var apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000,

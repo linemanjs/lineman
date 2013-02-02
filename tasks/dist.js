@@ -9,7 +9,7 @@ module.exports = function(grunt) {
   var _ = grunt.utils._;
 
   grunt.registerTask('dist', 'runs linemans dist lifecycle tasks', function(){
-    var appTasks = require(process.cwd() + '/config/application.js').appTasks;
+    var appTasks = require(process.cwd() + '/config/application').appTasks;
     grunt.task.run(appTasks.dist);
   });
 };

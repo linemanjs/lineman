@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
   var _ = grunt.utils._,
-      copy = require(__dirname+"/../lib/file-utils.js").copy;
+      copy = require("./../lib/file-utils").copy;
 
   grunt.registerTask('images', 'copy images to dist/img', function(target){
     target = target || "dist";
