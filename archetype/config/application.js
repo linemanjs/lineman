@@ -6,5 +6,21 @@
  */
 
 module.exports = require('lineman').config.extend('application', {
-  //Override application configuration here
+  //Override application configuration here. Common examples follow in the comments.
+
+  // API Proxying
+  //
+  // During development, you'll likely want to make XHR (AJAX) requests to an API on the same
+  // port as your lineman development server. By enabling the API proxy and setting the port, all
+  // requests for paths that don't match a static asset in ./generated will be forwarded to
+  // whatever service might be running on the specified port.
+  //
+  // server: {
+  //   apiProxy: {
+  //     enabled: true,
+  //     host: 'localhost',
+  //     port: 3000
+  //   }
+  // }
+
 });
