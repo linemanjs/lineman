@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require(__dirname + '/lib/file-utils.js'),
