@@ -11,11 +11,7 @@
 
 var apiProxy = function(host, port, proxy) {
   return function(req, res, next) {
-    if(req.url.match(new RegExp('^\/api\/'))) {
-      proxy.proxyRequest(req, res, {host: host, port: port});
-    } else {
-      next();
-    }
+    proxy.proxyRequest(req, res, {host: host, port: port});
   }
 }
 
@@ -25,23 +21,31 @@ module.exports = function(grunt) {
       httpProxy = require('http-proxy');
 
   grunt.registerTask('server', 'static file & api proxy development server', function() {
-    var apiPort = process.env.API_PORT || grunt.config.get("server.api.port"),
-        webPort = process.env.WEB_PORT || grunt.config.get("server.web.port"),
+    var apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000,
+        apiProxyEnabled = grunt.config.get("server.apiProxy.enabled"),
+        apiProxyHost = grunt.config.get("server.apiProxy.host") || 'localhost',
+        webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000,
+        webRoot = grunt.config.get("server.base") || "generated",
         app = express();
 
-    if(apiPort) {
+    if(apiProxyEnabled) {
       var proxy = new httpProxy.RoutingProxy();
     }
 
     app.configure(function() {
-      app.use(express.static(process.cwd() + "/generated"));
-      app.use(apiProxy('localhost', apiPort, proxy));
+      app.use(express.static(process.cwd() + "/" + webRoot));
+      if(apiProxyEnabled) {
+        app.use(apiProxy(apiProxyHost, apiPort, proxy));
+      }
       app.use(express.bodyParser());
       app.use(express.errorHandler());
     });
 
 
     grunt.log.writeln('Starting express web server in "./generated" on port '+webPort);
+    if(apiProxyEnabled) {
+      grunt.log.writeln('Proxying API requests to '+apiProxyHost+':'+apiPort);
+    }
     app.listen(webPort);
   });
 };

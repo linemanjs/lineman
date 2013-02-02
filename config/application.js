@@ -205,7 +205,15 @@ module.exports = {
 
   //productivity
   server: {
-    base: "generated"
+    base: "generated",
+    web: {
+      port: 8000
+    },
+    apiProxy: {
+      enabled: false,
+      host: 'localhost',
+      port: 3000
+    }
   },
   watch: {
     js: {
