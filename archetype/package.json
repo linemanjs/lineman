@@ -16,7 +16,6 @@
     "grunt-contrib-less": "<%= versions.grunt-contrib-less %>",
     "grunt-contrib-handlebars": "<%= versions.grunt-contrib-handlebars %>",
     "grunt-contrib-jst": "<%= versions.grunt-contrib-jst %>",
-    "grunt-contrib-connect": "<%= versions.grunt-contrib-connect %>",
     "grunt-contrib-watch": "<%= versions.grunt-contrib-watch %>",
     "grunt-contrib-clean": "<%= versions.grunt-contrib-clean %>",
     "grunt-contrib-uglify": "<%= versions.grunt-contrib-uglify %>",

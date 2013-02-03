@@ -30,7 +30,7 @@ module.exports = {
       'homepage:dev'
     ],
     dev: [
-      'connect:dev',
+      'server',
       'watch'
     ],
     dist: [
