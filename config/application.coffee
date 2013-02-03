@@ -164,44 +164,44 @@ module.exports =
   watch:
     js:
       files: ["<%= files.glob.js.vendor %>", "<%= files.glob.js.app %>"]
-      tasks: "configure concat:js"
+      tasks: ["configure", "concat:js"]
 
     coffee:
       files: "<%= files.glob.coffee.app %>"
-      tasks: "configure coffee configure concat:js"
+      tasks: ["configure","coffee","configure","concat:js"]
 
     jsSpecs:
       files: ["<%= files.glob.js.specHelpers %>", "<%= files.glob.js.spec %>"]
-      tasks: "configure concat:spec"
+      tasks: ["configure","concat:spec"]
 
     coffeeSpecs:
       files: ["<%= files.glob.coffee.specHelpers %>", "<%= files.glob.coffee.spec %>"]
-      tasks: "configure coffee configure concat:spec"
+      tasks: ["configure","coffee","configure","concat:spec"]
 
     css:
       files: "<%= files.glob.css.app %>"
-      tasks: "configure concat:css"
+      tasks: ["configure","concat:css"]
 
     less:
       files: "<%= files.glob.less.app %>"
-      tasks: "configure less configure concat:css"
+      tasks: ["configure","less","configure","concat:css"]
 
     handlebars:
       files: "<%= files.glob.template.handlebars %>"
-      tasks: "configure handlebars configure concat:js"
+      tasks: ["configure","handlebars","configure","concat:js"]
 
     underscore:
       files: "<%= files.glob.template.underscore %>"
-      tasks: "configure jst configure concat:js"
+      tasks: ["configure","jst","configure","concat:js"]
 
     images:
       files: ["<%= files.glob.img.app %>", "<%= files.glob.img.vendor %>"]
-      tasks: "configure images:dev"
+      tasks: ["configure","images:dev"]
 
     homepage:
       files: "<%= homepage.template %>"
-      tasks: "configure homepage:dev"
+      tasks: ["configure","homepage:dev"]
 
     lint:
       files: "<%= files.glob.js.app %>"
-      tasks: "configure lint"
+      tasks: ["configure","lint"]
