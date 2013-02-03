@@ -10,7 +10,16 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "<%= versions.grunt %>",
-    "grunt-contrib": "<%= versions.gruntContrib %>",
+    "grunt-contrib-jshint": "<%= versions.grunt-contrib-jshint %>",
+    "grunt-contrib-concat": "<%= versions.grunt-contrib-concat %>",
+    "grunt-contrib-coffee": "<%= versions.grunt-contrib-coffee %>",
+    "grunt-contrib-less": "<%= versions.grunt-contrib-less %>",
+    "grunt-contrib-handlebars": "<%= versions.grunt-contrib-handlebars %>",
+    "grunt-contrib-jst": "<%= versions.grunt-contrib-jst %>",
+    "grunt-contrib-connect": "<%= versions.grunt-contrib-connect %>",
+    "grunt-contrib-watch": "<%= versions.grunt-contrib-watch %>",
+    "grunt-contrib-clean": "<%= versions.grunt-contrib-clean %>",
+    "grunt-contrib-uglify": "<%= versions.grunt-contrib-uglify %>",
     "lineman": "<%= versions.lineman %>",
     "testem": "<%= versions.testem %>"
   }

@@ -29,8 +29,17 @@
     "node": "*"
   },
   "dependencies": {
-    "grunt": "0.3.16",
-    "grunt-contrib": "0.2.0",
+    "grunt": "0.4.0rc7",
+    "grunt-contrib-jshint": "0.1.1rc6",
+    "grunt-contrib-concat": "0.1.2rc6",
+    "grunt-contrib-coffee": "0.4.0rc7",
+    "grunt-contrib-less": "0.5.0rc7",
+    "grunt-contrib-handlebars": "0.5.3rc7",
+    "grunt-contrib-jst": "0.4.1rc7",
+    "grunt-contrib-connect": "0.1.1rc6",
+    "grunt-contrib-watch": "0.2.0rc7",
+    "grunt-contrib-clean": "0.4.0rc6",
+    "grunt-contrib-uglify": "0.1.1rc6",
     "whet.extend": "0.9.7",
     "handlebars": "1.0.7",
     "testem": "0.2.64",
@@ -38,7 +47,6 @@
     "express": "3.1.0",
     "http-proxy": "0.8.7"
   },
-  "devDependencies": {},
   "keywords": [
     "lineman"
   ]
