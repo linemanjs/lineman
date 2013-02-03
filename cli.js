@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('coffee-script')
 var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require('./lib/file-utils'),
