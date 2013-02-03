@@ -25,9 +25,9 @@ module.exports = function(grunt) {
   };
 
   grunt.registerTask('configure', '(Re-)expands all file paths and (re-)initializes the grunt config', function(){
-    var application = require(process.cwd() + '/config/application.js'),
-        files = require(process.cwd() + '/config/files.js'),
-        expandedFiles = _(expandFiles(files)).extend({glob: files});
+    var application = require(process.cwd() + '/config/application'),
+        files = require(process.cwd() + '/config/files');
+        expandedFiles = _(expandFiles(files)).extend({glob: files})
     grunt.initConfig(_(application).extend({files: expandedFiles}));
   });
 };

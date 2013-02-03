@@ -1,7 +1,7 @@
 {
   "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "homepage": "https://github.com/testdouble/lineman",
   "author": {
     "name": "Justin Searls",
@@ -42,8 +42,10 @@
     "grunt-contrib-uglify": "0.1.1rc6",
     "whet.extend": "0.9.7",
     "handlebars": "1.0.7",
-    "testem": "0.2.13",
-    "commander": "1.0.5"
+    "testem": "0.2.64",
+    "commander": "1.0.5",
+    "express": "3.1.0",
+    "http-proxy": "0.8.7"
   },
   "keywords": [
     "lineman"

@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
   var _ = grunt.util._,
-      copy = require(__dirname+"/../lib/file-utils.js").copy;
+      copy = require(__dirname+"/../lib/file-utils").copy;
 
   grunt.registerTask('webfonts', 'copy webfonts to dist/webfonts', function(target){
     target = target || "dist";
