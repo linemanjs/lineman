@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('coffee-script')
 var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require('./lib/file-utils'),
@@ -74,6 +75,19 @@ program
     .description(' - cleans out /generated and /dist folders')
     .action(function() {
       cli.tasks = ["clean"];
+      grunt.cli();
+    });
+
+program
+    .command('*')
+    .description('run the provided task as a grunt command')
+    .action(function(){
+      cli.tasks = grunt.util._(arguments).
+        chain().toArray().
+          initial().
+          without('run'). //TODO: what a mess. necessary b/c grunt will pass `run` in at the end.
+          value();
+
       grunt.cli();
     });
 

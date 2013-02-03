@@ -44,7 +44,8 @@
     "testem": "0.2.64",
     "commander": "1.0.5",
     "express": "3.1.0",
-    "http-proxy": "0.8.7"
+    "http-proxy": "0.8.7",
+    "coffee-script": "1.4.0"
   },
   "keywords": [
     "lineman"
