@@ -13,7 +13,7 @@
  */
 
 module.exports = function(grunt) {
-  var _ = grunt.utils._,
+  var _ = grunt.util._,
       express   = require('express'),
       httpProxy = require('http-proxy'),
       loadConfigurationFile = require("./../lib/file-utils").loadConfigurationFile;

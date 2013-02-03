@@ -6,7 +6,7 @@
  */
 
 module.exports = function(grunt) {
-  var _ = grunt.utils._,
+  var _ = grunt.util._,
       path = require('path'),
       fork = require('child_process').fork;
 

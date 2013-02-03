@@ -4,7 +4,7 @@
  *
  * The "configure" task will require this file and
  *  then re-initialize the grunt config such that
- *  directives like <config:files.js.app> will work
+ *  directives like <%= files.js.app %> will work
  *  regardless of the point you're at in the build
  *  lifecycle.
  */

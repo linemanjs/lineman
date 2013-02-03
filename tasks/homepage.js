@@ -18,7 +18,7 @@
  */
 
 module.exports = function(grunt) {
-  var fs = require('fs'), _ = grunt.utils._;
+  var fs = require('fs'), _ = grunt.util._;
 
   var extensionOf = function(fileName) {
     return _(fileName.match(/[^.]*$/)).last();

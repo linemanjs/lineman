@@ -6,7 +6,7 @@
  */
 
 module.exports = function(grunt) {
-  var _ = grunt.utils._;
+  var _ = grunt.util._;
 
   grunt.registerTask('dist', 'runs linemans dist lifecycle tasks', function(){
     var appTasks = require(process.cwd() + '/config/application').appTasks;

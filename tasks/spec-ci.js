@@ -6,7 +6,7 @@
  */
 
 module.exports = function(grunt) {
-  var _ = grunt.utils._,
+  var _ = grunt.util._,
       path = require('path'),
       spawn = require('child_process').spawn;
 

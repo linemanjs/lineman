@@ -3,12 +3,13 @@
  *  depended-on grunt tasks.
  */
 
+var grunt = require('grunt');
 module.exports = {
-  pkg: '<json:package.json>',
+  pkg: grunt.file.readJSON('package.json'),
   meta: {
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-      '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
+      '<%= grunt.template.today("yyyy-mm-dd") %>\\n' +
+      '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.company %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
   },
@@ -17,7 +18,7 @@ module.exports = {
     common: [
       'coffee',
       'less',
-      'lint',
+      'jshint',
       'handlebars',
       'jst',
       'configure',
@@ -29,12 +30,12 @@ module.exports = {
       'homepage:dev'
     ],
     dev: [
-      'server',
+      'connect:dev',
       'watch'
     ],
     dist: [
-      'min',
-      'mincss',
+      'uglify:js',
+      'uglify:css',
       'images:dist',
       'webfonts:dist',
       'homepage:dist'
@@ -45,9 +46,9 @@ module.exports = {
   coffee: {
     compile: {
       files: {
-        "generated/js/app.coffee.js": "<config:files.coffee.app>",
-        "generated/js/spec.coffee.js": "<config:files.coffee.spec>",
-        "generated/js/spec-helpers.coffee.js": "<config:files.coffee.specHelpers>"
+        "generated/js/app.coffee.js": "<%= files.coffee.app %>",
+        "generated/js/spec.coffee.js": "<%= files.coffee.spec %>",
+        "generated/js/spec-helpers.coffee.js": "<%= files.coffee.specHelpers %>"
       }
     }
   },
@@ -59,7 +60,7 @@ module.exports = {
         paths: ["app/css", "vendor/css"]
       },
       files: {
-        "generated/css/app.less.css": "<config:files.less.app>"
+        "generated/css/app.less.css": "<%= files.less.app %>"
       }
     }
   },
@@ -72,7 +73,7 @@ module.exports = {
         wrapped: true
       },
       files: {
-        "generated/template/handlebars.js": '<config:files.template.handlebars>'
+        "generated/template/handlebars.js": '<%= files.template.handlebars %>'
       }
     }
   },
@@ -82,7 +83,7 @@ module.exports = {
         namespace: "JST"
       },
       files: {
-        "generated/template/underscore.js": '<config:files.template.underscore>'
+        "generated/template/underscore.js": '<%= files.template.underscore %>'
       }
     }
   },
@@ -90,12 +91,12 @@ module.exports = {
   //quality
   spec: {
     files: [
-      '<config:files.glob.js.concatenated>',
-      '<config:files.glob.js.concatenatedSpec>'
+      '<%= files.glob.js.concatenated %>',
+      '<%= files.glob.js.concatenatedSpec %>'
     ]
   },
-  lint: {
-    files: ['<config:files.js.app>']
+  jshint: {
+    files: ['<%= files.js.app %>']
   },
   jshint: {
     options: {
@@ -116,26 +117,26 @@ module.exports = {
   //distribution
   concat:{
     js: {
-      src: ['<banner:meta.banner>', '<config:files.js.vendor>', '<config:files.template.generated>', '<config:files.coffee.generated>', '<config:files.js.app>'],
-      dest: '<config:files.glob.js.concatenated>'
+      src: ['<banner:meta.banner>', '<%= files.js.vendor %>', '<%= files.template.generated %>', '<%= files.coffee.generated %>', '<%= files.js.app %>'],
+      dest: '<%= files.glob.js.concatenated %>'
     },
     spec: {
-      src: ['<config:files.js.specHelpers>', '<config:files.coffee.generatedSpecHelpers>', '<config:files.js.spec>', '<config:files.coffee.generatedSpec>'],
-      dest: '<config:files.glob.js.concatenatedSpec>'
+      src: ['<%= files.js.specHelpers %>', '<%= files.coffee.generatedSpecHelpers %>', '<%= files.js.spec %>', '<%= files.coffee.generatedSpec %>'],
+      dest: '<%= files.glob.js.concatenatedSpec %>'
     },
     css: {
-      src: ['<config:files.css.vendor>', '<config:files.less.generated>', '<config:files.css.app>'],
-      dest: '<config:files.glob.css.concatenated>'
+      src: ['<%= files.css.vendor %>', '<%= files.less.generated %>', '<%= files.css.app %>'],
+      dest: '<%= files.glob.css.concatenated %>'
     }
   },
   // notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
   //        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images: {
     files: {
-      "app/img/": "<config:files.img.app>",
-      "vendor/img/": "<config:files.img.vendor>"
+      "app/img/": "<%= files.img.app %>",
+      "vendor/img/": "<%= files.img.vendor %>"
     },
-    root: "<config:files.glob.img.root>",
+    root: "<%= files.glob.img.root %>",
     dev: {
       dest: "generated"
     },
@@ -146,9 +147,9 @@ module.exports = {
 
   webfonts: {
     files: {
-      "vendor/webfonts/" : "<config:files.webfonts.vendor>"
+      "vendor/webfonts/" : "<%= files.webfonts.vendor %>"
     },
-    root: "<config:files.glob.webfonts.root>",
+    root: "<%= files.glob.webfonts.root %>",
     dev: {
       dest: "generated"
     },
@@ -175,28 +176,25 @@ module.exports = {
   },
 
   //optimizing
-  uglify: {},
-  min: {
-    dist: {
-      src: ['<banner:meta.banner>', 'generated/js/app.js'],
-      dest: "<config:files.glob.js.minified>"
-    }
-  },
-  mincss: {
-    compress: {
-      files: {
-        "dist/css/app.min.css": "generated/css/app.css"
-      }
+  uglify: {
+    options: {
+      banner: '<%= meta.banner %>'
+    },
+    js: {
+      'generated/js/app.js' : "<%= files.glob.js.minified %>"
+    },
+    css: {
+      "dist/css/app.min.css": "<%= files.css.concatenated %>"
     }
   },
 
   //cleaning
   clean: {
     js: {
-      src: '<config:files.js.concatenated>'
+      src: '<%= files.js.concatenated %>'
     },
     css: {
-      src: '<config:files.css.concatenated>'
+      src: '<%= files.css.concatenated %>'
     },
     dist: {
       src: ["dist", "generated"]
@@ -217,52 +215,52 @@ module.exports = {
   },
   watch: {
     js: {
-      files: ['<config:files.glob.js.vendor>', '<config:files.glob.js.app>'],
+      files: ['<%= files.glob.js.vendor %>', '<%= files.glob.js.app %>'],
       tasks: 'configure concat:js'
     },
     coffee: {
-      files: '<config:files.glob.coffee.app>',
+      files: '<%= files.glob.coffee.app %>',
       tasks: 'configure coffee configure concat:js'
     },
 
     jsSpecs: {
-      files: ['<config:files.glob.js.specHelpers>', '<config:files.glob.js.spec>'],
+      files: ['<%= files.glob.js.specHelpers %>', '<%= files.glob.js.spec %>'],
       tasks: 'configure concat:spec'
     },
     coffeeSpecs: {
-      files: ['<config:files.glob.coffee.specHelpers>', '<config:files.glob.coffee.spec>'],
+      files: ['<%= files.glob.coffee.specHelpers %>', '<%= files.glob.coffee.spec %>'],
       tasks: 'configure coffee configure concat:spec'
     },
 
     css: {
-      files: '<config:files.glob.css.app>',
+      files: '<%= files.glob.css.app %>',
       tasks: 'configure concat:css'
     },
     less: {
-      files: '<config:files.glob.less.app>',
+      files: '<%= files.glob.less.app %>',
       tasks: 'configure less configure concat:css'
     },
 
     handlebars: {
-      files: '<config:files.glob.template.handlebars>',
+      files: '<%= files.glob.template.handlebars %>',
       tasks: 'configure handlebars configure concat:js'
     },
     underscore: {
-      files: '<config:files.glob.template.underscore>',
+      files: '<%= files.glob.template.underscore %>',
       tasks: 'configure jst configure concat:js'
     },
 
     images: {
-      files: ["<config:files.glob.img.app>", "<config:files.glob.img.vendor>"],
+      files: ["<%= files.glob.img.app %>", "<%= files.glob.img.vendor %>"],
       tasks: 'configure images:dev'
     },
     homepage: {
-      files: '<config:homepage.template>',
+      files: '<%= homepage.template %>',
       tasks: 'configure homepage:dev'
     },
 
     lint: {
-      files: '<config:files.glob.js.app>',
+      files: '<%= files.glob.js.app %>',
       tasks: 'configure lint'
     }
   }
