@@ -39,16 +39,6 @@ module.exports = ((_, fs, grunt) ->
         versions:
           lineman: "~" + linemanPackageJson["version"]
           grunt: linemanPackageJson["dependencies"]["grunt"]
-          gruntContribJshint: linemanPackageJson["dependencies"]["grunt-contrib-jshint"]
-          gruntContribConcat: linemanPackageJson["dependencies"]["grunt-contrib-concat"]
-          gruntContribCoffee: linemanPackageJson["dependencies"]["grunt-contrib-coffee"]
-          gruntContribLess: linemanPackageJson["dependencies"]["grunt-contrib-less"]
-          gruntContribHandlebars: linemanPackageJson["dependencies"]["grunt-contrib-handlebars"]
-          gruntContribJst: linemanPackageJson["dependencies"]["grunt-contrib-jst"]
-          gruntContribConnect: linemanPackageJson["dependencies"]["grunt-contrib-connect"]
-          gruntContribWatch: linemanPackageJson["dependencies"]["grunt-contrib-watch"]
-          gruntContribClean: linemanPackageJson["dependencies"]["grunt-contrib-clean"]
-          gruntContribUglify: linemanPackageJson["dependencies"]["grunt-contrib-uglify"]
           testem: linemanPackageJson["dependencies"]["testem"]
       )
       grunt.file.write src, newPackageJson

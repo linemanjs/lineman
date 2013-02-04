@@ -10,15 +10,6 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "<%= versions.grunt %>",
-    "grunt-contrib-jshint": "<%= versions.gruntContribJshint %>",
-    "grunt-contrib-concat": "<%= versions.gruntContribConcat %>",
-    "grunt-contrib-coffee": "<%= versions.gruntContribCoffee %>",
-    "grunt-contrib-less": "<%= versions.gruntContribLess %>",
-    "grunt-contrib-handlebars": "<%= versions.gruntContribHandlebars %>",
-    "grunt-contrib-jst": "<%= versions.gruntContribJst %>",
-    "grunt-contrib-watch": "<%= versions.gruntContribWatch %>",
-    "grunt-contrib-clean": "<%= versions.gruntContribClean %>",
-    "grunt-contrib-uglify": "<%= versions.gruntContribUglify %>",
     "lineman": "<%= versions.lineman %>",
     "testem": "<%= versions.testem %>"
   }
