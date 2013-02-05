@@ -26,7 +26,8 @@ module.exports = (grunt) ->
     app = express()
     userConfig.drawRoutes app  if userConfig.drawRoutes
     app.configure ->
-      app.use express.bodyParser()
+      app.use express.json()
+      app.use express.multipart()
       app.use express.static(process.cwd() + "/" + webRoot)
       app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy())  if apiProxyEnabled
       app.use express.errorHandler()
