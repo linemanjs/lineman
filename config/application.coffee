@@ -11,7 +11,7 @@ module.exports =
   appTasks:
     common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify:js", "uglify:css", "images:dist", "webfonts:dist", "homepage:dist"]
+    dist: ["uglify:js", "mincss", "images:dist", "webfonts:dist", "homepage:dist"]
 
 
   #code
@@ -128,14 +128,16 @@ module.exports =
 
   #optimizing
   uglify:
-    options:
-      banner: "<%= meta.banner %>"
-
     js:
-      "generated/js/app.js": "<%= files.glob.js.minified %>"
+      options:
+        banner: "<%= meta.banner %>"
+      files:
+        "dist/js/app.min.js": "<%= files.js.concatenated %>"
 
-    css:
-      "dist/css/app.min.css": "<%= files.css.concatenated %>"
+  mincss:
+    compress:
+      files:
+        "dist/css/app.min.css": "<%= files.css.concatenated %>"
 
 
   #cleaning
