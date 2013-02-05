@@ -32,7 +32,8 @@ module.exports = function(grunt) {
     }
 
     app.configure(function() {
-      app.use(express.bodyParser());
+      app.use(express.json());
+      app.use(express.multipart());
       app.use(express.static(process.cwd() + "/" + webRoot));
       if(apiProxyEnabled) {
         app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()));
