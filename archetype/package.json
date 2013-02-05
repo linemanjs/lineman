@@ -9,7 +9,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "grunt": "<%= versions.grunt %>",
     "lineman": "<%= versions.lineman %>",
     "testem": "<%= versions.testem %>"
   }
