@@ -8,10 +8,12 @@ module.exports = (grunt) ->
   _ = grunt.util._
   path = require("path")
   spawn = require("child_process").spawn
+  testemRunnerPath = require("./../lib/testem-utils").testemRunnerPath
+
   grunt.registerTask "spec-ci", "run specs in ci mode", (target) ->
     done = @async()
     args = ["ci", "-f", path.resolve(process.cwd() + "/config/spec.json")]
-    child = spawn(process.cwd() + "/node_modules/testem/testem.js", args)
+    child = spawn(testemRunnerPath(), args)
     output = ""
     child.stdout.on "data", (chunk) ->
       process.stdout.write chunk
@@ -23,8 +25,6 @@ module.exports = (grunt) ->
         done false
       else
         done()
-
-
 
 testsFailed = (output) ->
   lines = output.split("\n")

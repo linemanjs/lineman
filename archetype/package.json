@@ -7,9 +7,7 @@
     "name": "John Doe",
     "company": "ACME, Inc."
   },
-  "dependencies": {},
-  "devDependencies": {
-    "lineman": "<%= versions.lineman %>",
-    "testem": "<%= versions.testem %>"
+  "dependencies": {
+    "lineman": "<%= versions.lineman %>"
   }
 }

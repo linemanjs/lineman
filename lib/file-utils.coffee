@@ -38,7 +38,6 @@ module.exports = ((_, fs, grunt) ->
         name: _(name).dasherize()
         versions:
           lineman: "~" + linemanPackageJson["version"]
-          testem: linemanPackageJson["dependencies"]["testem"]
       )
       grunt.file.write src, newPackageJson
 
