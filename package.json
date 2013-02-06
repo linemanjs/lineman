@@ -8,6 +8,7 @@
     "company": "Test Double",
     "email": "justin@testdouble.com"
   },
+  "preferGlobal" : true,
   "repository": {
     "type": "git",
     "url": "git://github.com/testdouble/lineman.git"
