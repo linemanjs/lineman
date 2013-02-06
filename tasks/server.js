@@ -2,7 +2,7 @@
  * Task: server
  * Description: server static files and proxy API (server-side) requests from another port
  * Dependencies: grunt
- * Contributor: @dmosher, @searls
+ * Contributor: @dmosher, @searls, @kbaribeau
  *
  * Configuration:
  *   "base" - the path from which to serve static assets from (this should almost always be left to the default value of "generated")
@@ -32,8 +32,6 @@ module.exports = function(grunt) {
     }
 
     app.configure(function() {
-      app.use(express.json());
-      app.use(express.multipart());
       app.use(express.static(process.cwd() + "/" + webRoot));
       if(apiProxyEnabled) {
         app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()));
