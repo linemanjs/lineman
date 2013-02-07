@@ -10,18 +10,20 @@ Configuration:
 module.exports = (grunt) ->
   _ = grunt.util._
   copy = require(__dirname + "/../lib/file-utils").copy
+
   grunt.registerTask "webfonts", "copy webfonts to dist/webfonts", (target) ->
     target = target or "dist"
     @requiresConfig "webfonts.files"
-    @requiresConfig "webfonts." + target
+    @requiresConfig "webfonts.#{target}"
     taskConfig = grunt.config.get("webfonts")
-    targetConfig = grunt.config.get("webfonts." + target)
-    destinationPath = targetConfig.dest + "/" + taskConfig.root
-    grunt.log.writeln "Copying webfonts to '" + destinationPath + "'"
+    targetConfig = grunt.config.get("webfonts.#{target}")
+    destinationPath = "#{targetConfig.dest}/#{taskConfig.root}"
+
+    grunt.log.writeln "Copying webfonts to '#{destinationPath}'"
     _(taskConfig.files).each (files, basePath) ->
       _(grunt.file.expand(files)).each (src) ->
-        dest = destinationPath + "/" + src.replace(basePath, "")
-        copy src, dest
+        dest = "#{destinationPath}/#{src.replace(basePath, "")}"
+        copy(src, dest)
 
 
 

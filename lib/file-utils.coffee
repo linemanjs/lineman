@@ -6,18 +6,16 @@ module.exports = ((_, fs, grunt) ->
     exports.copy = (src, dest) ->
       file = fs.lstatSync(src)
       if file.isDirectory()
-        exports.copyDir src, dest
+        exports.copyDir(src, dest)
       else
-        grunt.file.copy src, dest
-
+        grunt.file.copy(src, dest)
 
     # grunt.log.writeln("Copied image '"+src+"' to '"+dest+"'");
     exports.copyDir = (src, dest) ->
-      mkdirIfNecessary src, dest
+      mkdirIfNecessary(src, dest)
       paths = fs.readdirSync(src)
       _(paths).each (path) ->
-        exports.copy src + "/" + path, dest + "/" + path
-
+        exports.copy("#{src}/#{path}", "#{dest}/#{path}")
 
     exports.loadConfigurationFile = (name) ->
 
@@ -25,27 +23,27 @@ module.exports = ((_, fs, grunt) ->
       #  fs.existSync != require's ability to find modules, b/c require
       #  supports multiple extension lookup.
       try
-        return require(process.cwd() + "/config/" + name)
+        return require("#{process.cwd()}/config/#{name}")
       catch e
-        if e.code is "MODULE_NOT_FOUND"
+        if e.code == "MODULE_NOT_FOUND"
           return {}
         else
           throw e
 
     exports.overwritePackageJson = (src, name) ->
-      linemanPackageJson = grunt.file.readJSON(__dirname + "/../package.json")
+      linemanPackageJson = grunt.file.readJSON("#{__dirname}/../package.json")
       newPackageJson = _(grunt.file.read(src)).template(
         name: _(name).dasherize()
         versions:
           lineman: "~" + linemanPackageJson["version"]
       )
-      grunt.file.write src, newPackageJson
+      grunt.file.write(src, newPackageJson)
 
     mkdirIfNecessary = (src, dest) ->
       checkDir = fs.statSync(src)
       try
-        fs.mkdirSync dest, checkDir.mode
+        fs.mkdirSync(dest, checkDir.mode)
       catch e
-        throw e  if e.code isnt "EEXIST"
+        throw e  if e.code != "EEXIST"
 
 )(grunt.util._, fs, grunt)

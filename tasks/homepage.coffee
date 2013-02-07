@@ -19,25 +19,30 @@ which contains lots of useful goodies.
 module.exports = (grunt) ->
   fs = require("fs")
   _ = grunt.util._
-  extensionOf = (fileName) ->
-    _(fileName.match(/[^.]*$/)).last()
 
   grunt.registerTask "homepage", "generates a home page html file for the project dist directory", (target) ->
-    target = target or "dist"
-    @requiresConfig "homepage.template"
-    @requiresConfig "homepage." + target
+    target = target || "dist"
+    @requiresConfig("homepage.template")
+    @requiresConfig("homepage.#{target}")
     template = grunt.config.get("homepage.template")
-    targetConfig = grunt.config.get("homepage." + target)
-    format = (grunt.config.get("homepage.format") or extensionOf(template) or "html").toLowerCase()
-    if format is "html"
-      grunt.file.copy template, targetConfig.dest
+    targetConfig = grunt.config.get("homepage.#{target}")
+    format = (grunt.config.get("homepage.format") || extensionOf(template) || "html").toLowerCase()
+    if format == "html"
+      grunt.file.copy(template, targetConfig.dest)
     else
       source = grunt.file.read(template)
       context = _(grunt.config.get()).extend(targetConfig.context)
-      html = undefined
-      if _(["underscore", "us", "jst"]).include(format)
-        html = _(source).template()(context)
-      else html = require("handlebars").compile(source)(context)  if _(["handlebar", "hb", "handlebars"]).include(format)
-      grunt.file.write targetConfig.dest, html
-    grunt.log.writeln "Homepage HTML written to '" + targetConfig.dest + "'"
+      grunt.file.write(targetConfig.dest, htmlFor(format, source, context))
 
+    grunt.log.writeln("Homepage HTML written to '#{targetConfig.dest}'")
+
+  extensionOf = (fileName) ->
+    _(fileName.match(/[^.]*$/)).last()
+
+  htmlFor = (format, source, context) ->
+    if _(["underscore", "us", "jst"]).include(format)
+      _(source).template()(context)
+    else if _(["handlebar", "hb", "handlebars"]).include(format)
+      require("handlebars").compile(source)(context)
+    else
+      ""

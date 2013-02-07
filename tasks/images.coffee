@@ -10,18 +10,20 @@ Configuration:
 module.exports = (grunt) ->
   _ = grunt.util._
   copy = require("./../lib/file-utils").copy
+
   grunt.registerTask "images", "copy images to dist/img", (target) ->
-    target = target or "dist"
-    @requiresConfig "images.files"
-    @requiresConfig "images." + target
+    target = target || "dist"
+    @requiresConfig("images.files")
+    @requiresConfig("images.#{target}")
     taskConfig = grunt.config.get("images")
-    targetConfig = grunt.config.get("images." + target)
-    destinationPath = targetConfig.dest + "/" + taskConfig.root
-    grunt.log.writeln "Copying images to '" + destinationPath + "'"
+    targetConfig = grunt.config.get("images.#{target}")
+    destinationPath = "#{targetConfig.dest}/#{taskConfig.root}"
+
+    grunt.log.writeln("Copying images to '#{destinationPath}'")
     _(taskConfig.files).each (files, basePath) ->
       _(grunt.file.expand(files)).each (src) ->
-        dest = destinationPath + "/" + src.replace(basePath, "")
-        copy src, dest
+        dest = "#{destinationPath}/#{src.replace(basePath, "")}"
+        copy(src, dest)
 
 
 

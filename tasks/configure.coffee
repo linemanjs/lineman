@@ -15,9 +15,7 @@ module.exports = (grunt) ->
           parent[name] = grunt.file.expand(file)
         else if _(file).isObject()
           parent[name] = {}
-          expandFiles file, parent[name]
-
-
+          expandFiles(file, parent[name])
 
   grunt.registerTask "configure", "(Re-)expands all file paths and (re-)initializes the grunt config", ->
     application = require(process.cwd() + "/config/application")

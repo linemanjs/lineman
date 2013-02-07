@@ -3,8 +3,8 @@ fs = require("fs")
 module.exports =
   testemRunnerPath: ->
     testemPath = "/node_modules/testem/testem.js"
-    localPath = process.cwd() + testemPath
-    linemanPath = __dirname + "/.." + testemPath
+    localPath = "#{process.cwd()}#{testemPath}"
+    linemanPath = "#{__dirname}/..#{testemPath}"
     if fs.existsSync(localPath)
       localPath
     else if fs.existsSync(linemanPath)
