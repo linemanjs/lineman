@@ -1,5 +1,4 @@
 module.exports = (grunt) ->
-
   grunt.util._([
     "grunt-contrib-clean",
     "grunt-contrib-coffee",
@@ -10,6 +9,6 @@ module.exports = (grunt) ->
     "grunt-contrib-less",
     "grunt-contrib-mincss",
     "grunt-contrib-uglify",
-    "grunt-regarde"
+    "grunt-contrib-watch"
   ]).each (module) ->
     grunt.loadNpmTasks "lineman/node_modules/#{module}"

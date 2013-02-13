@@ -10,7 +10,7 @@ module.exports =
 
   appTasks:
     common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
-    dev: ["server", "regarde"]
+    dev: ["server", "watch"]
     dist: ["uglify:js", "mincss", "images:dist", "webfonts:dist", "homepage:dist"]
 
 
@@ -163,7 +163,7 @@ module.exports =
       host: "localhost"
       port: 3000
 
-  regarde:
+  watch:
     js:
       files: ["<%= files.glob.js.vendor %>", "<%= files.glob.js.app %>"]
       tasks: ["configure", "concat:js"]

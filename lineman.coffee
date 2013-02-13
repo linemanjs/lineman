@@ -1,5 +1,4 @@
 extend = require("whet.extend")
-
 module.exports =
   config:
     application: require("./config/application")
