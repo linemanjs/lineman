@@ -16,7 +16,8 @@ program
           dest = process.cwd() + "/" + project_name;
           console.log(" - Assembling your new project directory in '" + dest + "'...");
           files.copyDir(src, dest);
-          files.overwritePackageJson(dest + "/package.json", project_name)
+          files.overwritePackageJson(dest + "/package.json", project_name);
+          files.copy(dest + "/.npmignore", dest + "/.gitignore")
           npm.installFrom(dest, function(error) {
             if(error) {
               console.info("Oh no! Please consider opening a new issue with your log output at:\n"+
