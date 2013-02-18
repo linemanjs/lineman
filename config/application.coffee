@@ -11,7 +11,7 @@ module.exports =
   appTasks:
     common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify:js", "mincss", "images:dist", "webfonts:dist", "homepage:dist"]
+    dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
 
 
   #code
@@ -134,7 +134,7 @@ module.exports =
       files:
         "dist/js/app.min.js": "<%= files.js.concatenated %>"
 
-  mincss:
+  cssmin:
     compress:
       files:
         "dist/css/app.min.css": "<%= files.css.concatenated %>"

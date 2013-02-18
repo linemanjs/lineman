@@ -30,7 +30,7 @@
     "node": "*"
   },
   "dependencies": {
-    "grunt": "0.4.0rc8",
+    "grunt": "0.4.0",
     "grunt-contrib-clean": "0.4.0",
     "grunt-contrib-coffee": "0.4.0",
     "grunt-contrib-concat": "0.1.2",
@@ -38,8 +38,8 @@
     "grunt-contrib-jshint": "0.1.1",
     "grunt-contrib-jst": "0.4.1",
     "grunt-contrib-less": "0.5.0",
-    "grunt-contrib-mincss": "0.4.0rc7",
-    "grunt-contrib-uglify": "0.1.1rc6",
+    "grunt-contrib-cssmin": "0.4.1",
+    "grunt-contrib-uglify": "0.1.1",
     "grunt-contrib-watch": "0.2.0",
     "whet.extend": "0.9.9",
     "testem": "0.2.68",

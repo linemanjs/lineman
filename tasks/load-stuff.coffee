@@ -7,7 +7,7 @@ module.exports = (grunt) ->
     "grunt-contrib-jshint",
     "grunt-contrib-jst",
     "grunt-contrib-less",
-    "grunt-contrib-mincss",
+    "grunt-contrib-cssmin",
     "grunt-contrib-uglify",
     "grunt-contrib-watch"
   ]).each (module) ->
