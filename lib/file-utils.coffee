@@ -23,12 +23,19 @@ module.exports = ((_, fs, grunt) ->
       #  fs.existSync != require's ability to find modules, b/c require
       #  supports multiple extension lookup.
       try
-        return require("#{process.cwd()}/config/#{name}")
+        return require(configurationFileForName(name))
       catch e
         if e.code == "MODULE_NOT_FOUND"
           return {}
         else
           throw e
+
+    exports.reloadConfigurationFile = (name) ->
+      configName = configurationFileForName(name)
+      _(require.cache).each (entry, path) ->
+        if path.indexOf(configName) == 0
+          delete require.cache[path]
+      exports.loadConfigurationFile(name)
 
     exports.overwritePackageJson = (src, name) ->
       linemanPackageJson = grunt.file.readJSON("#{__dirname}/../package.json")
@@ -45,5 +52,7 @@ module.exports = ((_, fs, grunt) ->
         fs.mkdirSync(dest, checkDir.mode)
       catch e
         throw e  if e.code != "EEXIST"
+
+    configurationFileForName = (name) -> "#{process.cwd()}/config/#{name}"
 
 )(grunt.util._, fs, grunt)

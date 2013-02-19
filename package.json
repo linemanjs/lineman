@@ -46,7 +46,8 @@
     "commander": "1.1.1",
     "express": "3.1.0",
     "http-proxy": "0.8.7",
-    "coffee-script": "1.4.0"
+    "coffee-script": "1.4.0",
+    "watch_r": "0.0.3"
   },
   "keywords": [
     "lineman"

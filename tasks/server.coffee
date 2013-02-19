@@ -15,7 +15,8 @@ module.exports = (grunt) ->
   _ = grunt.util._
   express = require("express")
   httpProxy = require("http-proxy")
-  loadConfigurationFile = require("./../lib/file-utils").loadConfigurationFile
+  fileUtils = require("./../lib/file-utils")
+  watchr = require('watch_r');
 
   grunt.registerTask "server", "static file & api proxy development server", ->
     apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000
@@ -23,7 +24,7 @@ module.exports = (grunt) ->
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
-    userConfig = loadConfigurationFile("server")
+    userConfig = fileUtils.loadConfigurationFile("server")
     app = express()
 
     userConfig.drawRoutes(app) if userConfig.drawRoutes
@@ -35,7 +36,9 @@ module.exports = (grunt) ->
 
     grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
     grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}") if apiProxyEnabled
-    app.listen(webPort)
+
+    app.listen webPort, ->
+      resetRoutesOnServerConfigChange(app)
 
   apiProxy = (host, port, proxy) ->
     proxy.on "proxyError", (err, req, res) ->
@@ -46,3 +49,11 @@ module.exports = (grunt) ->
     return (req, res, next) ->
       proxy.proxyRequest(req, res, {host: host, port: port})
 
+  resetRoutesOnServerConfigChange = (app) ->
+    watchr grunt.file.expand('config/server.*'), (err, watcher) ->
+      watcher.on 'change', (contexts) ->
+        _(contexts).each (context) ->
+          userConfig = fileUtils.reloadConfigurationFile("server")
+          if userConfig.drawRoutes
+            _(app.routes).each (route, name) -> app.routes[name] = []
+            userConfig.drawRoutes(app)
