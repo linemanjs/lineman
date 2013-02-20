@@ -90,15 +90,9 @@ program
 
 program
     .command('*')
-    .description('run the provided task as a grunt command')
+    .description('unknown command')
     .action(function(){
-      cli.tasks = grunt.util._(arguments).
-        chain().toArray().
-          initial().
-          without('run'). //TODO: what a mess. necessary b/c grunt will pass `run` in at the end.
-          value();
-
-      grunt.cli();
+      program.help()
     });
 
 program.parse(process.argv);
