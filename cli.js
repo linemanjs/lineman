@@ -4,9 +4,16 @@ var program  = require('commander'),
     grunt    = require('grunt'),
     files    = require('./lib/file-utils'),
     npm      = require('./lib/npm-utils'),
-    cli      = require('grunt/lib/grunt/cli');
+    cli      = require('grunt/lib/grunt/cli'),
+    _        = grunt.util._;
 
 program.version(require('./package').version);
+
+var sprinkleGruntOptions = function(program) {
+  return _(cli.optlist).inject(function(memo, v, k){
+    return memo.option("--"+k);
+  }, program);
+};
 
 program
     .command('new')
@@ -39,17 +46,19 @@ program
           });
     });
 
-program
+sprinkleGruntOptions(
+  program
     .command('run')
-    .description(' - runs the development server from /generated and watches files for updates')
-    .action(function() {
+    .description(' - runs the development server from /generated and watches files for updates'))
+    .action(function(context) {
       cli.tasks = ["common", "dev"];
       grunt.cli();
     });
 
-program
+sprinkleGruntOptions(
+  program
     .command('build')
-    .description(' - compiles all assets into a production ready form in the /dist folder')
+    .description(' - compiles all assets into a production ready form in the /dist folder'))
     .action(function() {
       cli.tasks = ["common", "dist"];
       grunt.cli();
