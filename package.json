@@ -40,7 +40,7 @@
     "grunt-contrib-less": "0.5.0",
     "grunt-contrib-cssmin": "0.4.1",
     "grunt-contrib-uglify": "0.1.1",
-    "grunt-contrib-watch": "0.2.0",
+    "grunt-watch-nospawn": "0.0.1",
     "whet.extend": "0.9.9",
     "testem": "0.2.68",
     "commander": "1.1.1",

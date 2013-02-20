@@ -9,6 +9,6 @@ module.exports = (grunt) ->
     "grunt-contrib-less",
     "grunt-contrib-cssmin",
     "grunt-contrib-uglify",
-    "grunt-contrib-watch"
+    "grunt-watch-nospawn"
   ]).each (module) ->
     grunt.loadNpmTasks "lineman/node_modules/#{module}"
