@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 describe "a basic project" do
-  Given { new_lineman("frank") }
+  Given { }
   Then {}
 end

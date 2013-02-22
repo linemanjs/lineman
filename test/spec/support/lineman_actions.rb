@@ -1,16 +1,21 @@
 module LinemanActions
   BIN="../cli.js"
 
-  def new_lineman(name)
-    require 'ruby-debug'; debugger; 2;
-    #`#{BIN} new #{name}`
+  def lineman_new
+    `
+    mkdir -p tmp
+    cd tmp
+    rm -rf pants
+    #{BIN} new pants
+    `
   end
 
-  def tear_down_lineman
-  end
 
-  def build_lineman
+  def lineman_build
     `./node_modules/.bin/lineman build`
   end
 
+  def lineman_tear_down
+    `rm -rf tmp`
+  end
 end

@@ -28,4 +28,7 @@ RSpec.configure do |config|
   set_up_capybara(8000)
   config.include Capybara::DSL
   config.include LinemanActions
+
+  config.before(:all) { lineman_new }
+  config.after(:all) { lineman_tear_down }
 end
