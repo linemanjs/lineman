@@ -1,15 +1,18 @@
 module LinemanActions
-  BIN= File.join(File.dirname(__FILE__), "../../../cli.js")
+  ROOT = File.join(File.dirname(__FILE__), "../../..")
+  BIN= File.join(ROOT, "cli.js")
 
   def lineman_new
     `
     mkdir -p tmp
     cd tmp
     rm -rf pants
-    #{BIN} new pants
+    #{BIN} new pants --skip-install
+    cd pants
+    mkdir -p node_modules
+    ln -s #{ROOT} node_modules/lineman
     `
   end
-
 
   def lineman_build
     `
