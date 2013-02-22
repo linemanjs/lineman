@@ -8,7 +8,7 @@
  *  regardless of the point you're at in the build
  *  lifecycle.
  *
- * You can find the parent object in: node_modules/lineman/config/files.js
+ * You can find the parent object in: node_modules/lineman/config/files.coffee
  */
 
 module.exports = require('lineman').config.extend('files', {
