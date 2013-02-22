@@ -1,0 +1,13 @@
+source :rubygems
+
+group :test do
+  gem 'rspec-given'
+  gem 'rspec'
+  gem 'capybara'
+  gem 'poltergeist'
+end
+
+group :development do
+  gem 'debugger'
+end
+
