@@ -1,5 +1,5 @@
 module LinemanActions
-  BIN="../cli.js"
+  BIN= File.join(File.dirname(__FILE__), "../../../cli.js")
 
   def lineman_new
     `
@@ -12,7 +12,10 @@ module LinemanActions
 
 
   def lineman_build
-    `./node_modules/.bin/lineman build`
+    `
+    cd tmp/pants
+    #{BIN} build
+    `
   end
 
   def lineman_tear_down
