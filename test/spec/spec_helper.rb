@@ -14,7 +14,8 @@ def set_up_capybara(port)
     Capybara::Poltergeist::Driver.new(app, :inspector => true)
   end
 
-  Capybara.app_host = "http://localhost:#{port}"
+  Capybara.app_host = "file://#{File.dirname(__FILE__)}/../"
+  # Capybara.app_host = "http://localhost:#{port}"
   Capybara.default_wait_time = 5
   Capybara.default_driver = Capybara.current_driver = unless ENV['HEADFUL']
     require 'capybara/poltergeist'

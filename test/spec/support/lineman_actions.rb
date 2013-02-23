@@ -17,7 +17,7 @@ module LinemanActions
   def lineman_build
     `
     cd tmp/pants
-    #{BIN} build
+    #{BIN} build --stack
     `
   end
 
