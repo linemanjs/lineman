@@ -78,6 +78,20 @@ program
     });
 
 program
+  .command('grunt')
+  .description('Run a grunt command with lineman\'s version of grunt')
+  .action(function(){
+    cli.tasks = grunt.util._(arguments).
+      chain().toArray().
+        initial().
+        without('grunt').
+        value();
+
+    console.log(process.argv)
+    grunt.cli({gruntfile: (__dirname+"/Gruntfile.coffee")});
+  });
+
+program
     .command('*')
     .description('unknown command')
     .action(function(){

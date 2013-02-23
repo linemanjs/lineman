@@ -1,3 +1,5 @@
+fs = require('fs')
+
 module.exports = (grunt) ->
   grunt.util._([
     "grunt-contrib-clean",
@@ -11,4 +13,8 @@ module.exports = (grunt) ->
     "grunt-contrib-uglify",
     "grunt-watch-nospawn"
   ]).each (module) ->
-    grunt.loadNpmTasks "lineman/node_modules/#{module}"
+    if fs.existsSync("node_modules/#{module}")
+      grunt.loadNpmTasks(module)
+    else
+      grunt.loadNpmTasks("lineman/node_modules/#{module}")
+
