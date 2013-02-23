@@ -132,12 +132,12 @@ module.exports =
       options:
         banner: "<%= meta.banner %>"
       files:
-        "dist/js/app.min.js": "<%= files.js.concatenated %>"
+        "dist/js/app.min.js": "<%= files.glob.js.concatenated %>"
 
   cssmin:
     compress:
       files:
-        "dist/css/app.min.css": "<%= files.css.concatenated %>"
+        "dist/css/app.min.css": "<%= files.glob.css.concatenated %>"
 
 
   #cleaning
