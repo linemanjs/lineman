@@ -46,14 +46,26 @@ module LinemanActions
   end
 
   def add_file(path, contents = "")
-    location = File.join(File.dirname(__FILE__),"/../../tmp/pants/",path)
+    location = project_path(path)
     create_dir_for(location)
     File.open(location, "w" ) do |file|
       file.write(contents)
     end
   end
 
+  def edit_file(path, search, replace)
+    location = project_path(path)
+    new_contents = File.read(location).gsub(search, replace)
+    File.open(location, "w") do |file|
+      file.write(new_contents)
+    end
+  end
+
 private
+
+  def project_path(path)
+    File.join(File.dirname(__FILE__),"/../../tmp/pants/",path)
+  end
 
   def create_dir_for(path)
     dir = File.dirname(path)

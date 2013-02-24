@@ -25,7 +25,8 @@ describe "the hello world project" do
       Then { eval_js("pants()") == "yay!" }
 
       describe "editing the file" do
-        pending
+        Given { edit_file("app/js/foo.coffee", "pants", "hats") }
+        Then { eval_js("hats()") == "yay!" }
       end
 
       describe "removing the file" do
