@@ -34,11 +34,10 @@ module LinemanActions
   def lineman_run
     CapyHelper.set_capybara_host(:web)
 
-    Thread.new do
-      sh <<-BASH
-        cd tmp/pants
-        #{BIN} run --stack
-      BASH
+    @@run_thread = if defined?(@@run_thread) && @@run_thread.alive?
+      @@run_thread
+    else
+      start_lineman_run
     end
   end
 
@@ -53,7 +52,6 @@ module LinemanActions
       file.write(contents)
     end
   end
-
 
 private
 
@@ -73,6 +71,15 @@ private
           #{output}
         ERR
       end
+    end
+  end
+
+  def start_lineman_run
+    Thread.new do
+      sh <<-BASH
+        cd tmp/pants
+        #{BIN} run --stack
+      BASH
     end
   end
 end
