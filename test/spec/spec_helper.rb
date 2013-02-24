@@ -1,35 +1,17 @@
 require 'rspec/given'
+require 'support/capy_helper'
 require 'support/lineman_actions'
+require 'support/web_actions'
 
-def set_up_capybara(port)
-  require 'capybara'
-  require 'capybara/rspec'
-  require 'capybara/poltergeist'
-
-  Capybara.register_driver :chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
-  end
-
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, :inspector => true)
-  end
-
-  Capybara.app_host = "file://#{File.dirname(__FILE__)}/../"
-  # Capybara.app_host = "http://localhost:#{port}"
-  Capybara.default_wait_time = 5
-  Capybara.default_driver = Capybara.current_driver = unless ENV['HEADFUL']
-    require 'capybara/poltergeist'
-    :poltergeist
-  else
-    :chrome
-  end
-end
 
 RSpec.configure do |config|
-  set_up_capybara(8000)
-  config.include Capybara::DSL
-  config.include LinemanActions
+  CapyHelper.set_up_capybara(config)
 
-  config.before(:all) { lineman_tear_down }
-  config.before(:all) { lineman_new }
+  config.include LinemanActions
+  config.include WebActions
+
+  config.before(:all) do
+    lineman_tear_down
+    lineman_new
+  end
 end
