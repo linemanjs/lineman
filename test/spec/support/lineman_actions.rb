@@ -1,3 +1,5 @@
+require_relative 'capy_helper'
+
 module LinemanActions
   ROOT = File.join(File.dirname(__FILE__), "../../..")
   BIN= File.join(ROOT, "cli.js")
@@ -21,10 +23,23 @@ module LinemanActions
   end
 
   def lineman_build
+    CapyHelper.set_capybara_host(:file)
+
     sh <<-BASH
       cd tmp/pants
       #{BIN} build --stack
     BASH
+  end
+
+  def lineman_run
+    CapyHelper.set_capybara_host(:web)
+
+    Thread.new do
+      sh <<-BASH
+        cd tmp/pants
+        #{BIN} run --stack
+      BASH
+    end
   end
 
   def lineman_tear_down
