@@ -46,7 +46,21 @@ module LinemanActions
     sh 'rm -rf tmp'
   end
 
+  def add_file(path, contents = "")
+    location = File.join(File.dirname(__FILE__),"/../../tmp/pants/",path)
+    create_dir_for(location)
+    File.open(location, "w" ) do |file|
+      file.write(contents)
+    end
+  end
+
+
 private
+
+  def create_dir_for(path)
+    dir = File.dirname(path)
+    Dir.mkdir(dir) unless File.exist?(dir) #TODO - how to do mkdir -p??
+  end
 
   def sh(command)
     `#{command}`.tap do |output|
