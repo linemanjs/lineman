@@ -6,4 +6,4 @@ before_install:
   # - "sh -e /etc/init.d/xvfb start"
   - "npm install"
 install: "cd test && bundle install"
-script: "cd test && bundle exec rspec"
+script: "bundle exec rspec"
