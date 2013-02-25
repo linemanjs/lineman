@@ -1,7 +1,6 @@
 module WebActions
   def visit_harder(path)
     do_until { visit(path)["status"] == "success" }
-
   end
 
   def do_until(wait = 0.5, time_left = 5, &blk)
@@ -20,6 +19,13 @@ module WebActions
         return page.evaluate_script(script)
       rescue
       end
+    end
+  end
+
+  def expect_js(script)
+    do_until do
+      visit_harder("/")
+      page.evaluate_script(script)
     end
   end
 

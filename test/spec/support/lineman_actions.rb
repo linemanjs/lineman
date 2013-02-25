@@ -1,4 +1,5 @@
 require_relative 'capy_helper'
+require 'fileutils'
 
 module LinemanActions
   ROOT = File.join(File.dirname(__FILE__), "../../..")
@@ -61,6 +62,11 @@ module LinemanActions
     end
   end
 
+  def remove_file(path)
+    sleep(1) #sucks, but grunt watch blows up if we delete during compilation
+    File.delete(project_path(path))
+  end
+
 private
 
   def project_path(path)
@@ -69,24 +75,27 @@ private
 
   def create_dir_for(path)
     dir = File.dirname(path)
-    Dir.mkdir(dir) unless File.exist?(dir) #TODO - how to do mkdir -p??
+    FileUtils.mkdir_p(dir) unless File.exist?(dir) #TODO - how to do mkdir -p??
   end
 
   def sh(command)
     `#{command}`.tap do |output|
       unless $?.success?
-        raise <<-ERR
+        msg = <<-ERR
           Command  failed! You ran:
           #{command}
 
           STDOUT:
           #{output}
         ERR
+        puts msg
+        raise msg
       end
     end
   end
 
   def start_lineman_run
+    Thread.abort_on_exception = true
     Thread.new do
       sh <<-BASH
         cd tmp/pants
