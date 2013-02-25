@@ -1,5 +1,7 @@
 # Lineman
 
+[![Build Status](https://secure.travis-ci.org/testdouble/lineman.png)](http://travis-ci.org/testdouble/lineman)
+
 Lineman is a tool for bootstrapping fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
 
 Check out the [demo screencast!](http://www.youtube.com/watch?v=BmZ4XRErYAI)
@@ -249,3 +251,18 @@ It doesn't hurt that with Lineman, we're able to bootstrap new client-side apps 
 ## the terms
 
 Lineman was created by [test double](http://testdouble.com), a software studio in Columbus, Ohio. It's distributed under the [MIT license](http://mit-license.org).
+
+# Running Lineman's Tests
+
+If you're interested in contributing to Lineman, it's probably worth knowing how to run Lineman's tests. It's a little tricky, because we're using Ruby & RSpec to integration-test a node project.
+
+Once you've cloned lineman, here's all you need to install lineman's dependencies and the run its tests.
+
+``` bash
+$ npm install
+$ cd test
+$ bundle install
+$ bundle exec rspec
+```
+
+
