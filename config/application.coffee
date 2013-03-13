@@ -206,4 +206,4 @@ module.exports =
 
     lint:
       files: "<%= files.glob.js.app %>"
-      tasks: ["configure","lint"]
+      tasks: ["configure","jshint"]
