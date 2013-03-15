@@ -198,41 +198,17 @@ Try running `sudo launchctl limit maxfiles 2000 2100`. To have this setting pers
 
 # Deployment
 
-## Heroku (using Ruby)
+## Heroku
 
-### Add `Gemfile`
+Deploying your app to [heroku](http://heroku.com) couldn't be easier. Once you have the [heroku toolbelt](https://toolbelt.heroku.com) installed, simply run this from your project:
 
-``` ruby
-source :rubygems
-gem 'rack'
+```
+heroku create --stack cedar --buildpack http://github.com/testdouble/heroku-buildpack-lineman.git
 ```
 
-### Run `bundle`
+Now, whenever you `git push heroku`, our [custom buildpack](http://github.com/testdouble/heroku-buildpack-lineman) will build your project with lineman and then start serving your minified site assets with apache!
 
-### Create `config.ru` file
-
-``` ruby
-use Rack::Static,
-  :urls => ["/img", "/js", "/css"],
-  :root => "dist"
-
-run lambda { |env|
-  [
-    200,
-    {
-      'Content-Type'  => 'text/html',
-      'Cache-Control' => 'public, max-age=86400'
-    },
-    File.open('dist/index.html', File::RDONLY)
-  ]
-}
-```
-
-### Commit + push to Heroku
-
-With the `config.ru` and generated `Gemfile.lock` in your repository, simply push your directory to Heroku and it will detect it correctly as a Rack app, no Procfile needed.
-
-More info: [Creating Static Sites in Ruby with Rack](https://devcenter.heroku.com/articles/static-sites-ruby).
+What's really neat about this workflow is that while heroku takes care of building the assets for you (meaning you don't have to worry about checking in or transferring any generated assets), at runtime node is nowhere to be found! Your site is just static assets running on apache.
 
 # About
 
