@@ -41,6 +41,7 @@ program
   .command('run')
   .description(' - runs the development server from /generated and watches files for updates')
   .action(function(context) {
+    process.env['LINEMAN_RUN'] = true;
     cli.tasks = ["common", "dev"];
     grunt.cli();
   });
@@ -87,7 +88,6 @@ program
         without('grunt').
         value();
 
-    console.log(process.argv)
     grunt.cli({gruntfile: (__dirname+"/Gruntfile.coffee")});
   });
 
