@@ -11,7 +11,7 @@
     "lineman": "<%= versions.lineman %>"
   },
   "engines": {
-    "node": "~>0.8.20",
-    "npm": "~>1.2.11"
+    "node": "~>0.10.3",
+    "npm": "~>1.2.17"
   }
 }
