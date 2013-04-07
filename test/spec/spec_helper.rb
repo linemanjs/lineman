@@ -14,4 +14,8 @@ RSpec.configure do |config|
     lineman_tear_down
     lineman_new
   end
+
+  config.after(:all) do
+    lineman_tear_down
+  end
 end
