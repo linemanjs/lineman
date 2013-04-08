@@ -98,6 +98,7 @@ private
     Thread.abort_on_exception = true
     Thread.new do
       sh <<-BASH
+        mkdir -p tmp/pants
         cd tmp/pants
         #{BIN} run --stack
       BASH
