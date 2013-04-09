@@ -42,7 +42,7 @@
     "grunt-contrib-uglify": "0.2.0",
     "grunt-watch-nospawn": "0.0.3",
     "whet.extend": "0.9.9",
-    "testem": "0.2.81",
+    "testem": "0.2.82",
     "commander": "1.1.1",
     "express": "3.1.1",
     "http-proxy": "0.10.0",
