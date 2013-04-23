@@ -11,7 +11,7 @@ module.exports =
   appTasks:
     common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
+    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
 
 
   #code
