@@ -25,29 +25,26 @@ module.exports =
 
   #style
   less:
+    options:
+      paths: ["app/css", "vendor/css"]
     compile:
-      options:
-        paths: ["app/css", "vendor/css"]
-
       files:
         "generated/css/app.less.css": "<%= files.less.app %>"
 
 
   #templates
   handlebars:
+    options:
+      namespace: "JST"
+      wrapped: true
     compile:
-      options:
-        namespace: "JST"
-        wrapped: true
-
       files:
         "generated/template/handlebars.js": "<%= files.template.handlebars %>"
 
   jst:
+    options:
+      namespace: "JST"
     compile:
-      options:
-        namespace: "JST"
-
       files:
         "generated/template/underscore.js": "<%= files.template.underscore %>"
 
@@ -130,9 +127,9 @@ module.exports =
 
   #optimizing
   uglify:
+    options:
+      banner: "<%= meta.banner %>"
     js:
-      options:
-        banner: "<%= meta.banner %>"
       files:
         "dist/js/app.min.js": "<%= files.glob.js.concatenated %>"
 
