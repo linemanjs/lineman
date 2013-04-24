@@ -57,7 +57,6 @@ module.exports =
     files: ["<%= files.glob.js.concatenated %>", "<%= files.glob.js.concatenatedSpec %>"]
 
   jshint:
-    files: ["<%= files.js.app %>"]
     options:
       force: process.env['LINEMAN_RUN'] || false
       curly: true
@@ -70,6 +69,8 @@ module.exports =
       boss: true
       eqnull: true
       browser: true
+    app:
+      files: ["<%= files.js.app %>"]
 
 
   #distribution
