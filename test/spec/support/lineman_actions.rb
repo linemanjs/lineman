@@ -43,6 +43,7 @@ module LinemanActions
   end
 
   def lineman_tear_down
+    @@run_thread.exit if defined?(@@run_thread)
     sh 'rm -rf tmp'
   end
 
