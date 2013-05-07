@@ -190,11 +190,19 @@ Lineman generates a very particular directory structure. It looks like this:
 
 ### Too Many Open Files
 
-Lineman keeps a lot of files open at once. If you're seeing a message that looks like this:
-    `undefined: [Lundefined:Cundefined] EMFILE, too many open files`
+The `lineman run` command keeps file handles on all your projects files at once. If you're seeing a message that looks like this:
 
-Try running `sudo launchctl limit maxfiles 2000 2100`. To have this setting persist across reboots, put the following in /etc/launchd.conf: `limit maxfiles 2000 2100`
+    undefined: [Lundefined:Cundefined] EMFILE, too many open files
 
+Or this
+
+    Error: watch Unknown system errno 23
+
+Then it probably means your project has gotten big enough to either run into the user limit on open file descriptors or (in the case of the latter), the hard limit on your operating system's file table .
+
+To resolve this issue, we recommend first increasing the user limit on open files with the `ulimit` command. You might do this at the beginning of any terminal session or in your `~/.profile` dotfile.
+
+    ulimit -n 2048
 
 # Deployment
 
