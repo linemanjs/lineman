@@ -43,6 +43,14 @@ module.exports = (grunt) ->
     if _(["underscore", "us", "jst"]).include(format)
       _(source).template()(context)
     else if _(["handlebar", "hb", "handlebars"]).include(format)
-      require("handlebars").compile(source)(context)
+      locateHandlebars().compile(source)(context)
     else
       ""
+
+  locateHandlebars = ->
+    handlebarsPath = process.cwd()+'/node_modules/handlebars'
+    if fs.existsSync(handlebarsPath)
+      require(handlebarsPath)
+    else
+      grunt.log.writeln('NOTE: please add the `handlebars` module to your package.json, as Lineman doesn\'t include it directly. Attempting to Handlebars load naively (this may blow up).').
+      require("handlebars")
