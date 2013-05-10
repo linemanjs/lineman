@@ -2,10 +2,10 @@ semver = require('semver')
 
 module.exports = () ->
   return unless specifiedVersion = specifiedLinemanVersion()
-  linemanVersion = actualLinemanVersion()
-  unless semver.satisfies(linemanVersion, specifiedVersion)
+  actualVersion = actualLinemanVersion()
+  unless semver.satisfies(actualVersion, specifiedVersion)
     console.error """
-                  Uh oh, your package.json specifies lineman version '#{specifiedVersion}', but Lineman is currently '#{linemanVersion}'.
+                  Uh oh, your package.json specifies lineman version '#{specifiedVersion}', but Lineman is currently '#{actualVersion}'.
 
                   Possible solutions:
                     * Try running `npm install` to install the specified lineman version locally to `node_modules/lineman`
@@ -14,7 +14,7 @@ module.exports = () ->
     process.exit(1)
 
 specifiedLinemanVersion = ->
-  packageJson = require("#{process.cwd()}/package.json")
+  packageJson = loadPackageJson()
   packageJson?.dependencies?.lineman || packageJson?.devDependencies?.lineman
 
 actualLinemanVersion = ->
@@ -23,4 +23,8 @@ actualLinemanVersion = ->
   else
     require(process.env["LINEMAN_MAIN"]).version
 
-
+loadPackageJson = ->
+  try
+    require("#{process.cwd()}/package.json")
+  catch e
+    undefined
