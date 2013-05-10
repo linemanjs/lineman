@@ -9,9 +9,9 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.company %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */"
 
   appTasks:
-    common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
+    common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
+    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
 
 
   #code
