@@ -11,6 +11,8 @@ module.exports = ->
 
   require("./setup-options")(commander, cli)
 
+  require("./ensure-appropriate-version")()
+
   commander.
     command("new").
     description(" - generates a new lineman project in the specified folder : lineman new my-project").
