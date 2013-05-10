@@ -10,7 +10,7 @@ module LinemanActions
       mkdir -p tmp
       cd tmp
       rm -rf pants
-      #{BIN} new pants --skip-install
+      #{BIN} new pants
     BASH
     lineman_link
   end

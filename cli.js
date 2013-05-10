@@ -5,12 +5,23 @@ var program = require('commander'),
     files   = require('./lib/file-utils'),
     npm     = require('./lib/npm-utils'),
     cli     = require('grunt/lib/grunt/cli'),
+    fs      = require('fs'),
     _       = grunt.util._;
+
+var findTheRightLineman = function() {
+  if(fs.existsSync(process.cwd()+"/node_modules/lineman")) {
+    return "lineman";
+  } else {
+    return __dirname+"/lineman.js";
+  }
+};
+
+process.env['LINEMAN_MAIN'] = findTheRightLineman();
 
 
 program
   .version(require('./package').version)
-  .option("--skip-install", "Skip the `npm install` step when creating a new project")
+  .option("--install", "Perform an `npm install` when creating a new project, effectively freezing lineman with the project")
 _(cli.optlist).each(function(option, name){
   if(!_(["help", "version"]).include(name)) {
     program.option((option.short ? "-"+option.short+", " : "")+"--"+name, option.info);
@@ -27,13 +38,13 @@ program
     files.copyDir(src, dest);
     files.overwritePackageJson(dest + "/package.json", projectName);
     files.copy(dest + "/.npmignore", dest + "/.gitignore")
-    if(program.skipInstall) {
-      console.log(" - Skipping `npm install`. You may need to run this yourself while inside the new `"+projectName+"` directory later.");
-      printWelcome(projectName);
-    } else {
+    if(program.install) {
+      console.log(" - Performing `npm install`. Lineman will install into (and run out of) this project's `node_modules/lineman` directory.");
       npm.installFrom(dest, function(error) {
         error ? printError() : printWelcome(projectName);
       });
+    } else {
+      printWelcome(projectName);
     }
 });
 

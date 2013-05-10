@@ -5,7 +5,7 @@
  * You can find the parent object in: node_modules/lineman/config/application.coffee
  */
 
-module.exports = require('lineman').config.extend('application', {
+module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application', {
   //Override application configuration here. Common examples follow in the comments.
 
   // API Proxying

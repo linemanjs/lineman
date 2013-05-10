@@ -16,5 +16,5 @@ module.exports = (grunt) ->
     if fs.existsSync("node_modules/#{module}")
       grunt.loadNpmTasks(module)
     else
-      grunt.loadNpmTasks("lineman/node_modules/#{module}")
+      grunt.loadTasks(__dirname+"/../node_modules/#{module}/tasks")
 

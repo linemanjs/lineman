@@ -11,6 +11,6 @@
  * You can find the parent object in: node_modules/lineman/config/files.coffee
  */
 
-module.exports = require('lineman').config.extend('files', {
+module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
   //Override file patterns here
 });
