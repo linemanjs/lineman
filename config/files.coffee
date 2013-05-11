@@ -44,6 +44,7 @@ module.exports =
     concatenated: "generated/css/app.css"
 
   template:
+    homepage: "app/templates/homepage.us"
     handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"]
     underscore: ["app/templates/**/*.underscore", "app/templates/**/*.us"]
     generated: "generated/template/**/*.js"

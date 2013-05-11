@@ -9,7 +9,7 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.company %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */"
 
   appTasks:
-    common: ["configure", "coffee", "less", "sass", "jshint", "handlebars", "jst", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
+    common: ["coffee", "less", "sass", "jshint", "handlebars", "jst", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
     dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
 
@@ -18,9 +18,9 @@ module.exports =
   coffee:
     compile:
       files:
-        "generated/js/app.coffee.js": "<%= files.glob.coffee.app %>"
-        "generated/js/spec.coffee.js": "<%= files.glob.coffee.spec %>"
-        "generated/js/spec-helpers.coffee.js": "<%= files.glob.coffee.specHelpers %>"
+        "generated/js/app.coffee.js": "<%= files.coffee.app %>"
+        "generated/js/spec.coffee.js": "<%= files.coffee.spec %>"
+        "generated/js/spec-helpers.coffee.js": "<%= files.coffee.specHelpers %>"
 
 
   #style
@@ -30,8 +30,8 @@ module.exports =
         paths: ["app/css", "vendor/css"]
 
       files:
-        "generated/css/vendor.less.css": "<%= files.glob.less.vendor %>"
-        "generated/css/app.less.css": "<%= files.glob.less.app %>"
+        "generated/css/vendor.less.css": "<%= files.less.vendor %>"
+        "generated/css/app.less.css": "<%= files.less.app %>"
 
   sass:
     compile:
@@ -39,8 +39,8 @@ module.exports =
         includePaths: ["app/css", "vendor/css"]
 
       files:
-        "generated/css/vendor.sass.css": "<%= files.glob.sass.vendor %>"
-        "generated/css/app.sass.css": "<%= files.glob.sass.app %>"
+        "generated/css/vendor.sass.css": "<%= files.sass.vendor %>"
+        "generated/css/app.sass.css": "<%= files.sass.app %>"
 
 
 
@@ -52,7 +52,7 @@ module.exports =
         wrapped: true
 
       files:
-        "generated/template/handlebars.js": "<%= files.glob.template.handlebars %>"
+        "generated/template/handlebars.js": "<%= files.template.handlebars %>"
 
   jst:
     compile:
@@ -60,15 +60,15 @@ module.exports =
         namespace: "JST"
 
       files:
-        "generated/template/underscore.js": "<%= files.glob.template.underscore %>"
+        "generated/template/underscore.js": "<%= files.template.underscore %>"
 
 
   #quality
   spec:
-    files: ["<%= files.glob.js.concatenated %>", "<%= files.glob.js.concatenatedSpec %>"]
+    files: ["<%= files.js.concatenated %>", "<%= files.js.concatenatedSpec %>"]
 
   jshint:
-    files: ["<%= files.glob.js.app %>"]
+    files: ["<%= files.js.app %>"]
     options:
       force: process.env['LINEMAN_RUN'] || false
       curly: true
@@ -86,33 +86,33 @@ module.exports =
   #distribution
   concat:
     js:
-      src: ["<banner:meta.banner>", "<%= files.glob.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.glob.js.app %>"]
-      dest: "<%= files.glob.js.concatenated %>"
+      src: ["<banner:meta.banner>", "<%= files.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.js.app %>"]
+      dest: "<%= files.js.concatenated %>"
 
     spec:
-      src: ["<%= files.glob.js.specHelpers %>", "<%= files.coffee.generatedSpecHelpers %>", "<%= files.glob.js.spec %>", "<%= files.coffee.generatedSpec %>"]
-      dest: "<%= files.glob.js.concatenatedSpec %>"
+      src: ["<%= files.js.specHelpers %>", "<%= files.coffee.generatedSpecHelpers %>", "<%= files.js.spec %>", "<%= files.coffee.generatedSpec %>"]
+      dest: "<%= files.js.concatenatedSpec %>"
 
     css:
       src: [
         "<%= files.less.generatedVendor %>",
         "<%= files.sass.generatedVendor %>",
-        "<%= files.glob.css.vendor %>",
+        "<%= files.css.vendor %>",
         "<%= files.less.generatedApp %>",
         "<%= files.sass.generatedApp %>",
-        "<%= files.glob.css.app %>"
+        "<%= files.css.app %>"
       ]
-      dest: "<%= files.glob.css.concatenated %>"
+      dest: "<%= files.css.concatenated %>"
 
 
   # notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
   #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images:
     files:
-      "app/img/": "<%= files.glob.img.app %>"
-      "vendor/img/": "<%= files.glob.img.vendor %>"
+      "app/img/": "<%= files.img.app %>"
+      "vendor/img/": "<%= files.img.vendor %>"
 
-    root: "<%= files.glob.img.root %>"
+    root: "<%= files.img.root %>"
     dev:
       dest: "generated"
 
@@ -121,9 +121,9 @@ module.exports =
 
   webfonts:
     files:
-      "vendor/webfonts/": "<%= files.glob.webfonts.vendor %>"
+      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
 
-    root: "<%= files.glob.webfonts.root %>"
+    root: "<%= files.webfonts.root %>"
     dev:
       dest: "generated"
 
@@ -131,7 +131,7 @@ module.exports =
       dest: "dist"
 
   homepage:
-    template: "app/templates/homepage.us"
+    template: "<%= files.template.homepage %>"
     dev:
       dest: "generated/index.html"
       context:
@@ -151,12 +151,12 @@ module.exports =
       options:
         banner: "<%= meta.banner %>"
       files:
-        "dist/js/app.min.js": "<%= files.glob.js.concatenated %>"
+        "dist/js/app.min.js": "<%= files.js.concatenated %>"
 
   cssmin:
     compress:
       files:
-        "dist/css/app.min.css": "<%= files.glob.css.concatenated %>"
+        "dist/css/app.min.css": "<%= files.css.concatenated %>"
 
 
   #cleaning
@@ -184,49 +184,49 @@ module.exports =
 
   watch:
     js:
-      files: ["<%= files.glob.js.vendor %>", "<%= files.glob.js.app %>"]
+      files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
       tasks: ["concat:js"]
 
     coffee:
-      files: "<%= files.glob.coffee.app %>"
+      files: "<%= files.coffee.app %>"
       tasks: ["coffee", "concat:js"]
 
     jsSpecs:
-      files: ["<%= files.glob.js.specHelpers %>", "<%= files.glob.js.spec %>"]
+      files: ["<%= files.js.specHelpers %>", "<%= files.js.spec %>"]
       tasks: ["concat:spec"]
 
     coffeeSpecs:
-      files: ["<%= files.glob.coffee.specHelpers %>", "<%= files.glob.coffee.spec %>"]
+      files: ["<%= files.coffee.specHelpers %>", "<%= files.coffee.spec %>"]
       tasks: ["coffee", "concat:spec"]
 
     css:
-      files: ["<%= files.glob.css.vendor %>", "<%= files.glob.css.app %>"]
+      files: ["<%= files.css.vendor %>", "<%= files.css.app %>"]
       tasks: ["concat:css"]
 
     less:
-      files: ["<%= files.glob.less.vendor %>", "<%= files.glob.less.app %>"]
+      files: ["<%= files.less.vendor %>", "<%= files.less.app %>"]
       tasks: ["less", "concat:css"]
 
     sass:
-      files: ["<%= files.glob.sass.vendor %>", "<%= files.glob.sass.app %>"]
+      files: ["<%= files.sass.vendor %>", "<%= files.sass.app %>"]
       tasks: ["sass", "concat:css"]
 
     handlebars:
-      files: "<%= files.glob.template.handlebars %>"
+      files: "<%= files.template.handlebars %>"
       tasks: ["handlebars", "concat:js"]
 
     underscore:
-      files: "<%= files.glob.template.underscore %>"
+      files: "<%= files.template.underscore %>"
       tasks: ["jst", "concat:js"]
 
     images:
-      files: ["<%= files.glob.img.app %>", "<%= files.glob.img.vendor %>"]
+      files: ["<%= files.img.app %>", "<%= files.img.vendor %>"]
       tasks: ["images:dev"]
 
     homepage:
-      files: "<%= homepage.template %>"
+      files: "<%= files.template.homepage %>"
       tasks: ["homepage:dev"]
 
     lint:
-      files: "<%= files.glob.js.app %>"
+      files: "<%= files.js.app %>"
       tasks: ["jshint"]
