@@ -9,7 +9,7 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.company %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */"
 
   appTasks:
-    common: ["coffee", "less", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
+    common: ["coffee", "less", "sass", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
     dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
 
@@ -30,7 +30,18 @@ module.exports =
         paths: ["app/css", "vendor/css"]
 
       files:
-        "generated/css/app.less.css": "<%= files.less.app %>"
+        "generated/css/vendor.less.css": "<%= files.glob.less.vendor %>"
+        "generated/css/app.less.css": "<%= files.glob.less.app %>"
+
+  sass:
+    compile:
+      options:
+        includePaths: ["app/css", "vendor/css"]
+
+      files:
+        "generated/css/vendor.sass.css": "<%= files.glob.sass.vendor %>"
+        "generated/css/app.sass.css": "<%= files.glob.sass.app %>"
+
 
 
   #templates
@@ -83,7 +94,14 @@ module.exports =
       dest: "<%= files.glob.js.concatenatedSpec %>"
 
     css:
-      src: ["<%= files.css.vendor %>", "<%= files.less.generated %>", "<%= files.css.app %>"]
+      src: [
+        "<%= files.less.generatedVendor %>",
+        "<%= files.sass.generatedVendor %>",
+        "<%= files.css.vendor %>",
+        "<%= files.less.generatedApp %>",
+        "<%= files.sass.generatedApp %>",
+        "<%= files.css.app %>"
+      ]
       dest: "<%= files.glob.css.concatenated %>"
 
 
@@ -182,12 +200,16 @@ module.exports =
       tasks: ["configure","coffee","configure","concat:spec"]
 
     css:
-      files: "<%= files.glob.css.app %>"
+      files: ["<%= files.glob.css.vendor %>", "<%= files.glob.css.app %>"]
       tasks: ["configure","concat:css"]
 
     less:
-      files: "<%= files.glob.less.app %>"
+      files: ["<%= files.glob.less.vendor %>", "<%= files.glob.less.app %>"]
       tasks: ["configure","less","configure","concat:css"]
+
+    sass:
+      files: ["<%= files.glob.sass.vendor %>", "<%= files.glob.sass.app %>"]
+      tasks: ["configure","sass","configure","concat:css"]
 
     handlebars:
       files: "<%= files.glob.template.handlebars %>"

@@ -9,6 +9,7 @@ module.exports = (grunt) ->
     "grunt-contrib-jshint",
     "grunt-contrib-jst",
     "grunt-contrib-less",
+    "grunt-sass",
     "grunt-contrib-cssmin",
     "grunt-contrib-uglify",
     "grunt-watch-nospawn"

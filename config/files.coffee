@@ -27,8 +27,16 @@ module.exports =
     minified: "dist/js/app.min.js"
 
   less:
+    vendor: "vendor/css/**/*.less"
     app: "app/css/**/*.less"
-    generated: "generated/css/app.less.css"
+    generatedVendor: "generated/css/vendor.less.css"
+    generatedApp: "generated/css/app.less.css"
+
+  sass:
+    vendor: ["vendor/css/**/*.scss", "vendor/css/**/*.sass"]
+    app: ["app/css/**/*.scss", "app/css/**/*.sass"]
+    generatedVendor: "generated/css/vendor.sass.css"
+    generatedApp: "generated/css/app.sass.css"
 
   css:
     vendor: "vendor/css/**/*.css"
