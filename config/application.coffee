@@ -9,7 +9,7 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.company %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */"
 
   appTasks:
-    common: ["coffee", "less", "sass", "jshint", "handlebars", "jst", "configure", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
+    common: ["configure", "coffee", "less", "sass", "jshint", "handlebars", "jst", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
     dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
 
@@ -18,9 +18,9 @@ module.exports =
   coffee:
     compile:
       files:
-        "generated/js/app.coffee.js": "<%= files.coffee.app %>"
-        "generated/js/spec.coffee.js": "<%= files.coffee.spec %>"
-        "generated/js/spec-helpers.coffee.js": "<%= files.coffee.specHelpers %>"
+        "generated/js/app.coffee.js": "<%= files.glob.coffee.app %>"
+        "generated/js/spec.coffee.js": "<%= files.glob.coffee.spec %>"
+        "generated/js/spec-helpers.coffee.js": "<%= files.glob.coffee.specHelpers %>"
 
 
   #style
@@ -52,7 +52,7 @@ module.exports =
         wrapped: true
 
       files:
-        "generated/template/handlebars.js": "<%= files.template.handlebars %>"
+        "generated/template/handlebars.js": "<%= files.glob.template.handlebars %>"
 
   jst:
     compile:
@@ -60,7 +60,7 @@ module.exports =
         namespace: "JST"
 
       files:
-        "generated/template/underscore.js": "<%= files.template.underscore %>"
+        "generated/template/underscore.js": "<%= files.glob.template.underscore %>"
 
 
   #quality
@@ -68,7 +68,7 @@ module.exports =
     files: ["<%= files.glob.js.concatenated %>", "<%= files.glob.js.concatenatedSpec %>"]
 
   jshint:
-    files: ["<%= files.js.app %>"]
+    files: ["<%= files.glob.js.app %>"]
     options:
       force: process.env['LINEMAN_RUN'] || false
       curly: true
@@ -86,21 +86,21 @@ module.exports =
   #distribution
   concat:
     js:
-      src: ["<banner:meta.banner>", "<%= files.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.js.app %>"]
+      src: ["<banner:meta.banner>", "<%= files.glob.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.glob.js.app %>"]
       dest: "<%= files.glob.js.concatenated %>"
 
     spec:
-      src: ["<%= files.js.specHelpers %>", "<%= files.coffee.generatedSpecHelpers %>", "<%= files.js.spec %>", "<%= files.coffee.generatedSpec %>"]
+      src: ["<%= files.glob.js.specHelpers %>", "<%= files.coffee.generatedSpecHelpers %>", "<%= files.glob.js.spec %>", "<%= files.coffee.generatedSpec %>"]
       dest: "<%= files.glob.js.concatenatedSpec %>"
 
     css:
       src: [
         "<%= files.less.generatedVendor %>",
         "<%= files.sass.generatedVendor %>",
-        "<%= files.css.vendor %>",
+        "<%= files.glob.css.vendor %>",
         "<%= files.less.generatedApp %>",
         "<%= files.sass.generatedApp %>",
-        "<%= files.css.app %>"
+        "<%= files.glob.css.app %>"
       ]
       dest: "<%= files.glob.css.concatenated %>"
 
@@ -109,8 +109,8 @@ module.exports =
   #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images:
     files:
-      "app/img/": "<%= files.img.app %>"
-      "vendor/img/": "<%= files.img.vendor %>"
+      "app/img/": "<%= files.glob.img.app %>"
+      "vendor/img/": "<%= files.glob.img.vendor %>"
 
     root: "<%= files.glob.img.root %>"
     dev:
@@ -121,7 +121,7 @@ module.exports =
 
   webfonts:
     files:
-      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
+      "vendor/webfonts/": "<%= files.glob.webfonts.vendor %>"
 
     root: "<%= files.glob.webfonts.root %>"
     dev:
@@ -185,48 +185,48 @@ module.exports =
   watch:
     js:
       files: ["<%= files.glob.js.vendor %>", "<%= files.glob.js.app %>"]
-      tasks: ["configure", "concat:js"]
+      tasks: ["concat:js"]
 
     coffee:
       files: "<%= files.glob.coffee.app %>"
-      tasks: ["configure","coffee","configure","concat:js"]
+      tasks: ["coffee", "concat:js"]
 
     jsSpecs:
       files: ["<%= files.glob.js.specHelpers %>", "<%= files.glob.js.spec %>"]
-      tasks: ["configure","concat:spec"]
+      tasks: ["concat:spec"]
 
     coffeeSpecs:
       files: ["<%= files.glob.coffee.specHelpers %>", "<%= files.glob.coffee.spec %>"]
-      tasks: ["configure","coffee","configure","concat:spec"]
+      tasks: ["coffee", "concat:spec"]
 
     css:
       files: ["<%= files.glob.css.vendor %>", "<%= files.glob.css.app %>"]
-      tasks: ["configure","concat:css"]
+      tasks: ["concat:css"]
 
     less:
       files: ["<%= files.glob.less.vendor %>", "<%= files.glob.less.app %>"]
-      tasks: ["configure","less","configure","concat:css"]
+      tasks: ["less", "concat:css"]
 
     sass:
       files: ["<%= files.glob.sass.vendor %>", "<%= files.glob.sass.app %>"]
-      tasks: ["configure","sass","configure","concat:css"]
+      tasks: ["sass", "concat:css"]
 
     handlebars:
       files: "<%= files.glob.template.handlebars %>"
-      tasks: ["configure","handlebars","configure","concat:js"]
+      tasks: ["handlebars", "concat:js"]
 
     underscore:
       files: "<%= files.glob.template.underscore %>"
-      tasks: ["configure","jst","configure","concat:js"]
+      tasks: ["jst", "concat:js"]
 
     images:
       files: ["<%= files.glob.img.app %>", "<%= files.glob.img.vendor %>"]
-      tasks: ["configure","images:dev"]
+      tasks: ["images:dev"]
 
     homepage:
       files: "<%= homepage.template %>"
-      tasks: ["configure","homepage:dev"]
+      tasks: ["homepage:dev"]
 
     lint:
       files: "<%= files.glob.js.app %>"
-      tasks: ["configure","jshint"]
+      tasks: ["jshint"]
