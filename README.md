@@ -2,35 +2,46 @@
 
 [![Build Status](https://secure.travis-ci.org/testdouble/lineman.png)](http://travis-ci.org/testdouble/lineman)
 
-Lineman is a tool for bootstrapping fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
+Lineman is a tool to help you build fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
 
-Check out the [demo screencast!](http://www.youtube.com/watch?v=BmZ4XRErYAI)
+For an overview, consider checking out the [demo screencast](http://www.youtube.com/watch?v=BmZ4XRErYAI)!
 
-## Do I need Lineman?
+## Why Lineman?
 
-If you're starting a new project that will be deployed as static web assets, Lineman might be a great fit for you.
+Suppose that you're starting a new [single page web application](http://en.wikipedia.org/wiki/Single-page_application) and you want to reap the benefits of loose coupling between your client-side and server side. If that rings true, then Lineman (and similar tools) can help to keep you as productive working in the front-end as [traditional HTML generation frameworks](http://rubyonrails.org) do on the back-end.
 
-Some things it helps with:
+Now, for the features!
 
-* Immediately compile CoffeeScript, Less, and client-side templates as you edit source files
-* Provide a development server for fast feedback
-* Concatenate & minify all your CSS & JavaScript for production
-* Run specs on demand with `lineman spec` using [Testem](https://github.com/airportyh/testem)
-* Run specs with output suitable for your CI server using `lineman spec-ci`
+Lineman is a *productivity* tool, in that it provides a development server which:
 
-Just think of it as a handful of conventions and tasks that can help you get up-and-running more quickly than deciding on path names and configuring all the requisite grunt tasks yourself.
+* Serves up your app on a local development server at [localhost:8000](http://localhost:8000)
+* Compiles your [CoffeeScript](http://coffeescript.org) into JavaScript as soon as you save a file
+* Immediately compiles your [Sass](http://sass-lang.com) and [Less](http://lesscss.org) into CSS
+* Provides tools to stub out your back-end API services with [express](http://expressjs.com)
+* Compiles your JavaScript templates (e.g. Underscore, Handlebars) to a `window.JST` object that maps their file path to the compiled template function
+* Can ease development by [proxying XHRs to your server-side app](https://github.com/testdouble/lineman#proxying-requests-to-another-server)
+* Features a *delightful* spec runner called [Testem](https://github.com/airportyh/testem), which comes pre-configured for Jasmine
+
+Lineman is also a *build* tool, because when you're ready to deploy:
+
+* You can [deploy to Heroku](https://github.com/testdouble/lineman#heroku) just by committing and pushing with git
+* Assemble your app into a portable `dist` directory with minified JavaScript & CSS, which can in turn be deployed wherever static assets are served
+
+At the end of the day, Lineman is just a handful of conventions and grunt task configurations that can help you get up-and-running more quickly than rolling your own. It's easy to extend and modify as your application grows.
 
 ## Getting started
 
-First, you'll need [node.js](http://nodejs.org). You'll also need[PhantomJS](http://phantomjs.org) to run tests.
+First, you'll need [node.js](http://nodejs.org). If you plan on running tests, you'll also want [PhantomJS](http://phantomjs.org) somewhere on your PATH. (This is where [the aforementioned screencast picks up](http://searls.testdouble.com/2012/10/13/say-hello-to-lineman/).)
 
-[Once you have those, [here's a screencast on how to get started](http://searls.testdouble.com/2012/10/13/say-hello-to-lineman/).]
-
-Next, you'll need to install Grunt & Lineman globally:
+Next, you'll need to install Lineman globally:
 
 ``` bash
-$ npm install -g grunt lineman
+$ npm install -g lineman
 ```
+
+Once Lineman is installed, you can either ask it to generate a new project for you, or you might consider cloning from a pre-existing template.
+
+### lineman new
 
 To create a new project, run the `lineman` binary with the `new` command and tell it where you'd like the project to go:
 
@@ -40,9 +51,14 @@ $ lineman new my-project
 
 This will create a new directory named "my-project" and copy in Lineman's [archetypal project](https://github.com/testdouble/lineman/tree/master/archetype).
 
-Your new project will, by default, have Lineman and [grunt-contrib](https://github.com/gruntjs/grunt-contrib) as development dependencies.
+### Starting from a template
 
-Finally, you'll probably want to crack open your project' package.json file. That is, of course, unless you plan to give [John Doe](https://github.com/testdouble/lineman/blob/master/archetype/package.json) all the credit.
+We have a few template projects floating around to help you get up-and-running *even more faster*.
+
+* Using [Backbone.js](https://github.com/searls/lineman-ember-template)
+* Using [Angular.js](https://github.com/davemo/lineman-angular-template)
+* Using [Ember.js](https://github.com/davemo/lineman-backbone-template)
+* Building a [Markdown blog](https://github.com/searls/lineman-blog)
 
 ## Working with Lineman
 
@@ -60,7 +76,7 @@ From the project directory, you can start a server at [localhost:8000](http://lo
 $ lineman run
 ```
 
-Internally, Grunt's `watch` task will monitor for file changes and Lineman will make sure that any requisite compilation & concatenation occur, based on the type and location of the file change.
+Internally, Grunt's `watch` task will monitor for file changes; in turn, Lineman's default configuration will fire the appropriate tasks when a file of a given type is saved.
 
 With any luck, visiting the server in your browser will yield something as *beautiful* as this:
 
@@ -205,6 +221,16 @@ To resolve this issue, we recommend first increasing the user limit on open file
     ulimit -n 2048
 
 # Deployment
+
+## Static assets
+
+The great thing about a tool whose focus is narrowly on HTML, CSS, and JavaScript is that's *all you have to worry about* when it comes time to deploy. When you're ready to deploy, just run:
+
+```
+$ lineman build
+```
+
+And this will place a version of your app with minified assets that's ready to be deployed wherever you like. Maybe you'll plan on integrating it with your server-side's existing deployment, or maybe you'll host the files on a static file server.
 
 ## Heroku
 
