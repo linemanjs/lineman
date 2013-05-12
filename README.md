@@ -55,9 +55,9 @@ This will create a new directory named "my-project" and copy in Lineman's [arche
 
 We have a few template projects floating around to help you get up-and-running *even more faster*.
 
-* Using [Backbone.js](https://github.com/searls/lineman-ember-template)
+* Using [Backbone.js](https://github.com/davemo/lineman-backbone-template)
 * Using [Angular.js](https://github.com/davemo/lineman-angular-template)
-* Using [Ember.js](https://github.com/davemo/lineman-backbone-template)
+* Using [Ember.js](https://github.com/searls/lineman-ember-template)
 * Building a [Markdown blog](https://github.com/searls/lineman-blog)
 
 ## Working with Lineman
