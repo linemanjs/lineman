@@ -24,6 +24,7 @@ module.exports = ->
     description(" - runs the development server from /generated and watches files for updates").
     action (context) ->
       process.env["LINEMAN_RUN"] = true
+      cli.options.force = true unless cli.options.stack?
       cli.tasks = ["common", "dev"]
       grunt.cli()
 
