@@ -14,18 +14,19 @@ Now, for the features!
 
 Lineman is a *productivity* tool, in that it provides a development server which:
 
-* Serves up your app on a local development server at [localhost:8000](http://localhost:8000)
+* Serves up your app on a [local development server](https://github.com/testdouble/lineman#development) at [localhost:8000](http://localhost:8000)
 * Compiles your [CoffeeScript](http://coffeescript.org) into JavaScript as soon as you save a file
 * Immediately compiles your [Sass](http://sass-lang.com) and [Less](http://lesscss.org) into CSS
 * Provides tools to stub out your back-end API services with [express](http://expressjs.com)
 * Compiles your JavaScript templates (e.g. Underscore, Handlebars) to a `window.JST` object that maps their file path to the compiled template function
 * Can ease development by [proxying XHRs to your server-side app](https://github.com/testdouble/lineman#proxying-requests-to-another-server)
-* Features a *delightful* spec runner called [Testem](https://github.com/airportyh/testem), which comes pre-configured for Jasmine
+* [Features a *delightful* spec runner](https://github.com/testdouble/lineman#specs) called [Testem](https://github.com/airportyh/testem), which comes pre-configured for Jasmine
 
 Lineman is also a *build* tool, because when you're ready to deploy:
 
 * You can [deploy to Heroku](https://github.com/testdouble/lineman#heroku) just by committing and pushing with git
-* Assemble your app into a portable `dist` directory with minified JavaScript & CSS, which can in turn be deployed wherever static assets are served
+* Assemble your app into a [ready-to-deploy `dist` directory](https://github.com/testdouble/lineman#static-assets)
+* Run your specs headlessly for a [continuous integration build](https://github.com/testdouble/lineman#continuous-integration-specs)
 
 At the end of the day, Lineman is just a handful of conventions and grunt task configurations that can help you get up-and-running more quickly than rolling your own. It's easy to extend and modify as your application grows.
 
@@ -131,7 +132,7 @@ Lineman provides a way to run your specs constantly as you work on your code wit
 $ lineman spec
 ```
 
-[**Note:** `lineman spec` requires `lineman run` to be running in a different process to monitor file changes..
+**Heads up!** `lineman spec` only runs your tests, so be sure to keep `lineman run` running in another process (e.g. an extra terminal tab) to continue to monitor file changes.
 
 The `spec` command will launch the fantastic test framework [Testem](https://github.com/airportyh/testem) supports Safari, Chrome, Firefox, Opera, PhantomJS and (IE9, IE8, IE7 if on Windows). By default we have configured Testem to launch Chrome for tests during development.
 
