@@ -6,13 +6,12 @@ grunt = require("grunt")
 module.exports =
   pkg: grunt.file.readJSON("package.json")
   meta:
-    banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.company %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */"
+    banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n"
 
   appTasks:
     common: ["coffee", "less", "sass", "jshint", "handlebars", "jst", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
     dist: ["uglify:js", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
-
 
   #code
   coffee:
@@ -21,7 +20,6 @@ module.exports =
         "generated/js/app.coffee.js": "<%= files.coffee.app %>"
         "generated/js/spec.coffee.js": "<%= files.coffee.spec %>"
         "generated/js/spec-helpers.coffee.js": "<%= files.coffee.specHelpers %>"
-
 
   #style
   less:
@@ -42,8 +40,6 @@ module.exports =
         "generated/css/vendor.sass.css": "<%= files.sass.vendor %>"
         "generated/css/app.sass.css": "<%= files.sass.app %>"
 
-
-
   #templates
   handlebars:
     compile:
@@ -61,7 +57,6 @@ module.exports =
 
       files:
         "generated/template/underscore.js": "<%= files.template.underscore %>"
-
 
   #quality
   spec:
@@ -81,7 +76,6 @@ module.exports =
       boss: true
       eqnull: true
       browser: true
-
 
   #distribution
   concat:
@@ -103,7 +97,6 @@ module.exports =
         "<%= files.css.app %>"
       ]
       dest: "<%= files.css.concatenated %>"
-
 
   # notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
   #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
@@ -144,7 +137,6 @@ module.exports =
         js: "js/app.min.js"
         css: "css/app.min.css"
 
-
   #optimizing
   uglify:
     js:
@@ -158,7 +150,6 @@ module.exports =
       files:
         "dist/css/app.min.css": "<%= files.css.concatenated %>"
 
-
   #cleaning
   clean:
     js:
@@ -169,7 +160,6 @@ module.exports =
 
     dist:
       src: ["dist", "generated"]
-
 
   #productivity
   server:
