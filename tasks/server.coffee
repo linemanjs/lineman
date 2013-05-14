@@ -25,6 +25,7 @@ module.exports = (grunt) ->
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     userConfig = fileUtils.loadConfigurationFile("server")
+    pushStateEnabled = grunt.config.get("server.pushState")
     app = express()
 
     userConfig.drawRoutes(app) if userConfig.drawRoutes
@@ -33,12 +34,17 @@ module.exports = (grunt) ->
       app.use express.static("#{process.cwd()}/#{webRoot}")
       app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()) if apiProxyEnabled
       app.use express.errorHandler()
+      app.use pushStateSimulator("#{process.cwd()}/#{webRoot}") if pushStateEnabled
 
     grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
     grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}") if apiProxyEnabled
 
     app.listen webPort, ->
       resetRoutesOnServerConfigChange(app)
+
+  pushStateSimulator = (workingPath) ->
+    (req, res, next) ->
+      res.sendfile("#{workingPath}/index.html")
 
   apiProxy = (host, port, proxy) ->
     proxy.on "proxyError", (err, req, res) ->
