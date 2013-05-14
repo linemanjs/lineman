@@ -6,7 +6,7 @@ grunt = require("grunt")
 module.exports =
   pkg: grunt.file.readJSON("package.json")
   meta:
-    banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\\n"
+    banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %>\\n */"
 
   appTasks:
     common: ["coffee", "less", "sass", "jshint", "handlebars", "jst", "concat:js", "concat:spec", "concat:css", "images:dev", "webfonts:dev", "homepage:dev"]
