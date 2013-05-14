@@ -17,7 +17,7 @@ Lineman is a *productivity* tool, in that it provides a development server which
 * Serves up your app on a [local development server](https://github.com/testdouble/lineman#development) at [localhost:8000](http://localhost:8000)
 * Compiles your [CoffeeScript](http://coffeescript.org) into JavaScript as soon as you save a file
 * Immediately compiles your [Sass](http://sass-lang.com) and [Less](http://lesscss.org) into CSS
-* Provides tools to stub out your back-end API services with [express](http://expressjs.com)
+* Provides [tools to stub out your back-end API services](https://github.com/testdouble/lineman#stubbing-server-side-endpoints) with [express](http://expressjs.com)
 * Compiles your JavaScript templates (e.g. Underscore, Handlebars) to a `window.JST` object that maps their file path to the compiled template function
 * Can ease development by [proxying XHRs to your server-side app](https://github.com/testdouble/lineman#proxying-requests-to-another-server)
 * [Features a *delightful* spec runner](https://github.com/testdouble/lineman#specs) called [Testem](https://github.com/airportyh/testem), which comes pre-configured for Jasmine
