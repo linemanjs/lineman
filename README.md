@@ -228,7 +228,7 @@ But you're probably more interested in adding the custom task to run along with 
 
 In the above example, custom "taskA" would be run for *both* `lineman run` and `lineman build`. Meanwhile, "taskB" would only be run during `lineman run` and "taskC" would only run during `lineman build`.
 
-Tasks defined in this way will be appended to the end of the defaults ([check them out in Lineman's default configuration](https://github.com/testdouble/lineman/blob/master/config/application.coffee#L11-L14) for reference). If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly. (At some point, Lineman will probably expose a simpler API for editing the task lists, given how common this need is.)
+Tasks defined in this way will be appended to the end of the defaults ([check them out in Lineman's default configuration](https://github.com/testdouble/lineman/blob/master/config/application.coffee#L11-L14) for reference). If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly; [here's an example of removing a task](https://github.com/searls/lineman-ember-template/blob/master/config/application.coffee#L10-L14) from the Ember.js template. At some point, Lineman will probably expose a simpler API for editing the task lists, given how common this need is.
 
 ### Adding NPM based tasks
 
