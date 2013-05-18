@@ -60,6 +60,7 @@ module.exports = ->
     command("grunt").
     description("Run a grunt command with lineman's version of grunt").
     action ->
+      cli.options.base = process.cwd()
       cli.tasks = grunt.util._(arguments).chain().toArray().initial().without("grunt").value()
       grunt.cli(gruntfile: (__dirname + "/../../Gruntfile.coffee"))
 
