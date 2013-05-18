@@ -205,25 +205,30 @@ Lineman generates a very particular directory structure. It looks like this:
 
 ## Custom Tasks
 
-Lineman allows you to load extra NPM-based and custom grunt tasks. Configuring them is the same as configuring any task, by
-adding the relevant task configuration in `config/application.js`. Tasks you load can be run from the command line via:
+Lineman can easily be extended to do extra grunt-work for your application above-and-beyond the built-in grunt tasks. You may add tasks to your project in two ways:
+
+* If you're writing a task yourself, add it to the `tasks/` directory. Lineman will automatically load any tasks found here.
+* If you want to use a task that's packaged in an external npm module, add it to your `package.json` as a dependency and run `npm install`.
+
+Once they're loaded, you can manually run the task from the command line using `lineman grunt` (which just delegates through to `grunt`):
 
 ```bash
 $ lineman grunt taskname
 ```
 
-or by including them in the default targets that get run for `lineman build` and `lineman run`. You can add any task to these
-commands by adding it to the `appTasks` object in `config/application.js`:
+But you're probably more interested in adding the custom task to run along with the other tasks in `lineman run` and/or `lineman build`. You can add any task to these commands by adding it to the appropriate array under the `appTasks` object in `config/application.js`:
 
 ```javascript
   appTasks: {
-    dev     : ["only_for_dev_task"],
-    dist    : ["only_for_dist_task"],
-    common  : ["shared_task"]
+    common: ["taskA"],
+    dev: ["taskB"],
+    dist: ["taskC"]
   },
 ```
 
-Once that configuration has been done, your tasks will be part of the `run` target, the `build` target, or both, respectively.
+In the above example, custom "taskA" would be run for *both* `lineman run` and `lineman build`. Meanwhile, "taskB" would only be run during `lineman run` and "taskC" would only run during `lineman build`.
+
+Tasks defined in this way will be appended to the end of the defaults ([check them out in Lineman's default configuration](https://github.com/testdouble/lineman/blob/master/config/application.coffee#L11-L14) for reference). If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly. (At some point, Lineman will probably expose a simpler API for editing the task lists, given how common this need is.)
 
 ### Adding NPM based tasks
 
