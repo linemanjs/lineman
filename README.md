@@ -203,6 +203,44 @@ Lineman generates a very particular directory structure. It looks like this:
 
 ```
 
+## Custom Tasks
+
+Lineman allows you to load extra NPM-based and custom grunt tasks. Configuring them is the same as configuring any task, by
+adding the relevant task configuration in `config/application.js`. Tasks you load can be run from the command line via:
+
+```bash
+$ lineman grunt taskname
+```
+
+or by including them in the default targets that get run for `lineman build` and `lineman run`. You can add any task to these
+commands by adding it to the `appTasks` object in `config/application.js`:
+
+```javascript
+  appTasks: {
+    dev     : ["only_for_dev_task"],
+    dist    : ["only_for_dist_task"],
+    common  : ["shared_task"]
+  },
+```
+
+Once that configuration has been done, your tasks will be part of the `run` target, the `build` target, or both, respectively.
+
+### Adding NPM based tasks
+
+To load NPM-based tasks that aren't part of the standard Lineman dependencies, you can add the module names to the `appNpmTasks`
+object in `config/application.js`. Note that these still need to be installed, with `npm install <task> --save` or similar.
+
+```javascript
+  appNpmTasks: [
+    "npm_task_to_load"
+  ],
+```
+
+### Adding Custom tasks
+
+Lineman will automatically require all files in the `tasks` directory and load them into Grunt. If you have custom tasks, you 
+can leave them there and add them to the build as above.
+
 ## Troubleshooting
 
 ### Too Many Open Files
