@@ -216,19 +216,28 @@ Once they're loaded, you can manually run the task from the command line using `
 $ lineman grunt taskname
 ```
 
-But you're probably more interested in adding the custom task to run along with the other tasks in `lineman run` and/or `lineman build`. You can add any task to these commands by adding it to the appropriate array under the `appTasks` object in `config/application.js`:
+But you're probably more interested in adding the custom task to run along with the other tasks in `lineman run` and/or `lineman build`. You can add any task to these commands by adding it to the appropriate array under the `appendTasks` object in `config/application.js`:
 
 ```javascript
-  appTasks: {
-    common: ["taskA"],
-    dev: ["taskB"],
-    dist: ["taskC"]
+  prependTasks: {
+    common: ["A"],
+    dev: ["B"],
+    dist: ["C"]
   },
+  appendTasks: {
+    common: ["D"],
+    dev: ["E"],
+    dist: ["F"]
+  }
 ```
 
-In the above example, custom "taskA" would be run for *both* `lineman run` and `lineman build`. Meanwhile, "taskB" would only be run during `lineman run` and "taskC" would only run during `lineman build`.
+In the above example, tasks "A" & "D" would run during *both* `lineman run` and `lineman build`. Meanwhile, "B" & "E" would run only during `lineman run`, while "C" & "F" would only run during `lineman build`.
 
-Tasks defined in this way will be appended to the end of the defaults ([check them out in Lineman's default configuration](https://github.com/testdouble/lineman/blob/master/config/application.coffee#L11-L14) for reference). If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly; [here's an example of removing a task](https://github.com/searls/lineman-ember-template/blob/master/config/application.coffee#L10-L14) from the Ember.js template. At some point, Lineman will probably expose a simpler API for editing the task lists, given how common this need is.
+Tasks specified under `prependTasks` way will be run before Lineman's built-in tasks for the corresponding phase, while tasks specified under `appendTasks` will run immediately afterward. For reference, [check out](https://github.com/testdouble/lineman/blob/master/config/application.coffee#L11-L14) Lineman's default configuration.
+
+For tasks that must precede Lineman's built-in tasks, you may also you
+
+If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly; [here's an example of removing a task](https://github.com/searls/lineman-ember-template/blob/master/config/application.coffee#L10-L14) from the [Ember.js template](https://github.com/searls/lineman-ember-template).
 
 ### Adding NPM based tasks
 

@@ -4,8 +4,9 @@ Description: runs linemans dist lifecycle tasks
 Dependencies: grunt
 Contributor: @davemo
 ###
+
+gatherTasks = require("./../lib/gather-tasks")
+
 module.exports = (grunt) ->
   grunt.registerTask "dist", "runs linemans dist lifecycle tasks", ->
-    appTasks = require(process.cwd() + "/config/application").appTasks
-    grunt.task.run(appTasks.dist)
-
+    grunt.task.run(gatherTasks("dist"))
