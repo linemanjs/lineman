@@ -15,6 +15,7 @@ module.exports = (grunt) ->
     "grunt-contrib-cssmin"
     "grunt-contrib-uglify"
     "grunt-contrib-watch"
+    "grunt-typescript"
   ]
 
   loadTask = (module) ->

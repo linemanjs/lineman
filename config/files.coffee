@@ -26,6 +26,10 @@ module.exports =
     concatenatedSpec: "generated/js/spec.js"
     minified: "dist/js/app.js"
 
+  typescript:
+    app: "app/js/**/*.ts"
+    generated: "generated/js/app.ts.js"
+
   less:
     app: "app/css/**/*.less"
     vendor: "vendor/css/**/*.less"

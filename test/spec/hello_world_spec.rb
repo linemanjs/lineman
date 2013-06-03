@@ -33,6 +33,21 @@ describe "the hello world project" do
       end
     end
 
+    describe "adding a TypeScript file" do
+      Given(:contents) { "window.edward = function() { return 'scissors' };" }
+      Given { add_file("app/js/bar.ts", contents) }
+      Then { eval_js("edward()").should == "scissors" }
+
+      describe "editing the file" do
+        Given { edit_file("app/js/bar.ts", "edward", "hands") }
+        Then { eval_js("hands()").should == "scissors" }
+      end
+
+      describe "removing the file" do
+        Given { remove_file("app/js/bar.ts") }
+        Then { expect_js("window.edward === undefined") }
+      end
+    end
   end
 
   describe "app.js banner" do

@@ -9,7 +9,7 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
 
   appTasks:
-    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
+    common: ["coffee", "typescript", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
     dev: ["server", "watch"]
     dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "pages:dist"]
   loadNpmTasks: []
@@ -21,6 +21,11 @@ module.exports =
         "<%= files.coffee.generated %>": "<%= files.coffee.app %>"
         "<%= files.coffee.generatedSpec %>": "<%= files.coffee.spec %>"
         "<%= files.coffee.generatedSpecHelpers %>": "<%= files.coffee.specHelpers %>"
+
+  typescript:
+    compile:
+      files:
+        "generated/js/app.ts.js": "<%= files.typescript.app %>"
 
   #style
   less:
