@@ -58,6 +58,8 @@ module.exports =
   #quality
   spec:
     files: ["<%= files.js.concatenated %>", "<%= files.js.concatenatedSpec %>"]
+    options:
+      growl: false
 
   jshint:
     files: ["<%= files.js.app %>"]
