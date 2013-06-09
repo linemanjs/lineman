@@ -11,7 +11,8 @@ module.exports = (grunt) ->
 
   grunt.registerTask "spec", "run specs", (target) ->
     done = @async()
-    args = ["-g", "-f", path.resolve("#{process.cwd()}/config/spec.json")]
+    args = ["-f", path.resolve("#{process.cwd()}/config/spec.json")]
+    if this.options().growl then args.push "-g"
     child = fork(testemRunnerPath(), args)
     child.on "exit", (code, signal) ->
       grunt.warn("Spec execution failed with exit code #{code}")  if code != 0
