@@ -140,6 +140,19 @@ You can override this by modifying the `launch_in_dev` property within `config/s
 
 We have found that running tests in Chrome during development is ideal as it enables the insertion of `debugger;` statements into javascript which allows debugging in the browser.
 
+##### Growl/Growl-ish notification
+
+You can also enable testem [Growl/Growl-ish notification](https://github.com/airportyh/testem#growl-or-growl-ish-notifications) so you don't have to look at terminal while developing.
+To enable this feature, set the `growl` flag on the `options` property of the `spec` task in `config/application.js`, like this:
+
+``` javascript
+  spec: {
+    options: {
+      growl: true
+    }
+  }
+```
+
 ### Continuous Integration Specs
 
 You can also run specs with output generated for your CI environment in [TAP 13](http://en.wikipedia.org/wiki/Test_Anything_Protocol) format:
