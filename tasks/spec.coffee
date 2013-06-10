@@ -10,10 +10,14 @@ module.exports = (grunt) ->
   testemRunnerPath = require("./../lib/testem-utils").testemRunnerPath
 
   grunt.registerTask "spec", "run specs", (target) ->
-    done = @async()
-    args = ["-f", path.resolve("#{process.cwd()}/config/spec.json")]
-    if this.options().growl then args.push "-g"
-    child = fork(testemRunnerPath(), args)
-    child.on "exit", (code, signal) ->
-      grunt.warn("Spec execution failed with exit code #{code}")  if code != 0
-      done()
+    try
+      done = @async()
+      args = ["-f", path.resolve("#{process.cwd()}/config/spec.json")]
+      if this.options().growl then args.push "-g"
+      child = fork(testemRunnerPath(), args)
+      child.on "exit", (code, signal) ->
+        grunt.warn("Spec execution failed with exit code #{code}")  if code != 0
+        done()
+    catch e
+      grunt.fatal(e)
+      throw e
