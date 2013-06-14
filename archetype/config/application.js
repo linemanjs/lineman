@@ -23,4 +23,12 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application
   //   }
   // }
 
+  // Sass
+  //
+  // Lineman supports Sass via grunt-contrib-sass, which requires you first
+  // have Ruby installed as well as the `sass` gem. To enable it, comment out the
+  // following line:
+  //
+  // enableSass: false
+
 });

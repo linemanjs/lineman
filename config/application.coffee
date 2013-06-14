@@ -9,9 +9,10 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
 
   appTasks:
-    common: ["coffee", "less", "sass", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "homepage:dev"]
+    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "homepage:dev"]
     dev: ["server", "watch"]
     dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
+  loadNpmTasks: []
 
   #code
   coffee:
@@ -30,14 +31,14 @@ module.exports =
         "generated/css/vendor.less.css": "<%= files.less.vendor %>"
         "generated/css/app.less.css": "<%= files.less.app %>"
 
+  enableSass: false
   sass:
     compile:
       options:
-        includePaths: ["app/css", "vendor/css"]
+        loadPath: ["app/css", "vendor/css"]
 
       files:
-        "generated/css/vendor.sass.css": "<%= files.sass.vendor %>"
-        "generated/css/app.sass.css": "<%= files.sass.app %>"
+        "generated/css/app.sass.css": "<%= files.sass.main %>"
 
   #templates
   handlebars:

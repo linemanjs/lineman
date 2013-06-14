@@ -33,6 +33,7 @@ module.exports =
     generatedApp: "generated/css/app.less.css"
 
   sass:
+    main: ["app/css/main.scss","app/css/main.sass"]
     vendor: ["vendor/css/**/*.scss", "vendor/css/**/*.sass"]
     app: ["app/css/**/*.scss", "app/css/**/*.sass"]
     generatedVendor: "generated/css/vendor.sass.css"

@@ -1,7 +1,7 @@
 fs = require('fs')
 
 module.exports = (grunt) ->
-  loadNpmTasks = require("#{process.cwd()}/config/application").loadNpmTasks || []
+  config = require("#{process.cwd()}/config/application")
   linemanNpmTasks = [
     "grunt-contrib-clean",
     "grunt-contrib-coffee",
@@ -10,7 +10,6 @@ module.exports = (grunt) ->
     "grunt-contrib-jshint",
     "grunt-contrib-jst",
     "grunt-contrib-less",
-    "grunt-sass",
     "grunt-contrib-cssmin",
     "grunt-contrib-uglify",
     "grunt-watch-nospawn"
@@ -18,7 +17,8 @@ module.exports = (grunt) ->
 
   grunt.util._(linemanNpmTasks).
     chain().
-    union(loadNpmTasks).
+    union(if config.enableSass then "grunt-contrib-sass" else []).
+    union(config.loadNpmTasks || []).
     each (module) ->
       if fs.existsSync("#{process.cwd()}/node_modules/#{module}")
         grunt.loadNpmTasks(module)

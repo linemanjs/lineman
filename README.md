@@ -263,6 +263,18 @@ To load NPM-based tasks that aren't part of the standard Lineman dependencies, y
 Lineman will automatically require all files in the `tasks` directory and load them into Grunt. If you have custom tasks, you
 can leave them there and add them to the build as above.
 
+### Using Sass
+
+Lineman supports [Sass](http://sass-lang.com/) via [grunt-contrib-sass](https://github.com/gruntjs/grunt-contrib-sass). Because the `sass` task requires Ruby & the "sass" gem to be installed in order to function, it is disabled by default.
+
+First, to enable sass, in your `config/application.js` file, specify:
+
+``` javascript
+enableSass: true
+```
+
+Once Sass is enabled, it will look for a "main.scss" or "main.sass" file in `app/css`. Rather than concatenating all the source files you include in your project, Sass files will only be included as you `@import` them from your main file. For more information on overriding the options in grunt-contrib-sass, please check out its [README](https://github.com/gruntjs/grunt-contrib-sass).
+
 ## Troubleshooting
 
 ### Too Many Open Files
