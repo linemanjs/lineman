@@ -250,6 +250,16 @@ Tasks specified under `prependTasks` way will be run before Lineman's built-in t
 
 If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly; [here's an example of removing a task](https://github.com/searls/lineman-ember-template/blob/master/config/application.coffee#L10-L14) from the [Ember.js template](https://github.com/searls/lineman-ember-template).
 
+#### Removing tasks
+
+But that's not all! If you need to remove a task that's built into Lineman, you can use the "removeTasks" configuration. For example, if you wanted to disable Lineman's CoffeeScript task, you could do this:
+
+```javascript
+  removeTasks: {
+    common: ["coffee"]
+  }
+```
+
 ### Adding NPM based tasks
 
 To load NPM-based tasks that aren't part of the standard Lineman dependencies, you can add the module names to the `loadNpmTasks` object in `config/application.js`. Note that these still need to be added to your app's `package.json` dependencies and installed to `node_modules` with `npm install`.
