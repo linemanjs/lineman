@@ -7,4 +7,4 @@ module.exports = (phase) ->
     (if config.enableSass && phase == "common" then ["sass"] else [])
     config.appTasks?[phase]
     config.appendTasks?[phase]
-  )).compact()
+  )).chain().difference(config.removeTasks?[phase]).compact().value()
