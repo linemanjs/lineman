@@ -1,7 +1,9 @@
 files = require("./../file-utils")
 fs = require('fs')
+_ = require('grunt').util._
 
 module.exports = (projectName, shouldNpmInstall) ->
+  ensureNotEmpty(projectName)
   dest = "#{process.cwd()}/#{projectName}"
   ensureNew(dest)
   printHello(dest)
@@ -11,10 +13,11 @@ module.exports = (projectName, shouldNpmInstall) ->
   else
     printWelcome(projectName)
 
+ensureNotEmpty = (projectName) ->
+  fail("Usage: `lineman new <name>`") if _(projectName).isEmpty() || !_(projectName).isString()
+
 ensureNew = (dest) ->
-  return unless fs.existsSync(dest)
-  console.error("Uh oh, it looks like `#{dest}` already exists! Exiting.")
-  process.exit(1)
+  fail("Uh oh, it looks like `#{dest}` already exists! Exiting.") if fs.existsSync(dest)
 
 printHello = (dest) ->
   console.log """
@@ -53,3 +56,7 @@ printWelcome = (projectName) ->
 
                For more info, check out http://github.com/testdouble/lineman
                """
+
+fail = (message) ->
+  console.error(message)
+  process.exit(1)
