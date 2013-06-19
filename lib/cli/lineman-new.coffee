@@ -2,12 +2,13 @@ files = require("./../file-utils")
 fs = require('fs')
 _ = require('grunt').util._
 
-module.exports = (projectName, shouldNpmInstall) ->
+module.exports = (projectName, shouldNpmInstall, shouldSkipExamples) ->
   ensureNotEmpty(projectName)
   dest = "#{process.cwd()}/#{projectName}"
   ensureNew(dest)
   printHello(dest)
   copyArchetype(dest, projectName)
+  deleteExampleFiles(dest) if shouldSkipExamples
   if shouldNpmInstall
     npmInstallTo(dest, projectName)
   else
@@ -35,6 +36,16 @@ copyArchetype = (dest, projectName) ->
   files.copyDir("#{__dirname}/../../archetype/", dest)
   files.overwritePackageJson("#{dest}/package.json", projectName)
   files.copy("#{dest}/.npmignore", "#{dest}/.gitignore")
+
+deleteExampleFiles = (dest) ->
+  _([
+    "app/css/style.less",
+    "app/js/hello.coffee",
+    "app/templates/hello.us",
+    "spec/hello-spec.coffee",
+    "vendor/js/underscore.js"
+  ]).each (path) ->
+    fs.unlink("#{dest}/#{path}")
 
 npmInstallTo = (dest, projectName) ->
   console.log(" - Performing `npm install`. Lineman will install into (and run out of) this project's `node_modules/lineman` directory.")

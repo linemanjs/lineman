@@ -17,7 +17,7 @@ module.exports = ->
     command("new").
     description(" - generates a new lineman project in the specified folder : lineman new my-project").
     action (projectName) ->
-      require('./lineman-new')(projectName, commander.install)
+      require('./lineman-new')(projectName, commander.install, commander.skipExamples)
 
   commander.
     command("run").
