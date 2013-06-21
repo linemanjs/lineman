@@ -123,6 +123,24 @@ To enable proxying, set the `enabled` flag on the `apiProxy` configuration of th
 
 With this feature, you'll be able to develop your client-side and server-side code in concert, while still keeping the codebases cleanly separated.
 
+#### HTML5 pushState Simulation
+
+Lineman provides a way to direct requests to either the `apiProxy` or serve up `generated/index.html` in order to simulate what using HTML5 pushState will behave like when running in dev mode. This requires both `apiProxy.prefix` and `server.pushState` configuration property to be set, so that the `apiProxy` correctly knows how route requests to the api you have configured. To enable `pushState` in your application set the `pushState` flag on the `server` task in `config/application.js` _and_ the `prefix` on the `apiProxy` configuration of the `server` task, like this:
+
+``` javascript
+  server: {
+    // enables HTML5 pushState; Lineman will correctly serve `generated/index.html` for any request that does not match the apiProxy.prefix
+    pushState: true,
+    apiProxy: {
+      enabled: true,
+      port: 3000,
+      prefix: 'api' // any requests that contain 'api' will now be the only ones forwarded to the apiProxy
+    }
+  }
+```
+
+[**Note:** enabling `server.pushState` merely configures the `apiProxy` to be smart about routing, you will still need to configure pushState support in whichever client-side routing library you are using.]
+
 ### Specs
 
 Lineman provides a way to run your specs constantly as you work on your code with the `lineman spec` command:
