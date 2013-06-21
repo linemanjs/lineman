@@ -10,6 +10,7 @@ Configuration:
 "apiProxy.port" - the port of the server running an API we want to proxy (does not proxy be default, can be overridden with ENV variable API_PORT)
 "apiProxy.enabled" - set to true to enable API proxying; if Lineman can't respond to a request, it will forward it to the API proxy
 "apiProxy.host" - the host to which API requests should be proxy, defaults to `localhost`)"
+"apiProxy.prefix" - an api prefix, to be used in conjunction with server.pushState to correctly identify requests that should go to the apiProxy"
 ###
 module.exports = (grunt) ->
   _ = grunt.util._
@@ -21,33 +22,64 @@ module.exports = (grunt) ->
   grunt.registerTask "server", "static file & api proxy development server", ->
     apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000
     apiProxyEnabled = grunt.config.get("server.apiProxy.enabled")
+    apiProxyPrefix  = grunt.config.get("server.apiProxy.prefix") || undefined
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     userConfig = fileUtils.loadConfigurationFile("server")
+    pushStateEnabled = grunt.config.get("server.pushState")
+    @requiresConfig("server.apiProxy.prefix") if pushStateEnabled
     app = express()
 
     userConfig.drawRoutes(app) if userConfig.drawRoutes
 
     app.configure ->
       app.use express.static("#{process.cwd()}/#{webRoot}")
-      app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()) if apiProxyEnabled
+
+      if apiProxyEnabled and pushStateEnabled
+        app.use prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy())
+        grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
+      else
+        if apiProxyEnabled
+          app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy())
+          grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+
       app.use express.errorHandler()
+      app.use pushStateSimulator(process.cwd(),webRoot) if pushStateEnabled
 
     grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
-    grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}") if apiProxyEnabled
+    grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
 
     app.listen webPort, ->
       resetRoutesOnServerConfigChange(app)
 
-  apiProxy = (host, port, proxy) ->
-    proxy.on "proxyError", (err, req, res) ->
-      res.statusCode = 500
-      res.write("API Proxying to `#{req.url}` failed with: `#{err.toString()}`")
-      res.end()
+  pushStateSimulator = (cwd, webRoot) ->
+    (req, res, next) ->
+      grunt.log.writeln("\nPushState: '#{req.path}' not found in #{cwd}/#{webRoot} - Serving up '#{webRoot}/index.html'")
+      res.sendfile("#{webRoot}/index.html")
+
+  handleProxyError = (err, req, res) ->
+    res.statusCode = 500
+    res.write("API Proxying to `#{req.url}` failed with: `#{err.toString()}`")
+    res.end()
+
+  prefixMatchingApiProxy = (prefix, host, port, proxy) ->
+    prefixMatcher = new RegExp(prefix)
+
+    proxy.on "proxyError", handleProxyError
 
     return (req, res, next) ->
-      proxy.proxyRequest(req, res, {host: host, port: port})
+      if prefix and prefixMatcher.exec(req.path)
+        proxy.proxyRequest(req, res, {host, port})
+      else
+        next()
+
+  apiProxy = (host, port, proxy) ->
+    proxy.on "proxyError", handleProxyError
+
+    return (req, res, next) ->
+      proxy.proxyRequest(req, res, {host, port})
+
 
   resetRoutesOnServerConfigChange = (app) ->
     watchr grunt.file.expand('config/server.*'), (err, watcher) ->
