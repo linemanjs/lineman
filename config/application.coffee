@@ -220,3 +220,7 @@ module.exports =
     lint:
       files: "<%= files.js.app %>"
       tasks: ["jshint"]
+
+    webfonts:
+      files: "<%= files.webfonts.vendor %>"
+      tasks: ["webfonts:dev"]
