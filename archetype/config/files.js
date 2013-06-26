@@ -8,7 +8,8 @@
  *  regardless of the point you're at in the build
  *  lifecycle.
  *
- * You can find the parent object in: node_modules/lineman/config/files.coffee
+ * To see the default definitions for all of Lineman's file paths and globs, look at:
+ * https://github.com/testdouble/lineman/blob/master/config/files.coffee
  */
 
 module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
