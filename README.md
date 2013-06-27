@@ -208,8 +208,9 @@ Lineman generates a very particular directory structure. It looks like this:
 ├── app
 │   ├── js                  # <-- JS & CoffeeScript
 │   ├── img                 # <-- images (are merged into the 'img' folder inside of generated & dist)
+│   └── pages               # <-- static HTML pages (underscore and handlebars templates are supported)
+│       └── index.us        # <-- a template used to produce the application's index.html
 │   └── templates           # <-- client-side templates
-│       ├── homepage.us     # <-- a template used to produce the application's index.html
 │       ├── other.us        # <-- other templates will be compiled to a window.JST object
 │       └── thing.hb        # <-- underscore & handlebars are both already set up
 │       └── _partial.hb     # <-- a handlebars partial, usable from within other handlebars templates

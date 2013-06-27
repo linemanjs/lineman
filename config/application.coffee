@@ -9,9 +9,9 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
 
   appTasks:
-    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "homepage:dev"]
+    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "homepage:dist"]
+    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "pages:dist"]
   loadNpmTasks: []
 
   #code
@@ -123,16 +123,16 @@ module.exports =
     dist:
       dest: "dist"
 
-  homepage:
-    template: "<%= files.template.homepage %>"
+  pages:
     dev:
-      dest: "generated/index.html"
+      src: "<%= files.pages.source %>"
+      dest: "generated"
       context:
         js: "js/app.js"
         css: "css/app.css"
-
     dist:
-      dest: "dist/index.html"
+      src: "<%= files.pages.source %>"
+      dest: "dist"
       context:
         js: "js/app.min.js"
         css: "css/app.min.css"
@@ -213,9 +213,9 @@ module.exports =
       files: ["<%= files.img.app %>", "<%= files.img.vendor %>"]
       tasks: ["images:dev"]
 
-    homepage:
-      files: "<%= files.template.homepage %>"
-      tasks: ["homepage:dev"]
+    pages:
+      files: "<%= files.pages.source %>"
+      tasks: ["pages:dev"]
 
     lint:
       files: "<%= files.js.app %>"
