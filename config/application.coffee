@@ -125,14 +125,16 @@ module.exports =
 
   pages:
     dev:
-      src: "<%= files.pages.source %>"
-      dest: "generated"
+      files:
+        "generated": "<%= files.pages.source %>",
+        "generated/index.html": "app/templates/homepage.*" # backward compatibility
       context:
         js: "js/app.js"
         css: "css/app.css"
     dist:
-      src: "<%= files.pages.source %>"
-      dest: "dist"
+      files:
+        "dist": "<%= files.pages.source %>",
+        "dist/index.html": "app/templates/homepage.*" # backward compatibility
       context:
         js: "js/app.min.js"
         css: "css/app.min.css"

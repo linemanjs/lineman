@@ -20,8 +20,12 @@ module.exports = (grunt) ->
     for filePair in @files
       for src in filePair.src
         format = (extensionOf(src) || "html").toLowerCase()
-        dest = [ filePair.dest.replace(/\/$/,''),
-                 src.replace(/.*\//, '').replace(/\..+$/, '.html') ].join '/'
+        dest = if filePair.dest.match(/\.html$/)
+          filePair.dest
+        else
+          [ filePair.dest.replace(/\/$/,''),
+            src.replace(/.*\//, '').replace(/\..+$/, '.html') ].join '/'
+
         if format == "html"
           grunt.file.copy(src, dest)
         else
