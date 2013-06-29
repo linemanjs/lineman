@@ -203,6 +203,10 @@ module.exports =
       files: ["<%= files.sass.vendor %>", "<%= files.sass.app %>"]
       tasks: ["sass", "concat:css"]
 
+    pages:
+      files: ["<%= files.pages.source %>", "app/templates/homepage.us"]
+      tasks: ["pages:dev"]
+
     handlebars:
       files: "<%= files.template.handlebars %>"
       tasks: ["handlebars", "concat:js"]
@@ -214,10 +218,6 @@ module.exports =
     images:
       files: ["<%= files.img.app %>", "<%= files.img.vendor %>"]
       tasks: ["images:dev"]
-
-    pages:
-      files: "<%= files.pages.source %>"
-      tasks: ["pages:dev"]
 
     lint:
       files: "<%= files.js.app %>"
