@@ -2,7 +2,7 @@
 Task: pages
 Description: generates static HTML files
 Dependencies: grunt, fs
-Contributor: @searls
+Contributor: @searls, @adamlogic
 
 Supported formats:
 html - template will merely be copied
