@@ -24,7 +24,7 @@ module.exports =
     specHelpers: "spec/helpers/**/*.js"
     concatenated: "generated/js/app.js"
     concatenatedSpec: "generated/js/spec.js"
-    minified: "dist/js/app.min.js"
+    minified: "dist/js/app.js"
 
   less:
     vendor: "vendor/css/**/*.less"
