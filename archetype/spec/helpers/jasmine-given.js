@@ -1,6 +1,6 @@
 
 /*
-jasmine-given 2.0.0
+jasmine-given 2.1.0
 Adds a Given-When-Then DSL to jasmine as an alternative style for specs
 site: https://github.com/searls/jasmine-given
 */
@@ -9,7 +9,7 @@ site: https://github.com/searls/jasmine-given
 (function() {
 
   (function(jasmine) {
-    var getBlock, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, whenList;
+    var getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, whenList;
     mostRecentlyUsed = null;
     stringifyExpectation = function(expectation) {
       var matches;
@@ -62,6 +62,18 @@ site: https://github.com/searls/jasmine-given
         return whenList.pop();
       });
     };
+    invariantList = [];
+    root.Invariant = function() {
+      var b;
+      mostRecentlyUsed = root.Invariant;
+      b = getBlock(arguments);
+      beforeEach(function() {
+        return invariantList.push(b);
+      });
+      return afterEach(function() {
+        return invariantList.pop();
+      });
+    };
     getBlock = function(thing) {
       var assignResultTo, setupFunction;
       setupFunction = o(thing).firstThat(function(arg) {
@@ -102,6 +114,7 @@ site: https://github.com/searls/jasmine-given
           block();
         }
         i = 0;
+        expectations = invariantList.concat(expectations);
         _results = [];
         while (i < expectations.length) {
           expect(expectations[i]).not.toHaveReturnedFalseFromThen(jasmine.getEnv().currentSpec, i + 1);
