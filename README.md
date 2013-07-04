@@ -59,6 +59,7 @@ We have a few template projects floating around to help you get up-and-running *
 * Using [Backbone.js](https://github.com/davemo/lineman-backbone-template)
 * Using [Angular.js](https://github.com/davemo/lineman-angular-template)
 * Using [Ember.js](https://github.com/searls/lineman-ember-template)
+* Creating a [JavaScript library](https://github.com/testdouble/lineman-lib-template)
 * Building a [Markdown blog](https://github.com/testdouble/lineman-blog)
 
 ## Working with Lineman
