@@ -7,5 +7,6 @@ module.exports = {
     grunt: require(__dirname+"/config/grunt"),
     extend: require(__dirname+"/lib/extend")
   },
+  grunt: require('grunt'),
   version: require(__dirname+"/package").version
 };
