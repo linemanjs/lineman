@@ -20,7 +20,8 @@ module.exports = (grunt) ->
         output += chunk
 
       child.on "exit", (code, signal) ->
-        if code != 0 || testsFailed(output)
+        debugger
+        if code != 0
           grunt.warn("Spec execution appears to have failed.")
           done(false)
         else
@@ -28,8 +29,3 @@ module.exports = (grunt) ->
     catch e
       grunt.fatal(e)
       throw e
-
-testsFailed = (output) ->
-  lines = output.split("\n")
-  summaryLine = lines[lines.length - 2]
-  summaryLine != "# ok"
