@@ -128,10 +128,12 @@ module.exports =
       files:
         "generated": "<%= files.pages.source %>",
         "generated/index.html": "app/templates/homepage.*" # backward compatibility
+      context: {}
     dist:
       files:
         "dist": "<%= files.pages.source %>",
         "dist/index.html": "app/templates/homepage.*" # backward compatibility
+      context: {}
 
   #optimizing
   uglify:
