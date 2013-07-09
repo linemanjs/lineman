@@ -8,6 +8,6 @@ group :test do
 end
 
 group :development do
-  gem 'debugger', '~>1.6.1'
+  gem 'debugger'
 end
 
