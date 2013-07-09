@@ -3,9 +3,9 @@
   <head>
     <title><%= pkg.name %></title>
 
-    <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/app.css" media="all" />
   </head>
   <body>
-    <script type="text/javascript" src="<%= js %>"></script>
+    <script type="text/javascript" src="js/app.js"></script>
   </body>
 </html>
