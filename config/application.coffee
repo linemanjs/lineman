@@ -18,9 +18,9 @@ module.exports =
   coffee:
     compile:
       files:
-        "generated/js/app.coffee.js": "<%= files.coffee.app %>"
-        "generated/js/spec.coffee.js": "<%= files.coffee.spec %>"
-        "generated/js/spec-helpers.coffee.js": "<%= files.coffee.specHelpers %>"
+        "<%= files.coffee.generated %>": "<%= files.coffee.app %>"
+        "<%= files.coffee.generatedSpec %>": "<%= files.coffee.spec %>"
+        "<%= files.coffee.generatedSpecHelpers %>": "<%= files.coffee.specHelpers %>"
 
   #style
   less:
@@ -28,17 +28,16 @@ module.exports =
       paths: ["app/css", "vendor/css"]
     compile:
       files:
-        "generated/css/vendor.less.css": "<%= files.less.vendor %>"
-        "generated/css/app.less.css": "<%= files.less.app %>"
+        "<%= files.less.generatedVendor %>": "<%= files.less.vendor %>"
+        "<%= files.less.generatedApp %>": "<%= files.less.app %>"
 
   enableSass: false
   sass:
     compile:
       options:
         loadPath: ["app/css", "vendor/css"]
-
       files:
-        "generated/css/app.sass.css": "<%= files.sass.main %>"
+        "<%= files.sass.generatedApp %>": "<%= files.sass.main %>"
 
   #templates
   handlebars:

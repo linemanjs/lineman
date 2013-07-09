@@ -14,12 +14,12 @@ module.exports =
     spec: "spec/**/*.coffee"
     specHelpers: "spec/helpers/**/*.coffee"
     generated: "generated/js/app.coffee.js"
-    generatedSpecHelpers: "generated/js/spec-helpers.coffee.js"
     generatedSpec: "generated/js/spec.coffee.js"
+    generatedSpecHelpers: "generated/js/spec-helpers.coffee.js"
 
   js:
-    vendor: "vendor/js/**/*.js"
     app: "app/js/**/*.js"
+    vendor: "vendor/js/**/*.js"
     spec: "spec/**/*.js"
     specHelpers: "spec/helpers/**/*.js"
     concatenated: "generated/js/app.js"
@@ -27,10 +27,10 @@ module.exports =
     minified: "dist/js/app.js"
 
   less:
-    vendor: "vendor/css/**/*.less"
     app: "app/css/**/*.less"
-    generatedVendor: "generated/css/vendor.less.css"
+    vendor: "vendor/css/**/*.less"
     generatedApp: "generated/css/app.less.css"
+    generatedVendor: "generated/css/vendor.less.css"
 
   sass:
     main: ["app/css/main.scss","app/css/main.sass"]
