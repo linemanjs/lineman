@@ -9,70 +9,68 @@
 # *  lifecycle.
 #
 module.exports =
-  dirs:
-    app: "app"
-    spec: "spec"
-    vendor: "vendor"
-    style: "css"
-    script: "js"
-    markup: "templates"
-    images: "img"
-    fonts: "webfonts"
-    static: "pages"
-    gen: "generated"
-    dist: "dist"
+
+  appDir: "app"
+  specDir: "spec"
+  vendorDir: "vendor"
+  cssDir: "css"
+  jsDir: "js"
+  tmplDir: "templates"
+  imgDir: "img"
+  fontDir: "webfonts"
+  staticDir: "pages"
 
   coffee:
-    app: "<%= files.dirs.app %>/<%= files.dirs.script %>/**/*.coffee"
-    spec: "<%= files.dirs.spec %>/**/*.coffee"
-    specHelpers: "<%= files.dirs.spec %>/helpers/**/*.coffee"
-    generated: "<%= files.dirs.gen %>/<%= files.dirs.script %>/app.coffee.js"
-    generatedSpec: "<%= files.dirs.gen %>/<%= files.dirs.script %>/spec.coffee.js"
-    generatedSpecHelpers: "<%= files.dirs.gen %>/<%= files.dirs.script %>/spec-helpers.coffee.js"
+    app: "<%= files.appDir %>/<%= files.jsDir %>/**/*.coffee"
+    spec: "<%= files.specDir %>/**/*.coffee"
+    specHelpers: "<%= files.specDir %>/helpers/**/*.coffee"
+    generated: "generated/<%= files.jsDir %>/app.coffee.js"
+    generatedSpec: "generated/<%= files.jsDir %>/spec.coffee.js"
+    generatedSpecHelpers: "generated/<%= files.jsDir %>/spec-helpers.coffee.js"
 
   js:
-    app: "<%= files.dirs.app %>/<%= files.dirs.script %>/**/*.js"
-    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.script %>/**/*.js"
-    spec: "<%= files.dirs.spec %>/**/*.js"
-    specHelpers: "<%= files.dirs.spec %>/helpers/**/*.js"
-    concatenated: "<%= files.dirs.gen %>/<%= files.dirs.script %>/app.js"
-    concatenatedSpec: "<%= files.dirs.gen %>/<%= files.dirs.script %>/spec.js"
-    minified: "<%= files.dirs.dist %>/<%= files.dirs.script %>/app.js"
+    app: "<%= files.appDir %>/<%= files.jsDir %>/**/*.js"
+    vendor: "<%= files.vendorDir %>/<%= files.jsDir %>/**/*.js"
+    spec: "<%= files.specDir %>/**/*.js"
+    specHelpers: "<%= files.specDir %>/helpers/**/*.js"
+    concatenated: "generated/<%= files.jsDir %>/app.js"
+    concatenatedSpec: "generated/<%= files.jsDir %>/spec.js"
+    minified: "dist/<%= files.jsDir %>/app.js"
 
   less:
-    app: "<%= files.dirs.app %>/<%= files.dirs.style %>/**/*.less"
-    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.style %>/**/*.less"
-    generatedApp: "<%= files.dirs.gen %>/<%= files.dirs.style %>/app.less.css"
-    generatedVendor: "<%= files.dirs.gen %>/<%= files.dirs.style %>/vendor.less.css"
+    app: "<%= files.appDir %>/<%= files.cssDir %>/**/*.less"
+    vendor: "<%= files.vendorDir %>/<%= files.cssDir %>/**/*.less"
+    generatedApp: "generated/<%= files.cssDir %>/app.less.css"
+    generatedVendor: "generated/<%= files.cssDir %>/vendor.less.css"
 
   sass:
-    main: ["<%= files.dirs.app %>/<%= files.dirs.style %>/main.scss","<%= files.dirs.app %>/<%= files.dirs.style %>/main.sass"]
-    app: ["<%= files.dirs.app %>/<%= files.dirs.style %>/**/*.scss", "<%= files.dirs.app %>/<%= files.dirs.style %>/**/*.sass"]
-    vendor: ["<%= files.dirs.vendor %>/<%= files.dirs.style %>/**/*.scss", "<%= files.dirs.vendor %>/<%= files.dirs.style %>/**/*.sass"]
-    generatedApp: "<%= files.dirs.gen %>/<%= files.dirs.style %>/app.sass.css"
-    generatedVendor: "<%= files.dirs.gen %>/<%= files.dirs.style %>/vendor.sass.css"
+    main: ["<%= files.appDir %>/<%= files.cssDir %>/main.scss","<%= files.appDir %>/<%= files.cssDir %>/main.sass"]
+    app: ["<%= files.appDir %>/<%= files.cssDir %>/**/*.scss", "<%= files.appDir %>/<%= files.cssDir %>/**/*.sass"]
+    vendor: ["<%= files.vendorDir %>/<%= files.cssDir %>/**/*.scss", "<%= files.vendorDir %>/<%= files.cssDir %>/**/*.sass"]
+    generatedApp: "generated/<%= files.cssDir %>/app.sass.css"
+    generatedVendor: "generated/<%= files.cssDir %>/vendor.sass.css"
 
   css:
-    app: "<%= files.dirs.app %>/<%= files.dirs.style %>/**/*.css"
-    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.style %>/**/*.css"
-    concatenated: "<%= files.dirs.gen %>/<%= files.dirs.style %>/app.css"
-    minified: "<%= files.dirs.dist %>/<%= files.dirs.style %>/app.css"
+    app: "<%= files.appDir %>/<%= files.cssDir %>/**/*.css"
+    vendor: "<%= files.vendorDir %>/<%= files.cssDir %>/**/*.css"
+    concatenated: "generated/<%= files.cssDir %>/app.css"
+    minified: "dist/<%= files.cssDir %>/app.css"
 
   template:
-    handlebars: ["<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.handlebar", "<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.handlebars", "<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.hb"]
-    underscore: ["<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.underscore", "<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.us"]
-    generatedHandlebars: "<%= files.dirs.gen %>/<%= files.dirs.markup %>/handlebars.js"
-    generatedUnderscore: "<%= files.dirs.gen %>/<%= files.dirs.markup %>/underscore.js"
-    generated: "<%= files.dirs.gen %>/<%= files.dirs.markup %>/**/*.js"
+    handlebars: ["<%= files.appDir %>/<%= files.tmplDir %>/**/*.handlebar", "<%= files.appDir %>/<%= files.tmplDir %>/**/*.handlebars", "<%= files.appDir %>/<%= files.tmplDir %>/**/*.hb"]
+    underscore: ["<%= files.appDir %>/<%= files.tmplDir %>/**/*.underscore", "<%= files.appDir %>/<%= files.tmplDir %>/**/*.us"]
+    generatedHandlebars: "generated/<%= files.tmplDir %>/handlebars.js"
+    generatedUnderscore: "generated/<%= files.tmplDir %>/underscore.js"
+    generated: "generated/<%= files.tmplDir %>/**/*.js"
 
   pages:
-    source: "<%= files.dirs.app %>/<%= files.dirs.static %>/**/*.*"
+    source: "<%= files.appDir %>/<%= files.staticDir %>/**/*.*"
 
   img:
-    app: "<%= files.dirs.app %>/<%= files.dirs.images %>/**/*.*"
-    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.images %>/**/*.*"
+    app: "<%= files.appDir %>/<%= files.imgDir %>/**/*.*"
+    vendor: "<%= files.vendorDir %>/<%= files.imgDir %>/**/*.*"
     root: "img"
 
   webfonts:
-    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.fonts %>/**/*.*"
+    vendor: "<%= files.vendorDir %>/<%= files.fontDir %>/**/*.*"
     root: "webfonts"

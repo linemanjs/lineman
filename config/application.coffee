@@ -26,7 +26,7 @@ module.exports =
   #style
   less:
     options:
-      paths: ["<%= files.dirs.app %>/<%= files.dirs.style %>", "<%= files.dirs.vendor %>/<%= files.dirs.style %>"]
+      paths: ["<%= files.appDir %>/<%= files.cssDir %>", "<%= files.vendorDir %>/<%= files.cssDir %>"]
     compile:
       files: [
         { src: "<%= files.less.app %>", dest: "<%= files.less.generatedApp %>" }
@@ -37,7 +37,7 @@ module.exports =
   sass:
     compile:
       options:
-        loadPath: ["<%= files.dirs.app %>/<%= files.dirs.style %>", "<%= files.dirs.vendor %>/<%= files.dirs.style %>"]
+        loadPath: ["<%= files.appDir %>/<%= files.cssDir %>", "<%= files.vendorDir %>/<%= files.cssDir %>"]
       files: [
         { src: "<%= files.sass.main %>", dest: "<%= files.sass.generatedApp %>" }
       ]
@@ -106,40 +106,40 @@ module.exports =
   #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images:
     files: [
-      { src: "<%= files.img.app %>", dest: "<%= files.dirs.app %>/<%= files.dirs.images %>/" }
-      { src: "<%= files.img.vendor %>", dest: "<%= files.dirs.vendor %>/<%= files.dirs.images %>/" }
+      { src: "<%= files.img.app %>", dest: "<%= files.appDir %>/<%= files.imgDir %>/" }
+      { src: "<%= files.img.vendor %>", dest: "<%= files.vendorDir %>/<%= files.imgDir %>/" }
     ]
 
     root: "<%= files.img.root %>"
     dev:
-      dest: "<%= files.dirs.gen %>"
+      dest: "generated"
 
     dist:
-      dest: "<%= files.dirs.dist %>"
+      dest: "dist"
 
   webfonts:
     files: [
-      { src: "<%= files.webfonts.vendor %>", dest: "<%= files.dirs.vendor %>/<%= files.dirs.fonts %>/" }
+      { src: "<%= files.webfonts.vendor %>", dest: "<%= files.vendorDir %>/<%= files.fontDir %>/" }
     ]
 
     root: "<%= files.webfonts.root %>"
     dev:
-      dest: "<%= files.dirs.gen %>"
+      dest: "generated"
 
     dist:
-      dest: "<%= files.dirs.dist %>"
+      dest: "dist"
 
   pages:
     dev:
       files: [
-        { src: "<%= files.pages.source %>", dest: "<%= files.dirs.gen %>" }
-        { src: "<%= files.dirs.app %>/<%= files.dirs.markup %>/homepage.*", dest: "<%= files.dirs.gen %>/index.html" } # backward compatibility
+        { src: "<%= files.pages.source %>", dest: "generated" }
+        { src: "<%= files.appDir %>/<%= files.tmplDir %>/homepage.*", dest: "generated/index.html" } # backward compatibility
       ]
       context: {}
     dist:
       files: [
-        { src: "<%= files.pages.source %>", dest: "<%= files.dirs.dist %>" }
-        { src: "<%= files.dirs.app %>/<%= files.dirs.markup %>/homepage.*", dest: "<%= files.dirs.dist %>/index.html" } # backward compatibility
+        { src: "<%= files.pages.source %>", dest: "dist" }
+        { src: "<%= files.appDir %>/<%= files.tmplDir %>/homepage.*", dest: "dist/index.html" } # backward compatibility
       ]
       context: {}
 
@@ -167,11 +167,11 @@ module.exports =
       src: "<%= files.css.concatenated %>"
 
     dist:
-      src: ["<%= files.dirs.dist %>", "<%= files.dirs.gen %>"]
+      src: ["dist", "generated"]
 
   #productivity
   server:
-    base: "<%= files.dirs.gen %>"
+    base: "generated"
     web:
       port: 8000
 
