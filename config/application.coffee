@@ -128,16 +128,12 @@ module.exports =
       files:
         "generated": "<%= files.pages.source %>",
         "generated/index.html": "app/templates/homepage.*" # backward compatibility
-      context:
-        js: "js/app.js"
-        css: "css/app.css"
+      context: {}
     dist:
       files:
         "dist": "<%= files.pages.source %>",
         "dist/index.html": "app/templates/homepage.*" # backward compatibility
-      context:
-        js: "js/app.min.js"
-        css: "css/app.min.css"
+      context: {}
 
   #optimizing
   uglify:
@@ -145,12 +141,12 @@ module.exports =
       banner: "<%= meta.banner %>"
     js:
       files:
-        "dist/js/app.min.js": "<%= files.js.concatenated %>"
+        "dist/js/app.js": "<%= files.js.concatenated %>"
 
   cssmin:
     compress:
       files:
-        "dist/css/app.min.css": "<%= files.css.concatenated %>"
+        "dist/css/app.css": "<%= files.css.concatenated %>"
 
   #cleaning
   clean:
