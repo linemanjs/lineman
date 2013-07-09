@@ -45,15 +45,17 @@ module.exports =
       namespace: "JST"
       wrapped: true
     compile:
-      files:
-        "generated/template/handlebars.js": "<%= files.template.handlebars %>"
+      files: [
+        { src: "<%= files.template.handlebars %>", dest: "<%= files.template.generatedHandlebars %>" }
+      ]
 
   jst:
     options:
       namespace: "JST"
     compile:
-      files:
-        "generated/template/underscore.js": "<%= files.template.underscore %>"
+      files: [
+        { src: "<%= files.template.underscore %>", dest: "<%= files.template.generatedUnderscore %>" }
+      ]
 
   #quality
   spec:
