@@ -17,27 +17,30 @@ module.exports =
   #code
   coffee:
     compile:
-      files:
-        "<%= files.coffee.generated %>": "<%= files.coffee.app %>"
-        "<%= files.coffee.generatedSpec %>": "<%= files.coffee.spec %>"
-        "<%= files.coffee.generatedSpecHelpers %>": "<%= files.coffee.specHelpers %>"
+      files: [
+        { src: "<%= files.coffee.app %>", dest: "<%= files.coffee.generated %>" }
+        { src: "<%= files.coffee.spec %>", dest: "<%= files.coffee.generatedSpec %>" }
+        { src: "<%= files.coffee.specHelpers %>", dest: "<%= files.coffee.generatedSpecHelpers %>" }
+      ]
 
   #style
   less:
     options:
-      paths: ["app/css", "vendor/css"]
+      paths: ["<%= files.dirs.app %>/<%= files.dirs.style %>", "<%= files.dirs.vendor %>/<%= files.dirs.style %>"]
     compile:
-      files:
-        "<%= files.less.generatedVendor %>": "<%= files.less.vendor %>"
-        "<%= files.less.generatedApp %>": "<%= files.less.app %>"
+      files: [
+        { src: "<%= files.less.app %>", dest: "<%= files.less.generatedApp %>" }
+        { src: "<%= files.less.vendor %>", dest: "<%= files.less.generatedVendor %>" }
+      ]
 
   enableSass: false
   sass:
     compile:
       options:
-        loadPath: ["app/css", "vendor/css"]
-      files:
-        "<%= files.sass.generatedApp %>": "<%= files.sass.main %>"
+        loadPath: ["<%= files.dirs.app %>/<%= files.dirs.style %>", "<%= files.dirs.vendor %>/<%= files.dirs.style %>"]
+      files: [
+        { src: "<%= files.sass.main %>", dest: "<%= files.sass.generatedApp %>" }
+      ]
 
   #templates
   handlebars:
@@ -102,38 +105,42 @@ module.exports =
   # notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
   #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images:
-    files:
-      "app/img/": "<%= files.img.app %>"
-      "vendor/img/": "<%= files.img.vendor %>"
+    files: [
+      { src: "<%= files.img.app %>", dest: "<%= files.dirs.app %>/<%= files.dirs.images %>/" }
+      { src: "<%= files.img.vendor %>", dest: "<%= files.dirs.vendor %>/<%= files.dirs.images %>/" }
+    ]
 
     root: "<%= files.img.root %>"
     dev:
-      dest: "generated"
+      dest: "<%= files.dirs.gen %>"
 
     dist:
-      dest: "dist"
+      dest: "<%= files.dirs.dist %>"
 
   webfonts:
-    files:
-      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
+    files: [
+      { src: "<%= files.webfonts.vendor %>", dest: "<%= files.dirs.vendor %>/<%= files.dirs.fonts %>/" }
+    ]
 
     root: "<%= files.webfonts.root %>"
     dev:
-      dest: "generated"
+      dest: "<%= files.dirs.gen %>"
 
     dist:
-      dest: "dist"
+      dest: "<%= files.dirs.dist %>"
 
   pages:
     dev:
-      files:
-        "generated": "<%= files.pages.source %>",
-        "generated/index.html": "app/templates/homepage.*" # backward compatibility
+      files: [
+        { src: "<%= files.pages.source %>", dest: "<%= files.dirs.gen %>" }
+        { src: "<%= files.dirs.app %>/<%= files.dirs.markup %>/homepage.*", dest: "<%= files.dirs.gen %>/index.html" } # backward compatibility
+      ]
       context: {}
     dist:
-      files:
-        "dist": "<%= files.pages.source %>",
-        "dist/index.html": "app/templates/homepage.*" # backward compatibility
+      files: [
+        { src: "<%= files.pages.source %>", dest: "<%= files.dirs.dist %>" }
+        { src: "<%= files.dirs.app %>/<%= files.dirs.markup %>/homepage.*", dest: "<%= files.dirs.dist %>/index.html" } # backward compatibility
+      ]
       context: {}
 
   #optimizing
@@ -141,13 +148,15 @@ module.exports =
     options:
       banner: "<%= meta.banner %>"
     js:
-      files:
-        "dist/js/app.js": "<%= files.js.concatenated %>"
+      files: [
+        { src: "<%= files.js.concatenated %>", dest: "<%= files.js.minified %>" }
+      ]
 
   cssmin:
     compress:
-      files:
-        "dist/css/app.css": "<%= files.css.concatenated %>"
+      files: [
+        { src: "<%= files.css.concatenated %>", dest: "<%= files.css.minified %>" }
+      ]
 
   #cleaning
   clean:
@@ -158,11 +167,11 @@ module.exports =
       src: "<%= files.css.concatenated %>"
 
     dist:
-      src: ["dist", "generated"]
+      src: ["<%= files.dirs.dist %>", "<%= files.dirs.gen %>"]
 
   #productivity
   server:
-    base: "generated"
+    base: "<%= files.dirs.gen %>"
     web:
       port: 8000
 

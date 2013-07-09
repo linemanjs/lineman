@@ -16,6 +16,9 @@ module.exports =
     style: "css"
     script: "js"
     markup: "templates"
+    images: "img"
+    fonts: "webfonts"
+    static: "pages"
     gen: "generated"
     dist: "dist"
 
@@ -53,6 +56,7 @@ module.exports =
     app: "<%= files.dirs.app %>/<%= files.dirs.style %>/**/*.css"
     vendor: "<%= files.dirs.vendor %>/<%= files.dirs.style %>/**/*.css"
     concatenated: "<%= files.dirs.gen %>/<%= files.dirs.style %>/app.css"
+    minified: "<%= files.dirs.dist %>/<%= files.dirs.style %>/app.css"
 
   template:
     handlebars: ["<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.handlebar", "<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.handlebars", "<%= files.dirs.app %>/<%= files.dirs.markup %>/**/*.hb"]
@@ -62,13 +66,13 @@ module.exports =
     generated: "<%= files.dirs.gen %>/<%= files.dirs.markup %>/**/*.js"
 
   pages:
-    source: "<%= files.dirs.app %>/pages/**/*.*"
+    source: "<%= files.dirs.app %>/<%= files.dirs.static %>/**/*.*"
 
   img:
-    app: "<%= files.dirs.app %>/img/**/*.*"
-    vendor: "<%= files.dirs.vendor %>/img/**/*.*"
+    app: "<%= files.dirs.app %>/<%= files.dirs.images %>/**/*.*"
+    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.images %>/**/*.*"
     root: "img"
 
   webfonts:
-    vendor: "<%= files.dirs.vendor %>/webfonts/**/*.*"
+    vendor: "<%= files.dirs.vendor %>/<%= files.dirs.fonts %>/**/*.*"
     root: "webfonts"
