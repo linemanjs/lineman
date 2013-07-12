@@ -80,8 +80,10 @@ module.exports =
   #distribution
   concat:
     js:
-      src: ["<banner:meta.banner>", "<%= files.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.js.app %>"]
+      src: ["<%= files.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.js.app %>"]
       dest: "<%= files.js.concatenated %>"
+      options:
+        banner: "<%= meta.banner %>"
 
     spec:
       src: ["<%= files.js.specHelpers %>", "<%= files.coffee.generatedSpecHelpers %>", "<%= files.js.spec %>", "<%= files.coffee.generatedSpec %>"]
