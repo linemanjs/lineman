@@ -20,9 +20,10 @@ module.exports = (grunt) ->
     chain().
     union(if config.enableSass then "grunt-contrib-sass" else []).
     union(config.loadNpmTasks || []).
-    each (module) ->
+    each((module) ->
       if fs.existsSync("#{process.cwd()}/node_modules/#{module}")
         grunt.loadNpmTasks(module)
       else
-        grunt.loadTasks("#{__dirname}/../node_modules/#{module}/tasks")
-
+        grunt.loadTasks("#{__dirname}/../node_modules/#{module}/tasks")).
+    tap ->
+      grunt.task.renameTask("copy", "images")

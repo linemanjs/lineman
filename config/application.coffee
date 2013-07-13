@@ -101,16 +101,16 @@ module.exports =
       dest: "<%= files.css.concatenated %>"
 
   images:
-    files:
-      "app/img/": "<%= files.img.app %>"
-      "vendor/img/": "<%= files.img.vendor %>"
-
-    root: "<%= files.img.root %>"
     dev:
-      dest: "generated"
-
+      files: [ # vendor first, so 'app' wins any collisions
+        { expand: true, cwd: "vendor/", src: "img/**/*.*", dest: "generated/" }
+        { expand: true, cwd: "app/",    src: "img/**/*.*", dest: "generated/" }
+      ]
     dist:
-      dest: "dist"
+      files: [ # vendor first, so 'app' wins any collisions
+        { expand: true, cwd: "vendor/", src: "img/**/*.*", dest: "dist/" }
+        { expand: true, cwd: "app/",    src: "img/**/*.*", dest: "dist/" }
+      ]
 
   webfonts:
     files:
