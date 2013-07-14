@@ -28,7 +28,7 @@ module.exports = (grunt) ->
     webRoot = grunt.config.get("server.base") || "generated"
     userConfig = fileUtils.loadConfigurationFile("server")
     pushStateEnabled = grunt.config.get("server.pushState")
-    @requiresConfig("server.apiProxy.prefix") if pushStateEnabled
+    @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
     app = express()
 
     userConfig.drawRoutes(app) if userConfig.drawRoutes

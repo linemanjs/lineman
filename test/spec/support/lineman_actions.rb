@@ -68,6 +68,10 @@ module LinemanActions
     File.delete(project_path(path))
   end
 
+  def file_contents(path)
+    File.read project_path path
+  end
+
 private
 
   def project_path(path)
