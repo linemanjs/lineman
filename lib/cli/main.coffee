@@ -62,7 +62,7 @@ module.exports = ->
     action ->
       cli.options.base = process.cwd()
       cli.tasks = grunt.util._(arguments).chain().toArray().initial().without("grunt").value()
-      grunt.cli(gruntfile: (__dirname + "/../../Gruntfile.coffee"))
+      grunt.cli(gruntfile: "#{__dirname}/../../Gruntfile.coffee")
 
   commander.command("*").description("unknown command").action ->
     commander.help()
