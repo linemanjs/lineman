@@ -43,10 +43,13 @@ module.exports =
     vendor: "vendor/css/**/*.css"
     app: "app/css/**/*.css"
     concatenated: "generated/css/app.css"
+    minified: "dist/css/app.css"
 
   template:
     handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"]
     underscore: ["app/templates/**/*.underscore", "app/templates/**/*.us"]
+    generatedHandlebars: "generated/template/handlebars.js"
+    generatedUnderscore: "generated/template/underscore.js"
     generated: "generated/template/**/*.js"
 
   pages:

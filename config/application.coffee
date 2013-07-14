@@ -46,14 +46,14 @@ module.exports =
       wrapped: true
     compile:
       files:
-        "generated/template/handlebars.js": "<%= files.template.handlebars %>"
+        "<%= files.template.generatedHandlebars %>": "<%= files.template.handlebars %>"
 
   jst:
     options:
       namespace: "JST"
     compile:
       files:
-        "generated/template/underscore.js": "<%= files.template.underscore %>"
+        "<%= files.template.generatedUnderscore %>": "<%= files.template.underscore %>"
 
   #quality
   spec:
@@ -142,12 +142,12 @@ module.exports =
       banner: "<%= meta.banner %>"
     js:
       files:
-        "dist/js/app.js": "<%= files.js.concatenated %>"
+        "<%= files.js.minified %>": "<%= files.js.concatenated %>"
 
   cssmin:
     compress:
       files:
-        "dist/css/app.css": "<%= files.css.concatenated %>"
+        "<%= files.css.minified %>": "<%= files.css.concatenated %>"
 
   #cleaning
   clean:
