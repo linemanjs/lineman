@@ -113,15 +113,10 @@ module.exports =
       ]
 
   webfonts:
-    files:
-      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
-
-    root: "<%= files.webfonts.root %>"
     dev:
-      dest: "generated"
-
+      expand: true, cwd: "vendor/", src: "webfonts/**/*.*", dest: "generated/"
     dist:
-      dest: "dist"
+      expand: true, cwd: "vendor/", src: "webfonts/**/*.*", dest: "dist/"
 
   pages:
     dev:

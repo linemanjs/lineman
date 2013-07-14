@@ -27,4 +27,8 @@ module.exports = (grunt) ->
     union("grunt-contrib-sass" if config.enableSass).
     union(config.loadNpmTasks).compact().value()
 
-  grunt.task.renameTask("copy", "images")
+  grunt.renameTask "copy", "images"
+
+  # must load again after a rename
+  loadTask "grunt-contrib-copy"
+  grunt.renameTask "copy", "webfonts"
