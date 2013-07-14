@@ -34,4 +34,19 @@ describe "the hello world project" do
     end
   end
 
+  describe "app.js banner" do
+    Given { lineman_build }
+    Given(:banner) { "/*! An HTML/JS/CSS app - v0.0.1 - " }
+
+    context "dev" do
+      Given(:app_js) { file_contents "generated/js/app.js" }
+      Then { app_js.should include banner }
+    end
+
+    context "dist" do
+      Given(:app_js) { file_contents "dist/js/app.js" }
+      Then { app_js.should include banner }
+    end
+  end
+
 end
