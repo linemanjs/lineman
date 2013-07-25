@@ -17,27 +17,30 @@ module.exports =
   #code
   coffee:
     compile:
-      files:
-        "<%= files.coffee.generated %>": "<%= files.coffee.app %>"
-        "<%= files.coffee.generatedSpec %>": "<%= files.coffee.spec %>"
-        "<%= files.coffee.generatedSpecHelpers %>": "<%= files.coffee.specHelpers %>"
+      files: [
+        { src: "<%= files.coffee.app %>", dest: "<%= files.coffee.generated %>" }
+        { src: "<%= files.coffee.spec %>", dest: "<%= files.coffee.generatedSpec %>" }
+        { src: "<%= files.coffee.specHelpers %>", dest: "<%= files.coffee.generatedSpecHelpers %>" }
+      ]
 
   #style
   less:
     options:
-      paths: ["app/css", "vendor/css"]
+      paths: ["<%= files.appDir %>/<%= files.cssDir %>", "<%= files.vendorDir %>/<%= files.cssDir %>"]
     compile:
-      files:
-        "<%= files.less.generatedVendor %>": "<%= files.less.vendor %>"
-        "<%= files.less.generatedApp %>": "<%= files.less.app %>"
+      files: [
+        { src: "<%= files.less.app %>", dest: "<%= files.less.generatedApp %>" }
+        { src: "<%= files.less.vendor %>", dest: "<%= files.less.generatedVendor %>" }
+      ]
 
   enableSass: false
   sass:
     compile:
       options:
-        loadPath: ["app/css", "vendor/css"]
-      files:
-        "<%= files.sass.generatedApp %>": "<%= files.sass.main %>"
+        loadPath: ["<%= files.appDir %>/<%= files.cssDir %>", "<%= files.vendorDir %>/<%= files.cssDir %>"]
+      files: [
+        { src: "<%= files.sass.main %>", dest: "<%= files.sass.generatedApp %>" }
+      ]
 
   #templates
   handlebars:
@@ -45,15 +48,17 @@ module.exports =
       namespace: "JST"
       wrapped: true
     compile:
-      files:
-        "<%= files.template.generatedHandlebars %>": "<%= files.template.handlebars %>"
+      files: [
+        { src: "<%= files.template.handlebars %>", dest: "<%= files.template.generatedHandlebars %>" }
+      ]
 
   jst:
     options:
       namespace: "JST"
     compile:
-      files:
-        "<%= files.template.generatedUnderscore %>": "<%= files.template.underscore %>"
+      files: [
+        { src: "<%= files.template.underscore %>", dest: "<%= files.template.generatedUnderscore %>" }
+      ]
 
   #quality
   spec:
@@ -102,9 +107,10 @@ module.exports =
   # notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
   #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images:
-    files:
-      "app/img/": "<%= files.img.app %>"
-      "vendor/img/": "<%= files.img.vendor %>"
+    files: [
+      { src: "<%= files.img.app %>", dest: "<%= files.appDir %>/<%= files.imgDir %>/" }
+      { src: "<%= files.img.vendor %>", dest: "<%= files.vendorDir %>/<%= files.imgDir %>/" }
+    ]
 
     root: "<%= files.img.root %>"
     dev:
@@ -114,8 +120,9 @@ module.exports =
       dest: "dist"
 
   webfonts:
-    files:
-      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
+    files: [
+      { src: "<%= files.webfonts.vendor %>", dest: "<%= files.vendorDir %>/<%= files.fontDir %>/" }
+    ]
 
     root: "<%= files.webfonts.root %>"
     dev:
@@ -126,14 +133,16 @@ module.exports =
 
   pages:
     dev:
-      files:
-        "generated": "<%= files.pages.source %>",
-        "generated/index.html": "app/templates/homepage.*" # backward compatibility
+      files: [
+        { src: "<%= files.pages.source %>", dest: "generated" }
+        { src: "<%= files.appDir %>/<%= files.tmplDir %>/homepage.*", dest: "generated/index.html" } # backward compatibility
+      ]
       context: {}
     dist:
-      files:
-        "dist": "<%= files.pages.source %>",
-        "dist/index.html": "app/templates/homepage.*" # backward compatibility
+      files: [
+        { src: "<%= files.pages.source %>", dest: "dist" }
+        { src: "<%= files.appDir %>/<%= files.tmplDir %>/homepage.*", dest: "dist/index.html" } # backward compatibility
+      ]
       context: {}
 
   #optimizing
@@ -141,13 +150,15 @@ module.exports =
     options:
       banner: "<%= meta.banner %>"
     js:
-      files:
-        "<%= files.js.minified %>": "<%= files.js.concatenated %>"
+      files: [
+        { src: "<%= files.js.concatenated %>", dest: "<%= files.js.minified %>" }
+      ]
 
   cssmin:
     compress:
-      files:
-        "<%= files.css.minified %>": "<%= files.css.concatenated %>"
+      files: [
+        { src: "<%= files.css.concatenated %>", dest: "<%= files.css.minified %>" }
+      ]
 
   #cleaning
   clean:
