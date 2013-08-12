@@ -172,6 +172,9 @@ module.exports =
       port: 3000
 
   watch:
+    options:
+      spawn: false
+
     js:
       files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
       tasks: ["concat:js"]
