@@ -3,6 +3,7 @@ grunt = require("grunt")
 cli = require("grunt/lib/grunt/cli")
 packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
+ReadsConfiguration = require("./reads-configuration")
 _ = grunt.util._
 
 module.exports = ->
@@ -49,6 +50,13 @@ module.exports = ->
     action ->
       cli.tasks = ["common", "spec-ci"]
       invokeGrunt(name: "spec-ci", chainable: true)
+
+  commander.
+    command("config").
+    description(" - get a value from lineman's configuration").
+    action ->
+      path = @args[0] if _(@args[0]).isString()
+      new ReadsConfiguration().read(path)
 
   commander.
     command("clean").
