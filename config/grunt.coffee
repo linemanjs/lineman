@@ -1,5 +1,12 @@
+_ = require('grunt').util._
+
 module.exports =
   run: (grunt) ->
-    grunt.loadTasks(__dirname+"/../tasks") #Lineman-defined tasks/
+    grunt.registerTask('default', []);
+    grunt.initConfig(userConfig())
+    grunt.loadTasks("#{__dirname}/../tasks") #Lineman-defined tasks/
     grunt.loadTasks("tasks") #User-defined tasks/
-    grunt.task.run("configure")
+
+userConfig = () ->
+  _(require("#{process.cwd()}/config/application")).extend
+    files: require("#{process.cwd()}/config/files")
