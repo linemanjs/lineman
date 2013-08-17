@@ -2,6 +2,7 @@ commander = require("commander")
 grunt = require("grunt")
 cli = require("grunt/lib/grunt/cli")
 packageJson = require("./../../package")
+RunsNextCommand = require("./runs-next-command")
 _ = grunt.util._
 
 module.exports = ->
@@ -33,38 +34,45 @@ module.exports = ->
     description(" - compiles all assets into a production ready form in the /dist folder").
     action ->
       cli.tasks = ["common", "dist"]
-      grunt.cli()
+      invokeGrunt(name: "build", chainable: true)
 
   commander.
     command("spec").
     description(" - runs specs in Chrome, override in config/spec.json").
     action ->
       cli.tasks = ["spec"]
-      grunt.cli()
+      invokeGrunt()
 
   commander.
     command("spec-ci").
     description(" - runs specs in a single pass using PhantomJS (which must be on your PATH) and outputs in TAP13 format, override in config/spec.json").
     action ->
       cli.tasks = ["common", "spec-ci"]
-      grunt.cli()
+      invokeGrunt(name: "spec-ci", chainable: true)
 
   commander.
     command("clean").
     description(" - cleans out /generated and /dist folders").
     action ->
       cli.tasks = ["clean"]
-      grunt.cli()
+      invokeGrunt(name: "clean", chainable: true)
 
   commander.
     command("grunt").
     description("Run a grunt command with lineman's version of grunt").
     action ->
       cli.options.base = process.cwd()
-      cli.tasks = grunt.util._(arguments).chain().toArray().initial().without("grunt").value()
-      grunt.cli(gruntfile: "#{__dirname}/../../Gruntfile.coffee")
+      cli.tasks = _(arguments).chain().toArray().initial().without("grunt").value()
+      invokeGrunt
+        options:
+          gruntfile: "#{__dirname}/../../Gruntfile.coffee"
 
   commander.command("*").description("unknown command").action ->
     commander.help()
 
   commander.parse(process.argv)
+
+invokeGrunt = (config = {}) ->
+  done = new RunsNextCommand(commander, config.name).run if config.chainable?
+  grunt.cli(config.options || {}, done)
+
