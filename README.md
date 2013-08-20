@@ -141,7 +141,7 @@ Lineman provides a way to direct requests to either the `apiProxy` or serve up `
   }
 ```
 
-[**Note:** enabling `server.pushState` merely configures the `apiProxy` to be smart about routing, you will still need to configure pushState support in whichever client-side routing library you are using.]
+**Note:** enabling `server.pushState` merely configures the `apiProxy` to be smart about routing, you will still need to configure pushState support in whichever client-side routing library you are using.
 
 ### Specs
 
