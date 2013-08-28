@@ -39,11 +39,11 @@ module.exports = (grunt) ->
       if apiProxyEnabled and pushStateEnabled
         app.use prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy())
         grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-      else
-        if apiProxyEnabled
-          app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy())
-          grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+      else if apiProxyEnabled
+        app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy())
+        grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
 
+      app.use express.bodyParser()
       app.use express.errorHandler()
       app.use pushStateSimulator(process.cwd(),webRoot) if pushStateEnabled
 
