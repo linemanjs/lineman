@@ -45,7 +45,7 @@
     "config-extend": "0.0.1",
     "testem": "0.3.16",
     "commander": "1.1.1",
-    "express": "3.2.4",
+    "express": "3.3.8",
     "http-proxy": "0.10.2",
     "coffee-script": "1.6.3",
     "watch_r": "0.0.3",

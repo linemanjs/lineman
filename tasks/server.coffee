@@ -31,21 +31,20 @@ module.exports = (grunt) ->
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
     app = express()
 
-    userConfig.drawRoutes(app) if userConfig.drawRoutes
-
     app.configure ->
-      app.use express.static("#{process.cwd()}/#{webRoot}")
+      app.use(express.static("#{process.cwd()}/#{webRoot}"))
 
       if apiProxyEnabled and pushStateEnabled
-        app.use prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy())
         grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
+        app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
       else if apiProxyEnabled
-        app.use apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy())
         grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+        app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
 
-      app.use express.bodyParser()
-      app.use express.errorHandler()
-      app.use pushStateSimulator(process.cwd(),webRoot) if pushStateEnabled
+      app.use(express.bodyParser())
+      app.use(express.errorHandler())
+      userConfig.drawRoutes(app) if userConfig.drawRoutes
+      app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
 
     grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
     grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
