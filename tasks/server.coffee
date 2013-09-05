@@ -29,21 +29,22 @@ module.exports = (grunt) ->
     userConfig = fileUtils.loadConfigurationFile("server")
     pushStateEnabled = grunt.config.get("server.pushState")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
-    app = express()
+    app = wrapHttpVerbMethodsWithBodyParserStuff(express())
 
     app.configure ->
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
 
-      if apiProxyEnabled and pushStateEnabled
-        grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-        app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
-      else if apiProxyEnabled
-        grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
-        app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
-
-      app.use(express.bodyParser())
-      app.use(express.errorHandler())
       userConfig.drawRoutes(app) if userConfig.drawRoutes
+
+      if apiProxyEnabled
+        if pushStateEnabled
+          grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
+          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
+        else
+          grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+          app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
+
+      app.use(express.errorHandler())
       app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
 
     grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
@@ -51,6 +52,16 @@ module.exports = (grunt) ->
 
     app.listen webPort, ->
       resetRoutesOnServerConfigChange(app)
+
+  wrapHttpVerbMethodsWithBodyParserStuff = (app) ->
+    bodyParser = express.bodyParser()
+    _(app).tap (app) ->
+      _(["all", "get", "post", "put", "delete"]).each (verb) ->
+        app[verb] = _(app[verb]).wrap (verbHandler, path, requestHandler) ->
+          verbHandler.call app, path, (req, res, next) ->
+            bodyParser app, req, res, (err) ->
+              return next(err) if err
+              requestHandler(req, res, next)
 
   pushStateSimulator = (cwd, webRoot) ->
     (req, res, next) ->
@@ -78,7 +89,6 @@ module.exports = (grunt) ->
 
     return (req, res, next) ->
       proxy.proxyRequest(req, res, {host, port})
-
 
   resetRoutesOnServerConfigChange = (app) ->
     watchr grunt.file.expand('config/server.*'), (err, watcher) ->
