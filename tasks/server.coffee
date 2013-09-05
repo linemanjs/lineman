@@ -34,12 +34,16 @@ module.exports = (grunt) ->
     app.configure ->
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
 
-      if apiProxyEnabled and pushStateEnabled
-        grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-        app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
-      else if apiProxyEnabled
-        grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
-        app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
+      userConfig.drawRoutes(app) if userConfig.drawRoutes
+      addBodyParserCallbackToRoutes(app)
+
+      if apiProxyEnabled
+        if pushStateEnabled
+          grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
+          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
+        else
+          grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+          app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
 
       app.use(express.bodyParser())
       app.use(express.errorHandler())
@@ -79,6 +83,11 @@ module.exports = (grunt) ->
     return (req, res, next) ->
       proxy.proxyRequest(req, res, {host, port})
 
+  addBodyParserCallbackToRoutes = (app) ->
+    bodyParser = express.bodyParser()
+    _(["get", "post", "patch", "put", "delete", "options", "head"]).each (verb) ->
+      _(app.routes[verb]).each (route) ->
+        route.callbacks.unshift(bodyParser)
 
   resetRoutesOnServerConfigChange = (app) ->
     watchr grunt.file.expand('config/server.*'), (err, watcher) ->
@@ -88,3 +97,4 @@ module.exports = (grunt) ->
           if userConfig.drawRoutes
             _(app.routes).each (route, name) -> app.routes[name] = []
             userConfig.drawRoutes(app)
+            addBodyParserCallbackToRoutes(app.routes)
