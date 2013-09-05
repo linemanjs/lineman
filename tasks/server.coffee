@@ -29,12 +29,13 @@ module.exports = (grunt) ->
     userConfig = fileUtils.loadConfigurationFile("server")
     pushStateEnabled = grunt.config.get("server.pushState")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
-    app = wrapHttpVerbMethodsWithBodyParserStuff(express())
+    app = express()
 
     app.configure ->
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
 
       userConfig.drawRoutes(app) if userConfig.drawRoutes
+      addBodyParserCallbackToRoutes(app)
 
       if apiProxyEnabled
         if pushStateEnabled
@@ -52,16 +53,6 @@ module.exports = (grunt) ->
 
     app.listen webPort, ->
       resetRoutesOnServerConfigChange(app)
-
-  wrapHttpVerbMethodsWithBodyParserStuff = (app) ->
-    bodyParser = express.bodyParser()
-    _(app).tap (app) ->
-      _(["all", "get", "post", "put", "delete"]).each (verb) ->
-        app[verb] = _(app[verb]).wrap (verbHandler, path, requestHandler) ->
-          verbHandler.call app, path, (req, res, next) ->
-            bodyParser app, req, res, (err) ->
-              return next(err) if err
-              requestHandler(req, res, next)
 
   pushStateSimulator = (cwd, webRoot) ->
     (req, res, next) ->
@@ -90,6 +81,12 @@ module.exports = (grunt) ->
     return (req, res, next) ->
       proxy.proxyRequest(req, res, {host, port})
 
+  addBodyParserCallbackToRoutes = (app) ->
+    bodyParser = express.bodyParser()
+    _(["get", "post", "patch", "put", "delete", "options", "head"]).each (verb) ->
+      _(app.routes[verb]).each (route) ->
+        route.callbacks.unshift(bodyParser)
+
   resetRoutesOnServerConfigChange = (app) ->
     watchr grunt.file.expand('config/server.*'), (err, watcher) ->
       watcher.on 'change', (contexts) ->
@@ -98,3 +95,4 @@ module.exports = (grunt) ->
           if userConfig.drawRoutes
             _(app.routes).each (route, name) -> app.routes[name] = []
             userConfig.drawRoutes(app)
+            addBodyParserCallbackToRoutes(app.routes)
