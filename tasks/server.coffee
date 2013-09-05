@@ -29,9 +29,11 @@ module.exports = (grunt) ->
     userConfig = fileUtils.loadConfigurationFile("server")
     pushStateEnabled = grunt.config.get("server.pushState")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
-    app = wrapHttpVerbMethodsWithBodyParserStuff(express())
+    app = express()
 
     app.configure ->
+      wrapHttpVerbMethodsWithBodyParserStuff(app)
+
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
 
       userConfig.drawRoutes(app) if userConfig.drawRoutes
@@ -54,14 +56,10 @@ module.exports = (grunt) ->
       resetRoutesOnServerConfigChange(app)
 
   wrapHttpVerbMethodsWithBodyParserStuff = (app) ->
-    bodyParser = express.bodyParser()
-    _(app).tap (app) ->
-      _(["all", "get", "post", "put", "delete"]).each (verb) ->
-        app[verb] = _(app[verb]).wrap (verbHandler, path, requestHandler) ->
-          verbHandler.call app, path, (req, res, next) ->
-            bodyParser app, req, res, (err) ->
-              return next(err) if err
-              requestHandler(req, res, next)
+    _(["all", "get", "post", "put", "delete"]).each (verb) ->
+      app[verb] = _(app[verb]).wrap (f, path, handlers...) ->
+        f.call(app, path, express.bodyParser(), handlers...)
+        undefined
 
   pushStateSimulator = (cwd, webRoot) ->
     (req, res, next) ->
