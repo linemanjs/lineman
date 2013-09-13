@@ -1,15 +1,10 @@
-
-/*
-jasmine-given 2.1.0
-Adds a Given-When-Then DSL to jasmine as an alternative style for specs
-site: https://github.com/searls/jasmine-given
-*/
-
-
+/* jasmine-given - 2.2.0
+ * Adds a Given-When-Then DSL to jasmine as an alternative style for specs
+ * https://github.com/searls/jasmine-given
+ */
 (function() {
-
   (function(jasmine) {
-    var getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, whenList;
+    var declareJasineSpec, getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, whenList;
     mostRecentlyUsed = null;
     stringifyExpectation = function(expectation) {
       var matches;
@@ -23,12 +18,13 @@ site: https://github.com/searls/jasmine-given
     beforeEach(function() {
       return this.addMatchers({
         toHaveReturnedFalseFromThen: function(context, n) {
-          var exception, result;
+          var e, exception, result;
           result = false;
           exception = void 0;
           try {
             result = this.actual.call(context);
-          } catch (e) {
+          } catch (_error) {
+            e = _error;
             exception = e;
           }
           this.message = function() {
@@ -63,12 +59,10 @@ site: https://github.com/searls/jasmine-given
       });
     };
     invariantList = [];
-    root.Invariant = function() {
-      var b;
+    root.Invariant = function(invariantBehavior) {
       mostRecentlyUsed = root.Invariant;
-      b = getBlock(arguments);
       beforeEach(function() {
-        return invariantList.push(b);
+        return invariantList.push(invariantBehavior);
       });
       return afterEach(function() {
         return invariantList.pop();
@@ -96,29 +90,31 @@ site: https://github.com/searls/jasmine-given
       };
     };
     mostRecentExpectations = null;
-    root.Then = function() {
+    declareJasineSpec = function(specArgs, itFunction) {
       var expectationFunction, expectations, label;
-      label = o(arguments).firstThat(function(arg) {
+      if (itFunction == null) {
+        itFunction = it;
+      }
+      label = o(specArgs).firstThat(function(arg) {
         return o(arg).isString();
       });
-      expectationFunction = o(arguments).firstThat(function(arg) {
+      expectationFunction = o(specArgs).firstThat(function(arg) {
         return o(arg).isFunction();
       });
       mostRecentlyUsed = root.subsequentThen;
       mostRecentExpectations = expectations = [expectationFunction];
-      it("then " + (label != null ? label : stringifyExpectation(expectations)), function() {
-        var block, i, _i, _len, _ref, _results;
+      itFunction("then " + (label != null ? label : stringifyExpectation(expectations)), function() {
+        var block, expectation, i, _i, _j, _len, _len1, _ref, _ref1, _results;
         _ref = whenList != null ? whenList : [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           block = _ref[_i];
           block();
         }
-        i = 0;
-        expectations = invariantList.concat(expectations);
+        _ref1 = invariantList.concat(expectations);
         _results = [];
-        while (i < expectations.length) {
-          expect(expectations[i]).not.toHaveReturnedFalseFromThen(jasmine.getEnv().currentSpec, i + 1);
-          _results.push(i++);
+        for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
+          expectation = _ref1[i];
+          _results.push(expect(expectation).not.toHaveReturnedFalseFromThen(jasmine.getEnv().currentSpec, i + 1));
         }
         return _results;
       });
@@ -126,6 +122,12 @@ site: https://github.com/searls/jasmine-given
         Then: subsequentThen,
         And: subsequentThen
       };
+    };
+    root.Then = function() {
+      return declareJasineSpec(arguments);
+    };
+    root.Then.only = function() {
+      return declareJasineSpec(arguments, it.only);
     };
     root.subsequentThen = function(additionalExpectation) {
       mostRecentExpectations.push(additionalExpectation);

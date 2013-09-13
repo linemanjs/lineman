@@ -20,7 +20,6 @@ module.exports = (grunt) ->
         output += chunk
 
       child.on "exit", (code, signal) ->
-        debugger
         if code != 0
           grunt.warn("Spec execution appears to have failed.")
           done(false)

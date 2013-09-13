@@ -58,7 +58,8 @@ We have a few template projects floating around to help you get up-and-running *
 
 * Using [Backbone.js](https://github.com/davemo/lineman-backbone-template)
 * Using [Angular.js](https://github.com/davemo/lineman-angular-template)
-* Using [Ember.js](https://github.com/searls/lineman-ember-template)
+* Using [Ember.js with Jasmine](https://github.com/searls/lineman-ember-template)
+* Using [Ember.js with QUnit](https://github.com/jlsuttles/lineman-ember-qunit-template)
 * Creating a [JavaScript library](https://github.com/testdouble/lineman-lib-template)
 * Building a [Markdown blog](https://github.com/testdouble/lineman-blog)
 
@@ -141,7 +142,7 @@ Lineman provides a way to direct requests to either the `apiProxy` or serve up `
   }
 ```
 
-[**Note:** enabling `server.pushState` merely configures the `apiProxy` to be smart about routing, you will still need to configure pushState support in whichever client-side routing library you are using.]
+**Note:** enabling `server.pushState` merely configures the `apiProxy` to be smart about routing, you will still need to configure pushState support in whichever client-side routing library you are using.
 
 ### Specs
 

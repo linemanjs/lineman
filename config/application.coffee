@@ -129,12 +129,16 @@ module.exports =
       files:
         "generated": "<%= files.pages.source %>",
         "generated/index.html": "app/templates/homepage.*" # backward compatibility
-      context: {}
+      context:
+        js: "js/app.js"
+        css: "css/app.css"
     dist:
       files:
         "dist": "<%= files.pages.source %>",
         "dist/index.html": "app/templates/homepage.*" # backward compatibility
-      context: {}
+      context:
+        js: "js/app.js"
+        css: "css/app.css"
 
   #optimizing
   uglify:
