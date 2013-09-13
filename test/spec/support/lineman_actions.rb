@@ -10,7 +10,7 @@ module LinemanActions
       mkdir -p tmp
       cd tmp
       rm -rf pants
-      #{BIN} new pants
+      "#{BIN}" new pants
     BASH
     lineman_link
   end
@@ -19,7 +19,7 @@ module LinemanActions
     sh <<-BASH
       cd tmp/pants
       mkdir -p node_modules
-      ln -s #{ROOT} node_modules/lineman
+      ln -s "#{ROOT}" node_modules/lineman
     BASH
   end
 
@@ -28,7 +28,7 @@ module LinemanActions
 
     sh <<-BASH
       cd tmp/pants
-      #{BIN} build --stack
+      "#{BIN}" build --stack
     BASH
   end
 
@@ -105,7 +105,7 @@ private
       sh <<-BASH
         mkdir -p tmp/pants
         cd tmp/pants
-        #{BIN} run --stack
+        "#{BIN}" run --stack
       BASH
     end
   end
