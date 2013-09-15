@@ -3,8 +3,9 @@ fs = require("fs")
 module.exports =
   testemRunnerPath: ->
     testemPath = "node_modules/.bin/testem"
-    localPath = "#{process.cwd()}/#{testemPath}"
-    linemanPath = "#{__dirname}/../#{testemPath}"
+    extension = if require('os').platform() == "win32" then ".cmd" else ""
+    localPath = "#{process.cwd()}/#{testemPath}#{extension}"
+    linemanPath = "#{__dirname}/../#{testemPath}#{extension}"
     if fs.existsSync(localPath)
       localPath
     else if fs.existsSync(linemanPath)
