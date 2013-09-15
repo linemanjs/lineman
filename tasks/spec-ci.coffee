@@ -13,7 +13,7 @@ module.exports = (grunt) ->
     try
       done = @async()
       args = ["ci", "-f", path.resolve("#{process.cwd()}/config/spec.json")]
-      options = { stdio: 'ignore'}
+      options = { stdio: 'inherit'}
       child = spawn(testemRunnerPath(), args, options)
 
       child.on "exit", (code, signal) ->
