@@ -32,6 +32,7 @@ module.exports = (grunt) ->
     app = express()
 
     app.configure ->
+      app.use(express.compress())
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
 
       userConfig.drawRoutes(app) if userConfig.drawRoutes
