@@ -14,6 +14,7 @@ Configuration:
 ###
 module.exports = (grunt) ->
   _ = grunt.util._
+  http = require("http")
   express = require("express")
   httpProxy = require("http-proxy")
   fileUtils = require("./../lib/file-utils")
@@ -30,7 +31,10 @@ module.exports = (grunt) ->
     pushStateEnabled = grunt.config.get("server.pushState")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
     app = express()
+    server = http.createServer(app)
 
+    userConfig.modifyHttpServer(server) if userConfig.modifyHttpServer
+            
     app.configure ->
       app.use(express.compress())
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
@@ -54,7 +58,7 @@ module.exports = (grunt) ->
     grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
     grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
 
-    app.listen webPort, ->
+    server.listen webPort, ->
       resetRoutesOnServerConfigChange(app)
 
   pushStateSimulator = (cwd, webRoot) ->
