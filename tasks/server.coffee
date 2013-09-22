@@ -102,4 +102,4 @@ module.exports = (grunt) ->
           if userConfig.drawRoutes?
             _(app.routes).each (route, name) -> app.routes[name] = []
             userConfig.drawRoutes(app)
-            addBodyParserCallbackToRoutes(app.routes)
+            addBodyParserCallbackToRoutes(app)
