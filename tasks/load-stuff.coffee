@@ -12,7 +12,7 @@ module.exports = (grunt) ->
     "grunt-contrib-less",
     "grunt-contrib-cssmin",
     "grunt-contrib-uglify",
-    "grunt-watch-nospawn"
+    "grunt-contrib-watch"
   ]
 
   grunt.util._(linemanNpmTasks).
