@@ -1,7 +1,9 @@
 semver = require('semver')
 
-module.exports = () ->
+module.exports = ->
   return unless specifiedVersion = specifiedLinemanVersion()
+  return if /^git(\+(.*))?:\/\//.test(specifiedVersion)
+
   actualVersion = actualLinemanVersion()
   unless semver.satisfies(actualVersion, specifiedVersion)
     console.error """
