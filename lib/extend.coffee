@@ -1,5 +1,5 @@
 _ = require('grunt').util._
-extend = require('node.extend')
+extend = require('config-extend')
 
 module.exports = (key, config = {}) ->
   original = require(__dirname+"/../config/#{key}")

@@ -1,5 +1,5 @@
-/* jasmine-only - 0.0.1
- * Exclusivity spec helpers for jasmines `describe` and `it`
+/* jasmine-only - 0.1.0
+ * Exclusivity spec helpers for jasmine: `describe.only` and `it.only`
  * https://github.com/davemo/jasmine-only
  */
 (function() {
@@ -74,6 +74,8 @@
     root.it.only = function(description, func) {
       return env.it.only(description, func);
     };
+    root.iit = root.it.only;
+    root.ddescribe = root.describe.only;
     jasmine.Spec = (function(_super) {
       __extends(Spec, _super);
 

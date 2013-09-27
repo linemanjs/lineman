@@ -18,9 +18,9 @@ module.exports =
   coffee:
     compile:
       files:
-        "generated/js/app.coffee.js": "<%= files.coffee.app %>"
-        "generated/js/spec.coffee.js": "<%= files.coffee.spec %>"
-        "generated/js/spec-helpers.coffee.js": "<%= files.coffee.specHelpers %>"
+        "<%= files.coffee.generated %>": "<%= files.coffee.app %>"
+        "<%= files.coffee.generatedSpec %>": "<%= files.coffee.spec %>"
+        "<%= files.coffee.generatedSpecHelpers %>": "<%= files.coffee.specHelpers %>"
 
   #style
   less:
@@ -28,17 +28,16 @@ module.exports =
       paths: ["app/css", "vendor/css"]
     compile:
       files:
-        "generated/css/vendor.less.css": "<%= files.less.vendor %>"
-        "generated/css/app.less.css": "<%= files.less.app %>"
+        "<%= files.less.generatedVendor %>": "<%= files.less.vendor %>"
+        "<%= files.less.generatedApp %>": "<%= files.less.app %>"
 
   enableSass: false
   sass:
     compile:
       options:
         loadPath: ["app/css", "vendor/css"]
-
       files:
-        "generated/css/app.sass.css": "<%= files.sass.main %>"
+        "<%= files.sass.generatedApp %>": "<%= files.sass.main %>"
 
   #templates
   handlebars:
@@ -47,14 +46,14 @@ module.exports =
       wrapped: true
     compile:
       files:
-        "generated/template/handlebars.js": "<%= files.template.handlebars %>"
+        "<%= files.template.generatedHandlebars %>": "<%= files.template.handlebars %>"
 
   jst:
     options:
       namespace: "JST"
     compile:
       files:
-        "generated/template/underscore.js": "<%= files.template.underscore %>"
+        "<%= files.template.generatedUnderscore %>": "<%= files.template.underscore %>"
 
   #quality
   spec:
@@ -123,12 +122,16 @@ module.exports =
       files:
         "generated": "<%= files.pages.source %>",
         "generated/index.html": "app/templates/homepage.*" # backward compatibility
-      context: {}
+      context:
+        js: "js/app.js"
+        css: "css/app.css"
     dist:
       files:
         "dist": "<%= files.pages.source %>",
         "dist/index.html": "app/templates/homepage.*" # backward compatibility
-      context: {}
+      context:
+        js: "js/app.js"
+        css: "css/app.css"
 
   #optimizing
   uglify:
@@ -136,12 +139,12 @@ module.exports =
       banner: "<%= meta.banner %>"
     js:
       files:
-        "dist/js/app.js": "<%= files.js.concatenated %>"
+        "<%= files.js.minified %>": "<%= files.js.concatenated %>"
 
   cssmin:
     compress:
       files:
-        "dist/css/app.css": "<%= files.css.concatenated %>"
+        "<%= files.css.minified %>": "<%= files.css.concatenated %>"
 
   #cleaning
   clean:
@@ -166,6 +169,9 @@ module.exports =
       port: 3000
 
   watch:
+    options:
+      spawn: false
+
     js:
       files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
       tasks: ["concat:js"]

@@ -13,14 +13,10 @@ module.exports = (grunt) ->
     try
       done = @async()
       args = ["ci", "-f", path.resolve("#{process.cwd()}/config/spec.json")]
-      child = spawn(testemRunnerPath(), args)
-      output = ""
-      child.stdout.on "data", (chunk) ->
-        process.stdout.write(chunk)
-        output += chunk
+      options = { stdio: 'inherit'}
+      child = spawn(testemRunnerPath(), args, options)
 
       child.on "exit", (code, signal) ->
-        debugger
         if code != 0
           grunt.warn("Spec execution appears to have failed.")
           done(false)
