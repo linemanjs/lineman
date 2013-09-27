@@ -23,9 +23,12 @@ module.exports = (grunt) ->
     else
       grunt.loadTasks("#{__dirname}/../node_modules/#{module}/tasks")
 
-  loadTask module for module in grunt.util._.chain(linemanNpmTasks).
+  npmTasks = grunt.util._(linemanNpmTasks).chain().
     union("grunt-contrib-sass" if config.enableSass).
-    union(config.loadNpmTasks).compact().value()
+    union(config.loadNpmTasks).
+    compact().value()
+
+  loadTask task for task in npmTasks
 
   grunt.renameTask "copy", "images"
 
