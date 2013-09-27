@@ -1,6 +1,6 @@
 # Lineman
 
-[![Build Status](https://secure.travis-ci.org/testdouble/lineman.png)](http://travis-ci.org/testdouble/lineman)
+[![Build Status](https://travis-ci.org/testdouble/lineman.png?branch=master)](https://travis-ci.org/testdouble/lineman)
 
 Lineman is a tool to help you build fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](https://github.com/cowboy/grunt).
 
