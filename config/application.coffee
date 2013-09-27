@@ -185,6 +185,10 @@ module.exports =
       files: "<%= files.coffee.app %>"
       tasks: ["coffee", "concat:js"]
 
+    typescript:
+      files: "<%= files.typescript.app %>"
+      tasks: ["typescript", "concat:js"]
+
     jsSpecs:
       files: ["<%= files.js.specHelpers %>", "<%= files.js.spec %>"]
       tasks: ["concat:spec"]
