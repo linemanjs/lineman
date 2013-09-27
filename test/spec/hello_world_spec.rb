@@ -34,7 +34,7 @@ describe "the hello world project" do
     end
 
     describe "adding a TypeScript file" do
-      Given(:contents) { "window.edward = function() { return 'scissors' };" }
+      Given(:contents) { "interface Window { edward: any; }\nwindow.edward = function() { return 'scissors' };" }
       Given { add_file("app/js/bar.ts", contents) }
       Then { eval_js("edward()").should == "scissors" }
 
