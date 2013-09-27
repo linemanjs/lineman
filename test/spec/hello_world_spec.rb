@@ -32,6 +32,7 @@ describe "the hello world project" do
         Then { expect_js("window.pants === undefined") }
       end
     end
+
   end
 
   describe "app.js banner" do
@@ -46,6 +47,23 @@ describe "the hello world project" do
     context "dist" do
       Given(:app_js) { file_contents "dist/js/app.js" }
       Then { app_js.should include banner }
+    end
+  end
+
+
+  describe "images" do
+    Given(:img) { "double rainbow" }
+    Given { add_file "app/img/app.jpg", img }
+    Given { add_file "vendor/img/vendor.jpg", img }
+    Given { lineman_build }
+
+    context "dev" do
+      Then { file_contents("generated/img/app.jpg").should == img }
+      Then { file_contents("generated/img/vendor.jpg").should == img }
+    end
+    context "dist" do
+      Then { file_contents("dist/img/app.jpg").should == img }
+      Then { file_contents("dist/img/vendor.jpg").should == img }
     end
   end
 

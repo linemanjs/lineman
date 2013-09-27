@@ -99,30 +99,23 @@ module.exports =
       ]
       dest: "<%= files.css.concatenated %>"
 
-  # notes: due to ../../ paths for images in many css libs we dump images out to the root of dist and generated
-  #        if your lib requires a different structure to counter this, you'll need to nest your img files in vendor/img accordingly, ie: vendor/img/img
   images:
-    files:
-      "app/img/": "<%= files.img.app %>"
-      "vendor/img/": "<%= files.img.vendor %>"
-
-    root: "<%= files.img.root %>"
     dev:
-      dest: "generated"
-
+      files: [ # vendor first, so 'app' wins any collisions
+        { expand: true, cwd: "vendor/", src: "img/**/*.*", dest: "generated/" }
+        { expand: true, cwd: "app/",    src: "img/**/*.*", dest: "generated/" }
+      ]
     dist:
-      dest: "dist"
+      files: [ # vendor first, so 'app' wins any collisions
+        { expand: true, cwd: "vendor/", src: "img/**/*.*", dest: "dist/" }
+        { expand: true, cwd: "app/",    src: "img/**/*.*", dest: "dist/" }
+      ]
 
   webfonts:
-    files:
-      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
-
-    root: "<%= files.webfonts.root %>"
     dev:
-      dest: "generated"
-
+      expand: true, cwd: "vendor/", src: "webfonts/**/*.*", dest: "generated/"
     dist:
-      dest: "dist"
+      expand: true, cwd: "vendor/", src: "webfonts/**/*.*", dest: "dist/"
 
   pages:
     dev:
