@@ -31,7 +31,7 @@ module.exports = (grunt) ->
   loadTask task for task in npmTasks
 
   grunt.renameTask "copy", "images"
+  loadTask "grunt-contrib-copy" # load again so webfonts can use it
 
-  # must load again after a rename
-  loadTask "grunt-contrib-copy"
   grunt.renameTask "copy", "webfonts"
+  loadTask "grunt-contrib-copy" # load again to make available in userland
