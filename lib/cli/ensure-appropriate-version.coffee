@@ -2,7 +2,7 @@ semver = require('semver')
 
 module.exports = ->
   return unless specifiedVersion = specifiedLinemanVersion()
-  return if /^git(\+(.*))?:\/\//.test(specifiedVersion)
+  return unless semver.validRange(specifiedVersion)
 
   actualVersion = actualLinemanVersion()
   unless semver.satisfies(actualVersion, specifiedVersion)
