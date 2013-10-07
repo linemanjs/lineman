@@ -25,6 +25,7 @@ module.exports = (grunt) ->
     apiProxyEnabled = grunt.config.get("server.apiProxy.enabled")
     apiProxyPrefix  = grunt.config.get("server.apiProxy.prefix") || undefined
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
+    apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin") || undefined
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     userConfig = fileUtils.loadConfigurationFile("server")
@@ -45,10 +46,10 @@ module.exports = (grunt) ->
       if apiProxyEnabled
         if pushStateEnabled
           grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
+          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyChangeOrigin, new httpProxy.RoutingProxy()))
         else
           grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
-          app.use(apiProxy(apiProxyHost, apiPort, new httpProxy.RoutingProxy()))
+          app.use(apiProxy(apiProxyHost, apiPort, apiProxyChangeOrigin, new httpProxy.RoutingProxy()))
 
       app.use(express.bodyParser())
       app.use(express.errorHandler())
@@ -71,22 +72,22 @@ module.exports = (grunt) ->
     res.write("API Proxying to `#{req.url}` failed with: `#{err.toString()}`")
     res.end()
 
-  prefixMatchingApiProxy = (prefix, host, port, proxy) ->
+  prefixMatchingApiProxy = (prefix, host, port, changeOrigin, proxy) ->
     prefixMatcher = new RegExp(prefix)
 
     proxy.on "proxyError", handleProxyError
 
     return (req, res, next) ->
       if prefix and prefixMatcher.exec(req.path)
-        proxy.proxyRequest(req, res, {host, port})
+        proxy.proxyRequest(req, res, {host, port, changeOrigin})
       else
         next()
 
-  apiProxy = (host, port, proxy) ->
+  apiProxy = (host, port, changeOrigin, proxy) ->
     proxy.on "proxyError", handleProxyError
 
     return (req, res, next) ->
-      proxy.proxyRequest(req, res, {host, port})
+      proxy.proxyRequest(req, res, {host, port, changeOrigin})
 
   addBodyParserCallbackToRoutes = (app) ->
     bodyParser = express.bodyParser()
