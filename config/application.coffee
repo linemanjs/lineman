@@ -70,7 +70,6 @@ module.exports =
       latedef: true
       newcap: true
       noarg: true
-      undef: false
       # relaxing options
       boss: true
       eqnull: true
