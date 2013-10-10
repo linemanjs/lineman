@@ -64,7 +64,6 @@ module.exports =
   jshint:
     files: ["<%= files.js.app %>"]
     options:
-      force: process.env['LINEMAN_RUN'] || false
       curly: true
       eqeqeq: true
       latedef: true
