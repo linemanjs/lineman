@@ -41,16 +41,11 @@ module.exports =
 
   #templates
   handlebars:
-    options:
-      namespace: "JST"
-      wrapped: true
     compile:
       files:
         "<%= files.template.generatedHandlebars %>": "<%= files.template.handlebars %>"
 
   jst:
-    options:
-      namespace: "JST"
     compile:
       files:
         "<%= files.template.generatedUnderscore %>": "<%= files.template.underscore %>"
