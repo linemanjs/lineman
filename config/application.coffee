@@ -178,7 +178,7 @@ module.exports =
 
     coffee:
       files: "<%= files.coffee.app %>"
-      tasks: ["coffee", "concat:js"]
+      tasks: ["newer:coffee", "concat:js"]
 
     jsSpecs:
       files: ["<%= files.js.specHelpers %>", "<%= files.js.spec %>"]
@@ -186,7 +186,7 @@ module.exports =
 
     coffeeSpecs:
       files: ["<%= files.coffee.specHelpers %>", "<%= files.coffee.spec %>"]
-      tasks: ["coffee", "concat:spec"]
+      tasks: ["newer:coffee", "concat:spec"]
 
     css:
       files: ["<%= files.css.vendor %>", "<%= files.css.app %>"]
