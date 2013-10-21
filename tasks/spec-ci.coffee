@@ -14,16 +14,17 @@ module.exports = (grunt) ->
 
   grunt.registerTask "spec-ci", "run specs in ci mode", ->
 
-    reporter = grunt.config.get("spec_ci.reporter") || exposedTestemOptionDefaults.reporter
-    config   = grunt.config.get("spec_ci.config")   || exposedTestemOptionDefaults.config
-    port     = grunt.config.get("spec_ci.port")     || exposedTestemOptionDefaults.port
-    host     = grunt.config.get("spec_ci.host")     || exposedTestemOptionDefaults.host
+    testemOptions = _({}).merge exposedTestemOptionDefaults,
+      reporter: grunt.config.get("spec_ci.reporter")
+      config:   grunt.config.get("spec_ci.config")
+      port:     grunt.config.get("spec_ci.port")
+      host:     grunt.config.get("spec_ci.host")
 
     testemFlags =
-      "-R"     : reporter
-      "-f"     : config
-      "-p"     : port
-      "--host" : host
+      "-R"     : testemOptions.reporter
+      "-f"     : testemOptions.config
+      "-p"     : testemOptions.port
+      "--host" : testemOptions.host
 
     args = _(testemFlags).chain()
       .pairs()
