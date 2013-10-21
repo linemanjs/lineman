@@ -26,9 +26,9 @@ module.exports = (grunt) ->
       "--host" : host
 
     args = _(testemFlags).chain()
-      .map((value, flag) -> [flag, value])
-      .flatten()
+      .pairs()
       .union(["ci"])
+      .flatten()
       .value()
 
     try
