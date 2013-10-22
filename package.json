@@ -50,7 +50,8 @@
     "http-proxy": "0.10.3",
     "coffee-script": "1.6.3",
     "watch_r": "0.0.14",
-    "semver": "2.1.0"
+    "semver": "2.1.0",
+    "grunt-newer": "~0.5.4"
   },
   "keywords": [
     "lineman"

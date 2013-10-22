@@ -9,18 +9,26 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
 
   appTasks:
-    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
+    common: ["newer:coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
     dev: ["server", "watch"]
     dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "pages:dist"]
   loadNpmTasks: []
 
+  newer:
+    options:
+      timestamps: "generated/timestamps"
+
   #code
   coffee:
-    compile:
-      files:
-        "<%= files.coffee.generated %>": "<%= files.coffee.app %>"
-        "<%= files.coffee.generatedSpec %>": "<%= files.coffee.spec %>"
-        "<%= files.coffee.generatedSpecHelpers %>": "<%= files.coffee.specHelpers %>"
+    app:
+      src: '<%= files.coffee.app %>'
+      dest: '<%= files.coffee.generated %>'
+    spec:
+      src: '<%= files.coffee.spec %>'
+      dest: '<%= files.coffee.generatedSpec %>'
+    specHelpers:
+      src: '<%= files.coffee.specHelpers %>'
+      dest: '<%= files.coffee.generatedSpecHelpers %>'
 
   #style
   less:
@@ -171,7 +179,7 @@ module.exports =
 
     coffee:
       files: "<%= files.coffee.app %>"
-      tasks: ["coffee", "concat:js"]
+      tasks: ["newer:coffee", "concat:js"]
 
     jsSpecs:
       files: ["<%= files.js.specHelpers %>", "<%= files.js.spec %>"]
@@ -179,7 +187,7 @@ module.exports =
 
     coffeeSpecs:
       files: ["<%= files.coffee.specHelpers %>", "<%= files.coffee.spec %>"]
-      tasks: ["coffee", "concat:spec"]
+      tasks: ["newer:coffee", "concat:spec"]
 
     css:
       files: ["<%= files.css.vendor %>", "<%= files.css.app %>"]
