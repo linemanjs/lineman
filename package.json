@@ -49,7 +49,7 @@
     "express": "3.4.0",
     "http-proxy": "0.10.3",
     "coffee-script": "1.6.3",
-    "watch_r": "0.0.14",
+    "watch_r-structr-lock": "0.0.1",
     "semver": "2.1.0"
   },
   "keywords": [
