@@ -269,7 +269,7 @@ In the above example, tasks "A" & "D" would run during *both* `lineman run` and 
 
 Tasks specified under `prependTasks` way will be run before Lineman's built-in tasks for the corresponding phase, while tasks specified under `appendTasks` will run immediately afterward. For reference, [check out](https://github.com/testdouble/lineman/blob/master/config/application.coffee#L11-L14) Lineman's default configuration.
 
-If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly; [here's an example of removing a task](https://github.com/searls/lineman-ember-template/blob/master/config/application.coffee#L10-L14) from the [Ember.js template](https://github.com/searls/lineman-ember-template).
+If you need more fine-grained control—say you want to *replace or remove* a default task—you can use custom JavaScript in your application config file to edit the appropriate array directly; [here's an example of removing a task](https://github.com/searls/lineman-ember-template/blob/master/config/application.coffee#L30-L31) from the [Ember.js template](https://github.com/searls/lineman-ember-template).
 
 #### Removing tasks
 
