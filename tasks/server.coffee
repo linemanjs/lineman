@@ -18,7 +18,7 @@ module.exports = (grunt) ->
   express = require("express")
   httpProxy = require("http-proxy")
   fileUtils = require("./../lib/file-utils")
-  watchr = require('watch_r-structr-lock');
+  watchr = require('watch_r-structr-lock')
 
   grunt.registerTask "server", "static file & api proxy development server", ->
     apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000
