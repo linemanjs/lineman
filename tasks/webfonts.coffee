@@ -19,6 +19,14 @@ module.exports = (grunt) ->
     targetConfig = grunt.config.get("webfonts.#{target}")
     destinationPath = "#{targetConfig.dest}/#{taskConfig.root}"
 
+    if grunt.config("webfonts.#{target}.files")? or grunt.config("webfonts.#{target}.src")?
+      grunt.warn """
+                 The 'webfonts' task implementation has been reverted. It currently does not
+                 support the grunt-contrib-copy style configuration, which has been detected in
+                 your setup. You will likely need to configure 'webfonts.vendor' and/or
+                 'webfonts.root' in 'config/files.js'.
+                 """
+
     grunt.log.writeln "Copying webfonts to '#{destinationPath}'"
     _(taskConfig.files).each (files, basePath) ->
       _(grunt.file.expand(files)).each (src) ->

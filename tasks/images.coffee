@@ -19,6 +19,14 @@ module.exports = (grunt) ->
     targetConfig = grunt.config.get("images.#{target}")
     destinationPath = "#{targetConfig.dest}/#{taskConfig.root}"
 
+    if grunt.config("images.#{target}.files")? or grunt.config("images.#{target}.src")?
+      grunt.warn """
+                 The 'images' task implementation has been reverted. It currently does not
+                 support the grunt-contrib-copy style configuration, which has been detected in
+                 your setup. You will likely need to configure 'img.app', 'img.vendor' and/or
+                 'img.root' in 'config/files.js'.
+                 """
+
     grunt.log.writeln("Copying images to '#{destinationPath}'")
     _(taskConfig.files).each (files, basePath) ->
       _(grunt.file.expand(files)).each (src) ->
