@@ -2,12 +2,10 @@ fs = require('fs')
 
 module.exports = (grunt) ->
   config = require("#{process.cwd()}/config/application")
-
   linemanNpmTasks = [
     "grunt-contrib-clean"
     "grunt-contrib-coffee"
     "grunt-contrib-concat"
-    "grunt-contrib-copy"
     "grunt-contrib-handlebars"
     "grunt-contrib-jshint"
     "grunt-contrib-jst"
@@ -29,9 +27,3 @@ module.exports = (grunt) ->
     compact().value()
 
   loadTask task for task in npmTasks
-
-  grunt.renameTask "copy", "images"
-  loadTask "grunt-contrib-copy" # load again so webfonts can use it
-
-  grunt.renameTask "copy", "webfonts"
-  loadTask "grunt-contrib-copy" # load again to make available in userland
