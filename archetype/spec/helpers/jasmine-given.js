@@ -1,10 +1,12 @@
-/* jasmine-given - 2.4.0
+/* jasmine-given - 2.5.0
  * Adds a Given-When-Then DSL to jasmine as an alternative style for specs
  * https://github.com/searls/jasmine-given
  */
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
   (function(jasmine) {
-    var additionalInsightsForErrorMessage, apparentReferenceError, attemptedEquality, comparisonInsight, declareJasmineSpec, deepEqualsNotice, doneWrapperFor, evalInContextOfSpec, finalStatementFrom, getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, wasComparison, whenList;
+    var Waterfall, additionalInsightsForErrorMessage, apparentReferenceError, attemptedEquality, comparisonInsight, declareJasmineSpec, deepEqualsNotice, doneWrapperFor, evalInContextOfSpec, finalStatementFrom, getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, wasComparison, whenList, wrapAsExpectations;
     mostRecentlyUsed = null;
     beforeEach(function() {
       return this.addMatchers(jasmine._given.matchers);
@@ -71,25 +73,28 @@
       });
       mostRecentlyUsed = root.subsequentThen;
       mostRecentExpectations = expectations = [expectationFunction];
-      itFunction("then " + (label != null ? label : stringifyExpectation(expectations)), doneWrapperFor(expectationFunction, function(done) {
-        var block, expectation, i, _i, _j, _len, _len1, _ref, _ref1, _results;
-        _ref = whenList != null ? whenList : [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          block = _ref[_i];
-          block();
-        }
-        _ref1 = invariantList.concat(expectations);
-        _results = [];
-        for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
-          expectation = _ref1[i];
-          _results.push(expect(expectation).not.toHaveReturnedFalseFromThen(jasmine.getEnv().currentSpec, i + 1, done));
-        }
-        return _results;
-      }));
+      itFunction("then " + (label != null ? label : stringifyExpectation(expectations)), function(jasmineDone) {
+        var userCommands;
+        userCommands = [].concat(whenList, invariantList, wrapAsExpectations(expectations));
+        return new Waterfall(userCommands, jasmineDone).flow();
+      });
       return {
         Then: subsequentThen,
         And: subsequentThen
       };
+    };
+    wrapAsExpectations = function(expectations) {
+      var expectation, i, _i, _len, _results;
+      _results = [];
+      for (i = _i = 0, _len = expectations.length; _i < _len; i = ++_i) {
+        expectation = expectations[i];
+        _results.push((function(expectation, i) {
+          return doneWrapperFor(expectation, function(maybeDone) {
+            return expect(expectation).not.toHaveReturnedFalseFromThen(jasmine.getEnv().currentSpec, i + 1, maybeDone);
+          });
+        })(expectation, i));
+      }
+      return _results;
     };
     doneWrapperFor = function(func, toWrap) {
       if (func.length === 0) {
@@ -232,9 +237,61 @@
     attemptedEquality = function(left, right, comparator) {
       return (comparator === "==" || comparator === "===") && jasmine.getEnv().equals_(left, right);
     };
-    return deepEqualsNotice = function(left, right) {
+    deepEqualsNotice = function(left, right) {
       return "However, these items are deeply equal! Try an expectation like this instead:\n  expect(" + left + ").toEqual(" + right + ")";
     };
+    return Waterfall = (function() {
+      function Waterfall(functions, finalCallback) {
+        var func, _i, _len, _ref;
+        if (functions == null) {
+          functions = [];
+        }
+        this.flow = __bind(this.flow, this);
+        this.invokeFinalCallbackIfNecessary = __bind(this.invokeFinalCallbackIfNecessary, this);
+        this.asyncTaskCompleted = __bind(this.asyncTaskCompleted, this);
+        this.functions = functions.slice(0);
+        this.finalCallback = finalCallback;
+        this.asyncCount = 0;
+        _ref = this.functions;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          func = _ref[_i];
+          if (func.length > 0) {
+            this.asyncCount += 1;
+          }
+        }
+      }
+
+      Waterfall.prototype.asyncTaskCompleted = function() {
+        this.asyncCount -= 1;
+        return this.flow();
+      };
+
+      Waterfall.prototype.invokeFinalCallbackIfNecessary = function() {
+        if (this.asyncCount === 0) {
+          if (typeof this.finalCallback === "function") {
+            this.finalCallback();
+          }
+          return this.finalCallback = void 0;
+        }
+      };
+
+      Waterfall.prototype.flow = function() {
+        var func;
+        if (this.functions.length === 0) {
+          return this.invokeFinalCallbackIfNecessary();
+        }
+        func = this.functions.shift();
+        if (func.length > 0) {
+          return func(this.asyncTaskCompleted);
+        } else {
+          func();
+          return this.flow();
+        }
+      };
+
+      return Waterfall;
+
+    })();
   })(jasmine);
 
 }).call(this);
