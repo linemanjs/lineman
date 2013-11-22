@@ -123,7 +123,7 @@ module.exports =
   enableAssetFingerprint: false
   assetFingerprint:
     options:
-      manifestPath: "dist/assets.json"
+      manifestPath: "<%= files.assetFingerprint.manifest %>"
 
     dist:
       expand: true

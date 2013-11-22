@@ -65,3 +65,6 @@ module.exports =
   webfonts:
     vendor: "vendor/webfonts/**/*.*"
     root: "webfonts"
+
+  assetFingerprint:
+    manifest: "dist/assets.json"
