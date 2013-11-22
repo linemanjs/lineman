@@ -126,10 +126,12 @@ module.exports =
       manifestPath: "<%= files.assetFingerprint.manifest %>"
 
     dist:
-      expand: true
-      cwd: "dist"
-      src: ["<%= files.js.minifiedWebRelative %>", "<%= files.css.minifiedWebRelative %>"]
-      dest: "dist"
+      files: [
+        expand: true
+        cwd: "dist"
+        src: ["<%= files.js.minifiedWebRelative %>", "<%= files.css.minifiedWebRelative %>"]
+        dest: "dist"
+      ]
 
   pages:
     dev:
