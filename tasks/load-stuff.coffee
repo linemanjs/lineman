@@ -13,6 +13,7 @@ module.exports = (grunt) ->
     "grunt-contrib-cssmin"
     "grunt-contrib-uglify"
     "grunt-watch-nospawn"
+    "grunt-asset-fingerprint"
   ]
 
   loadTask = (module) ->

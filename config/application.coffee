@@ -11,7 +11,7 @@ module.exports =
   appTasks:
     common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "pages:dist"]
+    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "assetFingerprint:dist", "pages:dist"]
   loadNpmTasks: []
 
   #code
@@ -118,6 +118,16 @@ module.exports =
       dest: "generated"
 
     dist:
+      dest: "dist"
+
+  assetFingerprint:
+    options:
+      manifestPath: "dist/assets.json"
+
+    dist:
+      expand: true
+      cwd: "dist"
+      src: ["<%= files.js.minifiedWebRelative %>", "<%= files.css.minifiedWebRelative %>"]
       dest: "dist"
 
   pages:

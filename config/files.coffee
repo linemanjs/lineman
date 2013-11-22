@@ -25,6 +25,7 @@ module.exports =
     concatenated: "generated/js/app.js"
     concatenatedSpec: "generated/js/spec.js"
     minified: "dist/js/app.js"
+    minifiedWebRelative: "js/app.js"
 
   less:
     app: "app/css/**/*.less"
@@ -44,6 +45,7 @@ module.exports =
     app: "app/css/**/*.css"
     concatenated: "generated/css/app.css"
     minified: "dist/css/app.css"
+    minifiedWebRelative: "css/app.css"
 
   template:
     handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"]
