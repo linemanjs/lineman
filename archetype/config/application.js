@@ -32,4 +32,12 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application
   //
   // enableSass: false
 
+  // Asset Fingerprints
+  //
+  // Lineman can fingerprint your static assets by appending a hash to the filename
+  // and logging a manifest of logical-to-hashed filenames in dist/assets.json
+  // via grunt-asset-fingerprint
+  //
+  // enableAssetFingerprint: false
+
 });

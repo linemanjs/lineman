@@ -23,6 +23,7 @@ module.exports = (grunt) ->
 
   npmTasks = grunt.util._(linemanNpmTasks).chain().
     union("grunt-contrib-sass" if config.enableSass).
+    union("grunt-asset-fingerprint" if config.enableAssetFingerprint).
     union(config.loadNpmTasks).
     compact().value()
 

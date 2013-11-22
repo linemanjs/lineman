@@ -120,6 +120,17 @@ module.exports =
     dist:
       dest: "dist"
 
+  enableAssetFingerprint: false
+  assetFingerprint:
+    options:
+      manifestPath: "<%= files.assetFingerprint.manifest %>"
+
+    dist:
+      expand: true
+      cwd: "dist"
+      src: ["<%= files.js.minifiedWebRelative %>", "<%= files.css.minifiedWebRelative %>"]
+      dest: "dist"
+
   pages:
     dev:
       files:
