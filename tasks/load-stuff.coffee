@@ -1,6 +1,9 @@
 fs = require('fs')
+hooks = require('./../lib/hooks')
 
 module.exports = (grunt) ->
+  _ = grunt.util._
+
   config = require("#{process.cwd()}/config/application")
   linemanNpmTasks = [
     "grunt-contrib-clean"
@@ -27,4 +30,6 @@ module.exports = (grunt) ->
     union(config.loadNpmTasks).
     compact().value()
 
-  loadTask task for task in npmTasks
+  _(npmTasks).each (taskName) ->
+    loadTask(taskName)
+    hooks.trigger("loadNpmTasks.afterLoad.#{taskName}", "afterLoad", taskName)
