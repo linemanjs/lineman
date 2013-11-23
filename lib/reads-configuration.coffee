@@ -4,7 +4,6 @@ module.exports = class ReadsConfiguration
   read: (propertyPath) ->
     config = require("#{process.cwd()}/config/application")
     value = if propertyPath? then @traverse(propertyPath.split("."), config) else config
-    console.log(value)
 
   traverse: (paths, value) ->
     if !value? || paths.length == 0

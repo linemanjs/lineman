@@ -289,6 +289,20 @@ To load NPM-based tasks that aren't part of the standard Lineman dependencies, y
   loadNpmTasks: ["npm_task_to_load"]
 ```
 
+#### Overcoming name conflicts with hooks
+
+One thing that comes up sometimes when you load a task via `loadNpmTasks` is a name conflict
+might emerge. You can work around this using Lineman's rudimentary `hooks` configuration.
+In `config/application`, you could do something like the following:
+
+``` coffeescript
+  hooks:
+    loadNpmTasks:
+      afterLoad:
+        "grunt-jasmine-bundle": ->
+          grunt.renameTask("spec", "nodeSpec")
+```
+
 ### Adding Custom tasks
 
 Lineman will automatically require all files in the `tasks` directory and load them into Grunt. If you have custom tasks, you

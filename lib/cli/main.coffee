@@ -3,7 +3,7 @@ grunt = require("grunt")
 cli = require("grunt/lib/grunt/cli")
 packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
-ReadsConfiguration = require("./reads-configuration")
+ReadsConfiguration = require("./../reads-configuration")
 _ = grunt.util._
 
 module.exports = ->
@@ -56,7 +56,8 @@ module.exports = ->
     description(" - get a value from lineman's configuration").
     action ->
       path = @args[0] if _(@args[0]).isString()
-      new ReadsConfiguration().read(path)
+      value = new ReadsConfiguration().read(path)
+      console.log(value)
 
   commander.
     command("clean").
