@@ -4,15 +4,35 @@ Description: run specs in ci mode
 Dependencies: grunt
 Contributor: @davemo
 ###
+
 module.exports = (grunt) ->
-  path = require("path")
+
   spawn = require("child_process").spawn
   testemRunnerPath = require("./../lib/testem-utils").testemRunnerPath
+  exposedTestemOptionDefaults = require("./../lib/testem-utils").exposedTestemOptionDefaults()
+  _ = grunt.util._
 
-  grunt.registerTask "spec-ci", "run specs in ci mode", (target) ->
+  grunt.registerTask "spec-ci", "run specs in ci mode", ->
+
+    reporter = grunt.config.get("spec_ci.reporter") || exposedTestemOptionDefaults.reporter
+    config   = grunt.config.get("spec_ci.config")   || exposedTestemOptionDefaults.config
+    port     = grunt.config.get("spec_ci.port")     || exposedTestemOptionDefaults.port
+    host     = grunt.config.get("spec_ci.host")     || exposedTestemOptionDefaults.host
+
+    testemFlags =
+      "-R"     : reporter
+      "-f"     : config
+      "-p"     : port
+      "--host" : host
+
+    args = _(testemFlags).chain()
+      .pairs()
+      .union(["ci"])
+      .flatten()
+      .value()
+
     try
       done = @async()
-      args = ["ci", "-f", path.resolve("#{process.cwd()}/config/spec.json")]
       options = { stdio: 'inherit'}
       child = spawn(testemRunnerPath(), args, options)
 
