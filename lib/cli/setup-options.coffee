@@ -5,7 +5,7 @@ module.exports = (commander, gruntCli) ->
   commander.option("--skip-examples", "lineman new - Skips the 'hello world' and other example files when creating a new project")
   _(gruntCli.optlist).each (option, name) ->
     unless name in ["help", "version"]
-      desc = "--#{name}"
+      desc = if option.negate then "--no-#{name}" else "--#{name}"
       desc = "-#{option.short}, #{desc}" if option.short
       commander.option(desc, "grunt - #{option.info}")
 
