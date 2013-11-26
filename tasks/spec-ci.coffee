@@ -4,6 +4,12 @@ Description: run specs in ci mode
 Dependencies: grunt
 Contributor: @davemo
 ###
+getRandomPort = ->
+  server = require('net').createServer()
+  port = server.listen(0).address().port
+  server.close()
+  port
+
 module.exports = (grunt) ->
   path = require("path")
   spawn = require("child_process").spawn
@@ -12,7 +18,11 @@ module.exports = (grunt) ->
   grunt.registerTask "spec-ci", "run specs in ci mode", (target) ->
     try
       done = @async()
-      args = ["ci", "-f", path.resolve("#{process.cwd()}/config/spec.json")]
+      args = [
+        "ci",
+        "-f", path.resolve("#{process.cwd()}/config/spec.json"),
+        "-p", getRandomPort()
+      ]
       options = { stdio: 'inherit'}
       child = spawn(testemRunnerPath(), args, options)
 
