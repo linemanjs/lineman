@@ -12,6 +12,6 @@
  * https://github.com/testdouble/lineman/blob/master/config/files.coffee
  */
 
-module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
+module.exports = require('./lineman').config.extend('files', {
   //Override file patterns here
 });
