@@ -1,8 +1,9 @@
 _ = require('grunt').util._
+buildsAppConfig = require('./builds-app-config')
 
 module.exports = class ReadsConfiguration
   read: (propertyPath) ->
-    config = require("#{process.cwd()}/config/application")
+    config = buildsAppConfig.withUserOverrides()
     value = if propertyPath? then @traverse(propertyPath.split("."), config) else config
 
   traverse: (paths, value) ->

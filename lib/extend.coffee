@@ -1,7 +1,9 @@
+buildsAppConfig = require('./builds-app-config')
 _ = require('grunt').util._
 extend = require('config-extend')
 
 module.exports = (key, config = {}) ->
-  original = require(__dirname+"/../config/#{key}")
-  override = if _(config).isFunction() then config(original) else config
-  extend(true, {}, original, override)
+  original = buildsAppConfig.withPlugins()[key]
+  userConfig = if _(config).isFunction() then config(original) else config
+  extend(true, {}, original, userConfig)
+
