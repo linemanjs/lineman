@@ -17,6 +17,7 @@ module.exports =
         overrideAppConfig(plugin, config.application, pluginPath)
         overrideFilesConfig(plugin, config.files)
 
+  # the user override configs will start with @withPlugins.
   withUserOverrides: ->
     extend true, {},
       require("#{process.cwd()}/config/application"),
@@ -25,7 +26,7 @@ module.exports =
 pluginFiles = ->
   grunt.file.expand([
     "#{__dirname}/../config/plugins/**/*",
-    "#{process.cwd()}/config/plugins/**/*",
+    "#{process.cwd()}/config/plugins/**/*"
   ])
 
 requirePlugin = (path, config) ->
@@ -38,15 +39,7 @@ linemanWithPluginConfigSoFar = (config) ->
     lineman.config.files = config.files
 
 overrideAppConfig = (plugin, appConfig, pluginPath) ->
-  appConfigName = appConfigNameForPlugin(pluginPath, plugin)
-  if plugin.config?
-    appConfig[appConfigName] ||= {}
-    extend(true, appConfig[appConfigName], plugin.config)
-
-appConfigNameForPlugin = (pluginPath, plugin) ->
-  return plugin.name if plugin.name?
-  _.str.camelize(path.basename(pluginPath).split('.')[0])
+  extend(true, appConfig, plugin.config) if plugin.config?
 
 overrideFilesConfig = (plugin, filesConfig) ->
-  return unless plugin.files?
-  extend(true, filesConfig, plugin.files)
+  extend(true, filesConfig, plugin.files) if plugin.files?

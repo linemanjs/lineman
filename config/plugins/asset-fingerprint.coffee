@@ -1,7 +1,8 @@
 module.exports = (lineman) ->
   config:
-    options:
-      manifestPath: "<%= files.assetFingerprint.manifest %>"
+    assetFingerprint:
+      options:
+        manifestPath: "<%= files.assetFingerprint.manifest %>"
 
     dist:
       files: [

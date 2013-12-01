@@ -1,11 +1,12 @@
 module.exports = (lineman) ->
   config:
-    files:
-      "vendor/webfonts/": "<%= files.webfonts.vendor %>"
+    webfonts:
+      files:
+        "vendor/webfonts/": "<%= files.webfonts.vendor %>"
 
-    root: "<%= files.webfonts.root %>"
-    dev:
-      dest: "generated"
+      root: "<%= files.webfonts.root %>"
+      dev:
+        dest: "generated"
 
-    dist:
-      dest: "dist"
+      dist:
+        dest: "dist"
