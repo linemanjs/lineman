@@ -1,9 +1,10 @@
 require('coffee-script');
+defaults = require('./lib/builds-app-config').default();
 
 module.exports = {
   config: {
-    application: require(__dirname+"/config/application"),
-    files: require(__dirname+"/config/files"),
+    application: defaults.application,
+    files: defaults.files,
     grunt: require(__dirname+"/config/grunt"),
     extend: require(__dirname+"/lib/extend")
   },
