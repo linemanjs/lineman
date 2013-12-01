@@ -13,6 +13,21 @@ module.exports =
     dev: ["server", "watch"]
     dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "pages:dist"]
 
+  removeTasks:
+    common: []
+    dev: []
+    dist: []
+
+  prependTasks:
+    common: []
+    dev: []
+    dist: []
+
+  appendTasks:
+    common: []
+    dev: []
+    dist: []
+
   loadNpmTasks: []
 
   enableSass: false

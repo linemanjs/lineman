@@ -2,6 +2,7 @@ extend = require('config-extend')
 grunt = require('grunt')
 path = require('path')
 _ = grunt.util._
+findsPluginModules = require('./finds-plugin-modules')
 
 module.exports =
 
@@ -24,10 +25,14 @@ module.exports =
       files: require("#{process.cwd()}/config/files")
 
 pluginFiles = ->
-  grunt.file.expand([
-    "#{__dirname}/../config/plugins/**/*",
-    "#{process.cwd()}/config/plugins/**/*"
-  ])
+  grunt.file.expand(pluginModulesFromNpm().concat(pluginFilesInsideProject()))
+
+pluginModulesFromNpm = ->
+  moduleNames = findsPluginModules.find().map (pluginModule) ->
+    "#{process.cwd()}/node_modules/#{pluginModule}/config/plugins/**/*"
+
+pluginFilesInsideProject = ->
+  ["#{__dirname}/../config/plugins/**/*", "#{process.cwd()}/config/plugins/**/*"]
 
 requirePlugin = (path, config) ->
   plugin = require(path)

@@ -1,5 +1,6 @@
 fs = require('fs')
 hooks = require('./../lib/hooks')
+findsPluginModules = require('./../lib/finds-plugin-modules')
 
 module.exports = (grunt) ->
   _ = grunt.util._
@@ -21,10 +22,20 @@ module.exports = (grunt) ->
   loadTask = (module) ->
     if fs.existsSync("#{process.cwd()}/node_modules/#{module}")
       grunt.loadNpmTasks(module)
+    else if modulePath = otherTaskModuleLocation(module)
+      grunt.loadTasks(modulePath)
     else
-      grunt.loadTasks("#{__dirname}/../node_modules/#{module}/tasks")
+      grunt.log.error("Task module #{module} not found")
 
-  npmTasks = grunt.util._(linemanNpmTasks).chain().
+  otherTaskModuleLocation = (taskModule) ->
+    _(pluginTaskModuleLocations(taskModule).concat("#{__dirname}/../node_modules/#{taskModule}/tasks")).
+      find(fs.existsSync)
+
+  pluginTaskModuleLocations = (taskModule) ->
+    _(findsPluginModules.find()).map (pluginModule) ->
+      "#{process.cwd()}/node_modules/#{pluginModule}/node_modules/#{taskModule}/tasks"
+
+  npmTasks = _(linemanNpmTasks).chain().
     union("grunt-contrib-sass" if config.enableSass).
     union("grunt-asset-fingerprint" if config.enableAssetFingerprint).
     union(config.loadNpmTasks).
