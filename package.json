@@ -30,7 +30,7 @@
     "node": "*"
   },
   "dependencies": {
-    "grunt": "0.4.1",
+    "grunt": "0.4.2",
     "grunt-contrib-clean": "0.5.0",
     "grunt-contrib-coffee": "0.7.0",
     "grunt-contrib-concat": "0.3.0",
@@ -44,15 +44,15 @@
     "grunt-watch-nospawn": "0.0.3",
     "grunt-asset-fingerprint": "0.0.1",
     "config-extend": "0.0.6",
-    "testem": "~0.5.12",
+    "testem": "0.5.12",
     "commander": "1.3.2",
     "express": "3.4.0",
     "http-proxy": "0.10.3",
     "coffee-script": "1.6.3",
     "watch_r-structr-lock": "0.0.1",
     "semver": "2.1.0",
-    "underscore": "~1.5.2",
-    "underscore.string": "~2.3.3"
+    "underscore": "1.5.2",
+    "underscore.string": "2.3.3"
   },
   "keywords": [
     "lineman"
