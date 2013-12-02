@@ -50,7 +50,9 @@
     "http-proxy": "0.10.3",
     "coffee-script": "1.6.3",
     "watch_r-structr-lock": "0.0.1",
-    "semver": "2.1.0"
+    "semver": "2.1.0",
+    "underscore": "~1.5.2",
+    "underscore.string": "~2.3.3"
   },
   "keywords": [
     "lineman"

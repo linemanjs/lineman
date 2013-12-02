@@ -4,7 +4,7 @@ cli = require("grunt/lib/grunt/cli")
 packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
 ReadsConfiguration = require("./../reads-configuration")
-_ = grunt.util._
+_ = require("underscore")
 
 module.exports = ->
   require("./setup-env")()
