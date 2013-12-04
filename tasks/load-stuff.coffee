@@ -1,11 +1,11 @@
 fs = require('fs')
 hooks = require('./../lib/hooks')
 findsPluginModules = require('./../lib/finds-plugin-modules')
+_ = require("underscore")
+config = require("#{process.cwd()}/config/application")
 
 module.exports = (grunt) ->
-  _ = grunt.util._
 
-  config = require("#{process.cwd()}/config/application")
   linemanNpmTasks = [
     "grunt-contrib-clean"
     "grunt-contrib-coffee"

@@ -1,6 +1,10 @@
 # Synchronous file helpers
 grunt = require("grunt")
 fs = require("fs")
+_ = require("underscore")
+_.str = require("underscore.string")
+_.mixin(_.str.exports())
+
 module.exports = ((_, fs, grunt) ->
   _({}).tap (exports) ->
     exports.copy = (src, dest) ->
@@ -55,4 +59,4 @@ module.exports = ((_, fs, grunt) ->
 
     configurationFileForName = (name) -> "#{process.cwd()}/config/#{name}"
 
-)(grunt.util._, fs, grunt)
+)(_, fs, grunt)

@@ -1,7 +1,8 @@
 extend = require('config-extend')
 grunt = require('grunt')
 path = require('path')
-_ = grunt.util._
+_ = require('underscore')
+
 findsPluginModules = require('./finds-plugin-modules')
 
 module.exports =

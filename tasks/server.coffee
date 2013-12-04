@@ -12,13 +12,14 @@ Configuration:
 "apiProxy.host" - the host to which API requests should be proxy, defaults to `localhost`)"
 "apiProxy.prefix" - an api prefix, to be used in conjunction with server.pushState to correctly identify requests that should go to the apiProxy"
 ###
+_         = require("underscore")
+http      = require("http")
+express   = require("express")
+httpProxy = require("http-proxy")
+fileUtils = require("./../lib/file-utils")
+watchr    = require('watch_r-structr-lock')
+
 module.exports = (grunt) ->
-  _ = grunt.util._
-  http = require("http")
-  express = require("express")
-  httpProxy = require("http-proxy")
-  fileUtils = require("./../lib/file-utils")
-  watchr = require('watch_r-structr-lock')
 
   grunt.registerTask "server", "static file & api proxy development server", ->
     apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000

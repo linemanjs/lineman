@@ -1,6 +1,8 @@
 grunt = require("grunt")
 exec = require("child_process").exec
-module.exports = ((_, exec) ->
+_ = require("underscore")
+
+module.exports = ->
   _({}).tap (exports) ->
     exports.installFrom = (path, callback) ->
       process.chdir(path)
@@ -13,5 +15,3 @@ module.exports = ((_, exec) ->
         callback(error)
 
     command = "npm install"
-
-)(grunt.util._, exec)
