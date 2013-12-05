@@ -32,7 +32,7 @@ pluginObjectBuilder = (dir, depth) ->
 descendantPluginCollector = (depth, knownPlugins) ->
   (deps, dep) ->
     allDeps = knownPlugins.concat(deps)
-    known = _(allDeps).find(knownPluginFinder(dep, depth))
+    known = _(allDeps).any(knownPluginFinder(dep, depth))
     descendants = plugins(dep.dir, depth + 1, allDeps) unless known
     tidyUnion(deps, descendants, dep)
 
