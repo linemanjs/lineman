@@ -32,7 +32,7 @@ pluginFilesFromLinemanCore = ->
 
 pluginModulesFromNpm = ->
   moduleNames = findsPluginModules.find().map (pluginModule) ->
-    "#{process.cwd()}/node_modules/#{pluginModule}/config/plugins/**/*"
+    "#{pluginModule.dir}/config/plugins/**/*"
 
 pluginFilesFromUserProject = ->
   ["#{process.cwd()}/config/plugins/**/*"]

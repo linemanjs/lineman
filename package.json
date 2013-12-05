@@ -41,7 +41,7 @@
     "grunt-contrib-sass": "0.5.0",
     "grunt-contrib-cssmin": "0.6.1",
     "grunt-contrib-uglify": "0.2.4",
-    "grunt-watch-nospawn": "0.0.3",
+    "grunt-watch-nospawn": "0.0.4",
     "grunt-asset-fingerprint": "0.0.1",
     "config-extend": "0.0.6",
     "testem": "~0.5.12",
@@ -50,7 +50,8 @@
     "http-proxy": "0.10.3",
     "coffee-script": "1.6.3",
     "watch_r-structr-lock": "0.0.1",
-    "semver": "2.1.0"
+    "semver": "2.1.0",
+    "resolve": "~0.6.1"
   },
   "keywords": [
     "lineman"

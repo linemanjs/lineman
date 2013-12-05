@@ -1,11 +1,14 @@
 fs = require('fs')
 hooks = require('./../lib/hooks')
 findsPluginModules = require('./../lib/finds-plugin-modules')
+resolvesQuietly = require('./../lib/resolves-quietly')
 
 module.exports = (grunt) ->
   _ = grunt.util._
 
   config = require("#{process.cwd()}/config/application")
+  pluginModules = findsPluginModules.find()
+
   linemanNpmTasks = [
     "grunt-contrib-clean"
     "grunt-contrib-coffee"
@@ -20,20 +23,22 @@ module.exports = (grunt) ->
   ]
 
   loadTask = (module) ->
-    if fs.existsSync("#{process.cwd()}/node_modules/#{module}")
+    if resolvesQuietly.resolve(module, basedir: process.cwd())
       grunt.loadNpmTasks(module)
-    else if modulePath = otherTaskModuleLocation(module)
-      grunt.loadTasks(modulePath)
+    else if path = otherTaskPathsFor(module)
+      grunt.loadTasks("#{path}/tasks")
     else
       grunt.log.error("Task module #{module} not found")
 
-  otherTaskModuleLocation = (taskModule) ->
-    _(pluginTaskModuleLocations(taskModule).concat("#{__dirname}/../node_modules/#{taskModule}/tasks")).
-      find(fs.existsSync)
+  otherTaskPathsFor = (taskModule) ->
+    _(pluginTaskModuleLocations(taskModule)).find(fs.existsSync) || resolvesQuietly.resolve(taskModule, basedir: "#{__dirname}/../")
 
   pluginTaskModuleLocations = (taskModule) ->
-    _(findsPluginModules.find()).map (pluginModule) ->
-      "#{process.cwd()}/node_modules/#{pluginModule}/node_modules/#{taskModule}/tasks"
+    _(pluginModules).chain()
+      .map (pluginModule) ->
+        resolvesQuietly.resolve(taskModule, basedir: pluginModule.dir)
+      .compact()
+      .value()
 
   npmTasks = _(linemanNpmTasks).chain().
     union("grunt-contrib-sass" if config.enableSass).
