@@ -9,9 +9,9 @@ module.exports =
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
 
   appTasks:
-    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "images:dev", "webfonts:dev", "pages:dev"]
+    common: ["coffee", "less", "jshint", "handlebars", "jst", "concat", "copy:dev", "images:dev", "webfonts:dev", "pages:dev"]
     dev: ["server", "watch"]
-    dist: ["uglify", "cssmin", "images:dist", "webfonts:dist", "pages:dist"]
+    dist: ["uglify", "cssmin", "copy:dist", "images:dist", "webfonts:dist", "pages:dist"]
 
   removeTasks:
     common: []
