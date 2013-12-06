@@ -42,6 +42,7 @@ deleteExampleFiles = (dest) ->
     "app/css/style.less",
     "app/js/hello.coffee",
     "app/templates/hello.us",
+    "app/static/favicon.ico",
     "spec/hello-spec.coffee",
     "vendor/js/underscore.js"
   ]).each (path) ->

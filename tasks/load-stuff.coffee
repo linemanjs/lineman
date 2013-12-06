@@ -13,6 +13,7 @@ module.exports = (grunt) ->
     "grunt-contrib-clean"
     "grunt-contrib-coffee"
     "grunt-contrib-concat"
+    "grunt-contrib-copy"
     "grunt-contrib-handlebars"
     "grunt-contrib-jshint"
     "grunt-contrib-jst"
