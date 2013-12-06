@@ -23,7 +23,7 @@ module.exports = (grunt) ->
   ]
 
   loadTask = (module) ->
-    if resolvesQuietly.resolve(module, basedir: process.cwd())
+    if fs.existsSync("#{process.cwd()}/node_modules/#{module}")
       grunt.loadNpmTasks(module)
     else if path = otherTaskPathsFor(module)
       grunt.loadTasks("#{path}/tasks")
