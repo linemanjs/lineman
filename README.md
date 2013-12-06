@@ -210,6 +210,7 @@ Lineman generates a very particular directory structure. It looks like this:
 ├── app
 │   ├── js                  # <-- JS & CoffeeScript
 │   ├── img                 # <-- images (are merged into the 'img' folder inside of generated & dist)
+│   ├── static              # <-- any other static files that need to be included in your built app
 │   └── pages               # <-- static HTML pages (underscore and handlebars templates are supported)
 │       └── index.us        # <-- a template used to produce the application's index.html
 │   └── templates           # <-- client-side templates
