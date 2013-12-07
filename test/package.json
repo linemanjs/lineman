@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "grunt": "~0.4.1",
-    "grunt-jasmine-bundle": ">= 0.0.2",
+    "grunt-jasmine-bundle": ">= 0.1.1",
     "sandboxed-module": "~0.2.2",
     "underscore": "~1.5.2"
   }

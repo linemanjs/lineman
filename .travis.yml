@@ -5,5 +5,10 @@ rvm:
   - 1.9.3
 before_install:
   - "npm install"
-install: "cd test && bundle install --without development"
-script: "bundle exec rspec"
+  - "cd test"
+install:
+  - "npm install"
+  - "bundle install --without development"
+script:
+  - "grunt spec:unit spec:e2e"
+  - "bundle exec rspec"
