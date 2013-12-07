@@ -9,7 +9,12 @@ before_install:
   - "cd test"
 install:
   - "npm install"
-  - "bundle install --without development"
+  - "bundle install --without development --deployment"
 script:
   - "grunt spec:unit spec:e2e"
   - "bundle exec rspec"
+cache:
+  directories:
+    - node_modules
+    - test/vendor/bundle
+    - test/node_modules
