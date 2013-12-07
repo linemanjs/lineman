@@ -6,9 +6,7 @@ rvm:
 env:
   - SELENIUM_VERSION=2.38.0
 before_install:
-  - wget http://selenium.googlecode.com/files/selenium-server-standalone-$SELENIUM_VERSION.jar
-  - export SELENIUM_SERVER_JAR="$(pwd)/selenium-server-standalone-$SELENIUM_VERSION.jar"
-  - java -jar $SELENIUM_SERVER_JAR > /dev/null 2>&1 &
+  - source ./test/script/start-selenium.sh
   - "npm install"
   - "npm install -g grunt-cli"
   - "cd test"
@@ -23,3 +21,4 @@ cache:
     - node_modules
     - test/vendor/bundle
     - test/node_modules
+    - test/bin
