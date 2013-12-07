@@ -4,16 +4,17 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     spec:
-      options:
-        minijasminenode:
-          showColors: true
-
       unit:
         options:
           helpers: "spec-unit/helpers/**/*.{js,coffee}"
           specs: "spec-unit/**/*.{js,coffee}"
+          minijasminenode:
+            showColors: true
 
       e2e:
         options:
           helpers: "spec-e2e/helpers/**/*.{js,coffee}"
           specs: ["spec-e2e/**/*.{js,coffee}", "!spec-e2e/tmp/**"]
+          minijasminenode:
+            showColors: true
+            onComplete: -> browser?.quit()

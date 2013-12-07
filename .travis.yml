@@ -3,7 +3,12 @@ node_js:
   - "0.10"
 rvm:
   - 1.9.3
+env:
+  - SELENIUM_VERSION=2.38.0
 before_install:
+  - wget http://selenium.googlecode.com/files/selenium-server-standalone-$SELENIUM_VERSION.jar
+  - export SELENIUM_SERVER_JAR="$(pwd)/selenium-server-standalone-$SELENIUM_VERSION.jar"
+  - java -jar $SELENIUM_SERVER_JAR > /dev/null 2>&1 &
   - "npm install"
   - "npm install -g grunt-cli"
   - "cd test"
