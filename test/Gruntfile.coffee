@@ -1,4 +1,5 @@
 #global module:false
+
 module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-jasmine-bundle')
 
@@ -17,4 +18,6 @@ module.exports = (grunt) ->
           specs: ["spec-e2e/**/*.{js,coffee}", "!spec-e2e/tmp/**"]
           minijasminenode:
             showColors: true
-            onComplete: -> browser?.quit()
+            onComplete: ->
+              require("./spec-e2e/helpers/tmp").delete()
+              browser?.quit()
