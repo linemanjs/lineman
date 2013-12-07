@@ -5,6 +5,7 @@ rvm:
   - 1.9.3
 before_install:
   - "npm install"
+  - "npm install -g grunt-cli"
   - "cd test"
 install:
   - "npm install"
