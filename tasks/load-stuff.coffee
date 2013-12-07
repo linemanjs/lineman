@@ -1,12 +1,13 @@
 fs = require('fs')
 hooks = require('./../lib/hooks')
 findsPluginModules = require('./../lib/finds-plugin-modules')
+buildsAppConfig = require('./../lib/builds-app-config')
 resolvesQuietly = require('./../lib/resolves-quietly')
 
 module.exports = (grunt) ->
   _ = grunt.util._
 
-  config = require("#{process.cwd()}/config/application")
+  config = buildsAppConfig.forGrunt()
   pluginModules = findsPluginModules.find()
 
   linemanNpmTasks = [

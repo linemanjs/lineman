@@ -1,7 +1,8 @@
 _ = require('grunt').util._
+buildsAppConfig = require('./../lib/builds-app-config')
 
 module.exports = (phase) ->
-  config = require("#{process.cwd()}/config/application")
+  config = buildsAppConfig.forGrunt()
   _([].concat(
     config.prependTasks?[phase]
     (if config.enableSass && phase == "common" then ["sass"] else [])

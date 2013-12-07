@@ -3,7 +3,7 @@ buildsAppConfig = require('./builds-app-config')
 
 module.exports = class ReadsConfiguration
   read: (propertyPath) ->
-    config = buildsAppConfig.withUserOverrides()
+    config = buildsAppConfig.forGrunt()
     value = if propertyPath? then @traverse(propertyPath.split("."), config) else config
 
   traverse: (paths, value) ->

@@ -6,23 +6,34 @@ findsPluginModules = require('./finds-plugin-modules')
 
 module.exports =
 
-  default: ->
-    extend true, {},
+  default: _.memoize ->
+    freshExtend
       application: require("./../config/application")
       files: require("./../config/files")
 
-  withPlugins: ->
-    _(@default()).tap (config) ->
+  withPlugins: _.memoize ->
+    _(@default()).extendTap (config) ->
       _(pluginFiles()).each (pluginPath) ->
         plugin = requirePlugin(pluginPath, config)
-        overrideAppConfig(plugin, config.application, pluginPath)
-        overrideFilesConfig(plugin, config.files)
+        overrideAppConfig(plugin?.config, config)
+        overrideFilesConfig(plugin?.files, config)
 
-  # the user override configs will start with @withPlugins.
-  withUserOverrides: ->
-    extend true, {},
-      require("#{process.cwd()}/config/application"),
-      files: require("#{process.cwd()}/config/files")
+  withUserOverrides: _.memoize ->
+    _(@withPlugins()).extendTap (config) =>
+      overrideAppConfig(loadUserOverride("application", config), config)
+      overrideFilesConfig(loadUserOverride("files", config), config)
+
+  forGrunt: ->
+    conf = @withUserOverrides()
+    freshExtend(conf.application, files: conf.files)
+
+freshExtend = (extensions...) ->
+  extend(true, {}, extensions...)
+
+_.mixin
+  extendTap: (object, tap) ->
+    _(freshExtend(object)).tap(tap)
+
 
 pluginFiles = ->
   grunt.file.expand(pluginFilesFromLinemanCore().concat(pluginModulesFromNpm(), pluginFilesFromUserProject()))
@@ -41,13 +52,17 @@ requirePlugin = (path, config) ->
   plugin = require(path)
   plugin?(linemanWithPluginConfigSoFar(config)) || plugin
 
+loadUserOverride = (name, config) ->
+  requirePlugin("#{process.cwd()}/config/#{name}", config)
+
 linemanWithPluginConfigSoFar = (config) ->
   _(require('./../lineman')).tap (lineman) ->
     lineman.config.application = config.application
     lineman.config.files = config.files
 
-overrideAppConfig = (plugin, appConfig, pluginPath) ->
-  extend(true, appConfig, plugin.config) if plugin.config?
+overrideAppConfig = (pluginConfig, config) ->
+  extend(true, config.application, pluginConfig) if pluginConfig?
 
-overrideFilesConfig = (plugin, filesConfig) ->
-  extend(true, filesConfig, plugin.files) if plugin.files?
+overrideFilesConfig = (pluginFiles, config) ->
+  extend(true, config.files, pluginFiles) if pluginFiles?
+
