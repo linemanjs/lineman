@@ -1,4 +1,4 @@
-describe.only "the hello world project", ->
+describe "the hello world project", ->
   beforeAll (done) -> lineman.new("hello-world", done)
 
   sharedExamplesFor "a hello world", ->
@@ -13,17 +13,38 @@ describe.only "the hello world project", ->
 
   describe "lineman build", ->
     Given (done) -> lineman.build(done)
-    Given (done) -> browser.get("file://#{lineman.projectPath()}/dist/index.html", done)
+    When (done) -> browser.get("file://#{lineman.projectPath()}/dist/index.html", done)
     itBehavesLike "a hello world"
 
   describe "lineman run", ->
     beforeAll (done) -> lineman.currentRun = lineman.run(done)
-    Given (done) -> browser.get("http://localhost:8000", done)
+    When (done) -> browser.get("http://localhost:8000", done)
 
     itBehavesLike "a hello world"
 
     describe "adding a CoffeeScript file", ->
-      Then -> #console.log _(browser).functions()
+      Given -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'")
+      Given (done) -> setTimeout(done, 1000)
+      Then (done) -> browser.eval "pants()", (err, val) ->
+        expect(val).toEqual("yay!")
+        done()
+
+      describe "then editing the file", ->
+        Given -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'")
+        Given (done) -> setTimeout(done, 1000)
+        Then (done) -> browser.eval "hats()", (err, val) ->
+          expect(val).toEqual("yay!")
+          done()
+        And (done) -> browser.eval "pants", (err, val) ->
+          expect(val).not.toBeDefined()
+          done()
+
+      describe "then removing the file", ->
+        Given -> linemanProject.removeFile("app/js/foo.coffee")
+        Given (done) -> setTimeout(done, 1000)
+        Then (done) -> browser.eval "pants", (err, val) ->
+          expect(val).not.toBeDefined()
+          done()
 
     afterAll -> lineman.currentRun.kill('SIGKILL')
 

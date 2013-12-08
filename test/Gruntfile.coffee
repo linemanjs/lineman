@@ -18,6 +18,7 @@ module.exports = (grunt) ->
           specs: ["spec-e2e/**/*.{js,coffee}", "!spec-e2e/tmp/**"]
           minijasminenode:
             showColors: true
+            defaultTimeoutInterval: 10000
             onComplete: ->
               require("./spec-e2e/helpers/tmp").delete()
               browser?.quit()

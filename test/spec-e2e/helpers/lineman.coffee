@@ -4,8 +4,7 @@ spawn = require("child_process").spawn
 currentLinemanPath = null
 linemanBinPath = "#{process.cwd()}/../cli.js"
 
-global.lineman =
-  projectPath: -> currentLinemanPath
+global.lineman = module.exports =
   new: (name, callback, done) ->
     currentLinemanPath = process.env.SPEC_TEMP_DIR
     exec("new", name, standardResponder(callback, done))
@@ -16,7 +15,9 @@ global.lineman =
 
   run: (done) ->
     _(exec("run", ->)).tap (child) ->
-      setTimeout(done, 1000)
+      setTimeout(done, 3000)
+
+  projectPath: -> currentLinemanPath
 
 exec = (args..., callback) ->
   chdir currentLinemanPath, ->

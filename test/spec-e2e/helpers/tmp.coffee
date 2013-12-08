@@ -2,7 +2,7 @@ rimraf = require('rimraf')
 fs = require('fs')
 tempDir = process.env.SPEC_TEMP_DIR = "#{process.cwd()}/tmp"
 
-module.exports = self =
+module.exports = tmp =
   create: ->
     fs.mkdirSync(tempDir) unless fs.existsSync(tempDir)
   delete: ->
@@ -10,7 +10,6 @@ module.exports = self =
       rimraf.sync(process.env.SPEC_TEMP_DIR)
 
 beforeAll ->
-  self.delete()
-  self.create()
-
+  tmp.delete()
+  tmp.create()
 
