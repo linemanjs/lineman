@@ -1,8 +1,6 @@
 language: node_js
 node_js:
   - "0.10"
-rvm:
-  - 1.9.3
 env:
   - SELENIUM_VERSION=2.38.0
 before_install:
@@ -10,15 +8,10 @@ before_install:
   - "npm install"
   - "npm install -g grunt-cli"
   - "cd test"
-install:
-  - "npm install"
-  - "bundle install --without development --deployment"
-script:
-  - "grunt spec:unit spec:e2e"
-  - "bundle exec rspec"
+install: "npm install"
+script: "grunt spec:unit spec:e2e"
 cache:
   directories:
     - node_modules
-    - test/vendor/bundle
     - test/node_modules
     - test/bin
