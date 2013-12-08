@@ -14,6 +14,10 @@ global.lineman =
   build: (callback, done) ->
     exec("build", standardResponder(callback, done))
 
+  run: (done) ->
+    _(exec("run", ->)).tap (child) ->
+      setTimeout(done, 1000)
+
 exec = (args..., callback) ->
   chdir currentLinemanPath, ->
     child = spawn(linemanBinPath, args)
@@ -22,8 +26,8 @@ exec = (args..., callback) ->
       result += data.toString()
 
     child.on "close", (code) ->
-      if code == 0
-        callback(result)
+      if Number(code) == 0
+        callback?(result)
       else
         throw new Error """
                         Failed when running `lineman #{args.join(' ')}`.
