@@ -1,0 +1,1 @@
+global._ = require('underscore')

@@ -1,0 +1,14 @@
+{
+  "name": "lineman-tests",
+  "description": "",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jasmine-bundle": ">= 0.1.4",
+    "sandboxed-module": "~0.2.2",
+    "underscore": "~1.5.2",
+    "wd": "~0.2.6",
+    "rimraf": "~2.2.4"
+  }
+}
