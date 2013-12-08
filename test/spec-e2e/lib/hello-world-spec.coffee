@@ -17,7 +17,13 @@ describe.only "the hello world project", ->
     itBehavesLike "a hello world"
 
   describe "lineman run", ->
-    Given (done) -> @child = lineman.run(done)
+    beforeAll (done) -> lineman.currentRun = lineman.run(done)
     Given (done) -> browser.get("http://localhost:8000", done)
+
     itBehavesLike "a hello world"
-    afterEach -> @child.kill('SIGKILL')
+
+    describe "adding a CoffeeScript file", ->
+      Then -> #console.log _(browser).functions()
+
+    afterAll -> lineman.currentRun.kill('SIGKILL')
+
