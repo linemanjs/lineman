@@ -2,7 +2,7 @@
 Task: server
 Description: server static files and proxy API (server-side) requests from another port
 Dependencies: grunt
-Contributor: @dmosher, @searls
+Contributor: @davemo, @searls
 
 Configuration:
 "base" - the path from which to serve static assets from (this should almost always be left to the default value of "generated")
