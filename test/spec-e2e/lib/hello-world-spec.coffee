@@ -2,49 +2,36 @@ describe "the hello world project", ->
   beforeAll (done) -> lineman.new("hello-world", done)
 
   sharedExamplesFor "a hello world", ->
-    When (done) -> browser.elementByCss ".hello", (err, el) => @el = el; done()
-
-    Then (done) ->  browser.text @el, (err, text) ->
-      expect(text).toEqual("Hello, World!")
-      done()
-    And (done) -> browser.getComputedCss @el, "backgroundColor", (err, css) ->
-      expect(css).toEqual("rgb(239, 239, 239)")
-      done()
+    When -> @el = browser.findElementByCssSelector('.hello')
+    Then -> "Hello, World!" @el.getText()
+    And -> @el.getCssValue('backgroundColor') == "rgb(239, 239, 239)"
 
   describe "lineman build", ->
     Given (done) -> lineman.build(done)
-    When (done) -> browser.get("file://#{lineman.projectPath()}/dist/index.html", done)
+    When -> browser.get("file://#{lineman.projectPath()}/dist/index.html")
     itBehavesLike "a hello world"
 
   describe "lineman run", ->
     beforeAll (done) -> lineman.currentRun = lineman.run(done)
-    When (done) -> browser.get("http://localhost:8000", done)
+    When -> browser.get("http://localhost:8000")
 
     itBehavesLike "a hello world"
 
     describe "adding a CoffeeScript file", ->
       Given -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'")
       Given (done) -> setTimeout(done, 1000)
-      Then (done) -> browser.eval "pants()", (err, val) ->
-        expect(val).toEqual("yay!")
-        done()
+      Then -> browser.eval("pants()") == "yay!"
 
       describe "then editing the file", ->
         Given -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'")
         Given (done) -> setTimeout(done, 1000)
-        Then (done) -> browser.eval "hats()", (err, val) ->
-          expect(val).toEqual("yay!")
-          done()
-        And (done) -> browser.eval "pants", (err, val) ->
-          expect(val).not.toBeDefined()
-          done()
+        Then -> browser.eval("hats()") == "yay!"
+        And -> browser.eval("pants") == undefined
 
       describe "then removing the file", ->
         Given -> linemanProject.removeFile("app/js/foo.coffee")
         Given (done) -> setTimeout(done, 1000)
-        Then (done) -> browser.eval "pants", (err, val) ->
-          expect(val).not.toBeDefined()
-          done()
+        Then -> browser.eval("pants") == undefined
 
     afterAll -> lineman.currentRun.kill('SIGKILL')
 

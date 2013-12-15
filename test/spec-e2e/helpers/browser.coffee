@@ -1,11 +1,7 @@
-wd = require 'wd'
+wd = require 'webdriver-sync'
 
-beforeEach (done) ->
-  global.browser = wd.remote()
-  browser.init
-    browserName: process.env.USE_BROWSER || 'phantomjs'
-  , done
-
+beforeEach ->
+  global.browser = new wd.ChromeDriver()
 
 afterEach ->
   browser.quit()
