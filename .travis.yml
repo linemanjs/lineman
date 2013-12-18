@@ -9,7 +9,9 @@ before_install:
   - "npm install -g grunt-cli"
   - "cd test"
 install: "npm install"
-script: "grunt spec:unit spec:e2e"
+script:
+  - "grunt spec:unit"
+  - "grunt spec:e2e"
 cache:
   directories:
     - node_modules

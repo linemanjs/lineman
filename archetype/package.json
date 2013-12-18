@@ -10,8 +10,8 @@
   "devDependencies": {
     "lineman": "<%= versions.lineman %>"
   },
-  "engines": {
-    "node": "~>0.10.5",
-    "npm": "~>1.2.18"
+  "scripts": {
+    "start": "lineman run",
+    "test": "lineman spec-ci"
   }
 }
