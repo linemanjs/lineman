@@ -1,7 +1,5 @@
-wd = require 'webdriver-sync'
+wd = require('webdriver-sync')
 
-beforeEach ->
+beforeAll ->
   global.browser = new wd.ChromeDriver()
-
-afterEach ->
-  browser.quit()
+  browser.eval = (code) -> browser.executeScript("return #{code}")

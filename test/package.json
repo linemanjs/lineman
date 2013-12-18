@@ -9,6 +9,6 @@
     "sandboxed-module": "~0.2.2",
     "underscore": "~1.5.2",
     "rimraf": "~2.2.4",
-    "webdriver-sync": "~0.4.0"
+    "webdriver-sync": "~0.4.3"
   }
 }
