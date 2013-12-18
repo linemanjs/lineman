@@ -13,9 +13,5 @@
   "scripts": {
     "start": "lineman run",
     "test": "lineman spec-ci"
-  },
-  "engines": {
-    "node": "~>0.10.5",
-    "npm": "~>1.2.18"
   }
 }
