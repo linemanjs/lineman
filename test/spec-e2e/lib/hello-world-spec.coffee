@@ -3,7 +3,7 @@ describe "the hello world project", ->
 
   sharedExamplesFor "a hello world", ->
     When -> @el = browser.findElementByCssSelector('.hello')
-    Then -> "Hello, World!" @el.getText()
+    Then -> "Hello, World!" == @el.getText()
     And -> @el.getCssValue('backgroundColor') == "rgb(239, 239, 239)"
 
   describe "lineman build", ->
