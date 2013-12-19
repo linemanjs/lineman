@@ -19,6 +19,7 @@ module.exports = (grunt) ->
   httpProxy = require("http-proxy")
   fileUtils = require("./../lib/file-utils")
   watchr = require('watch_r-structr-lock')
+  fs = require("fs")
 
   grunt.registerTask "server", "static file & api proxy development server", ->
     apiPort = process.env.API_PORT || grunt.config.get("server.apiProxy.port") || 3000
@@ -28,6 +29,7 @@ module.exports = (grunt) ->
     apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin") || undefined
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
+    staticRoutes = grunt.config.get("server.staticRoutes")
     userConfig = fileUtils.loadConfigurationFile("server")
     pushStateEnabled = grunt.config.get("server.pushState")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
@@ -39,6 +41,7 @@ module.exports = (grunt) ->
     app.configure ->
       app.use(express.compress())
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
+      mountUserStaticRoutes(app, webRoot, staticRoutes)
 
       userConfig.drawRoutes?(app)
       addBodyParserCallbackToRoutes(app)
@@ -61,6 +64,12 @@ module.exports = (grunt) ->
 
     server.listen webPort, ->
       resetRoutesOnServerConfigChange(app)
+
+  mountUserStaticRoutes = (app, webRoot, staticRoutes) ->
+    _(staticRoutes).each (src, dest) ->
+      path = if fs.existsSync(src) then src else "#{process.cwd()}/#{webRoot}/#{src}"
+      grunt.log.writeln("Mounting static assets found in `#{path}` to route `#{dest}`")
+      app.use(dest, express.static(path))
 
   pushStateSimulator = (cwd, webRoot) ->
     (req, res, next) ->
