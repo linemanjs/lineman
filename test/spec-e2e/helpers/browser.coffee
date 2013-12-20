@@ -1,5 +1,9 @@
-wd = require('webdriver-sync')
+webdriverSync = require('webdriver-sync')
 
-beforeAll ->
-  global.browser = if process.env.HEADLESS then new wd.PhantomJSDriver() else new wd.ChromeDriver()
-  browser.eval = (code) -> browser.executeScript("return #{code}")
+global.browser = if process.env.HEADLESS
+  new webdriverSync.PhantomJSDriver()
+else
+  new webdriverSync.ChromeDriver()
+
+browser.eval = (code) ->
+  browser.executeScript("return #{code}")
