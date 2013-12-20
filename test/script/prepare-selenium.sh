@@ -15,5 +15,5 @@ fi
 
 # Drop stuff where webdriver-sync wants to see it.
 mkdir ~/.webdriver-sync
-ln -s $SELENIUM_SERVER_JAR "$HOME/.webdriver-sync"
+ln -s $SELENIUM_SERVER_JAR "$HOME/.webdriver-sync/selenium-server-standalone.jar"
 touch ~/.webdriver-sync/chromedriver
