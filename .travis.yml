@@ -2,9 +2,9 @@ language: node_js
 node_js:
   - "0.10"
 env:
-  - SELENIUM_VERSION=2.38.0
+  - HEADLESS=true SELENIUM_VERSION=2.38.0
 before_install:
-  - source ./test/script/start-selenium.sh
+  - source ./test/script/prepare-selenium.sh
   - "npm install"
   - "npm install -g grunt-cli"
   - "cd test"

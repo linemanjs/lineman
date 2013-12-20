@@ -22,3 +22,4 @@ module.exports = (grunt) ->
             onComplete: ->
               require("./spec-e2e/helpers/tmp").delete()
               browser?.quit()
+              lineman?.currentRun?.kill?('SIGKILL')
