@@ -3,6 +3,7 @@ node_js:
   - "0.10"
 env:
   - SELENIUM_VERSION=2.38.0
+  - HEADLESS=true
 before_install:
   - source ./test/script/start-selenium.sh
   - "npm install"
