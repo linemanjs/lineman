@@ -32,6 +32,7 @@ module.exports = (grunt) ->
     staticRoutes = grunt.config.get("server.staticRoutes")
     userConfig = fileUtils.loadConfigurationFile("server")
     pushStateEnabled = grunt.config.get("server.pushState")
+    relativeUrlRoot = grunt.config.get("server.relativeUrlRoot")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
     app = express()
     server = http.createServer(app)
@@ -62,8 +63,14 @@ module.exports = (grunt) ->
     grunt.log.writeln("Starting express web server in '#{webRoot}' on port #{webPort}")
     grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
 
-    server.listen webPort, ->
+    applyRelativeUrlRoot(app, relativeUrlRoot).listen webPort, ->
       resetRoutesOnServerConfigChange(app)
+
+  applyRelativeUrlRoot = (app, relativeUrlRoot) ->
+    return app unless relativeUrlRoot?
+    grunt.log.writeln("Mounting application at path '#{relativeUrlRoot}'.")
+    _(express()).tap (otherApp) ->
+      otherApp.use(relativeUrlRoot, app)
 
   mountUserStaticRoutes = (app, webRoot, staticRoutes) ->
     _(staticRoutes).each (src, dest) ->
