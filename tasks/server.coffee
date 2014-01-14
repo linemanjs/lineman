@@ -59,7 +59,7 @@ module.exports = (grunt) ->
       userConfig.drawRoutes?(app)
       app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
 
-    grunt.log.writeln("Starting express web server in \"./generated\" on port #{webPort}")
+    grunt.log.writeln("Starting express web server in '#{webRoot}' on port #{webPort}")
     grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
 
     server.listen webPort, ->
