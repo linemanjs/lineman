@@ -9,8 +9,8 @@ before_install:
   - "cd test"
 install: "npm install"
 script:
-  - "grunt spec:unit"
-  - "grunt spec:e2e"
+  - "grunt spec:unit --stack"
+  - "grunt spec:e2e --stack"
 cache:
   directories:
     - node_modules
