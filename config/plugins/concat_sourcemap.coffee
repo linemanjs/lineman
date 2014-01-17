@@ -7,6 +7,7 @@ module.exports = (lineman) ->
       js:
         src: [
           "<%= files.js.vendor %>"
+          "<%= files.template.generated %>"
           "<%= files.js.app %>"
           "<%= files.coffee.generated %>"
         ]
