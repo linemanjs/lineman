@@ -7,14 +7,14 @@ linemanBinPath = "#{process.cwd()}/../cli.js"
 global.lineman = module.exports =
   new: (name, callback, done) ->
     currentLinemanPath = process.env.SPEC_TEMP_DIR
-    exec("new", name, standardResponder(callback, done))
+    exec("new", "--stack", name, standardResponder(callback, done))
     currentLinemanPath += "/#{name}"
 
   build: (callback, done) ->
-    exec("build", standardResponder(callback, done))
+    exec("build", "--stack", standardResponder(callback, done))
 
   run: (done) ->
-    _(exec("run", ->)).tap (child) ->
+    _(exec("run", "--stack", ->)).tap (child) ->
       setTimeout(done, 3000)
 
   projectPath: -> currentLinemanPath
