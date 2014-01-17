@@ -13,7 +13,7 @@ module.exports = (grunt) ->
   linemanNpmTasks = [
     "grunt-contrib-clean"
     "grunt-contrib-coffee"
-    "grunt-contrib-concat"
+    "grunt-concat-sourcemap"
     "grunt-contrib-copy"
     "grunt-contrib-handlebars"
     "grunt-contrib-jshint"
