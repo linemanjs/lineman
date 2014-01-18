@@ -37,6 +37,10 @@ module.exports = (lineman) ->
         files: "<%= files.template.handlebars %>"
         tasks: ["handlebars", "concat:js"]
 
+      jade:
+        files: "<%= files.template.jade %>"
+        tasks: ["jade", "concat:js"]
+
       underscore:
         files: "<%= files.template.underscore %>"
         tasks: ["jst", "concat:js"]
