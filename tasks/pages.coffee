@@ -43,6 +43,8 @@ module.exports = (grunt) ->
       _(source).template()(context)
     else if format in ["handlebar", "hb", "handlebars"]
       locateHandlebars().compile(source)(context)
+    else if format in ["jade"]
+      locateJade().compile(source)(context)
     else
       ""
 
@@ -53,6 +55,14 @@ module.exports = (grunt) ->
     else
       grunt.log.writeln('NOTE: please add the `handlebars` module to your package.json, as Lineman doesn\'t include it directly. Attempting to Handlebars load naively (this may blow up).').
       require("handlebars")
+
+  locateJade = ->
+    jadePath = process.cwd()+'/node_modules/jade'
+    if fs.existsSync(jadePath)
+      require(jadePath)
+    else
+      grunt.log.writeln('NOTE: please add the `jade` module to your package.json, as Lineman doesn\'t include it directly. Attempting to load Jade naively (this may blow up).').
+      require("jade")
 
   buildTemplateContext = (task) ->
     _(grunt.config.get()).

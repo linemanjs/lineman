@@ -50,8 +50,10 @@ module.exports =
   template:
     handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"]
     underscore: ["app/templates/**/*.underscore", "app/templates/**/*.us"]
+    jade: ["app/templates/**/*.jade"]
     generatedHandlebars: "generated/template/handlebars.js"
     generatedUnderscore: "generated/template/underscore.js"
+    generatedJade: "generated/template/jade.js"
     generated: "generated/template/**/*.js"
 
   pages:
