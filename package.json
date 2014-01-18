@@ -58,6 +58,6 @@
     "grunt-release": "~0.6.0"
   },
   "keywords": [
-    "lineman"
+    "lineman", "grunt", "yeoman", "build", "happiness"
   ]
 }
