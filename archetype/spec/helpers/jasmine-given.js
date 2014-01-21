@@ -1,17 +1,79 @@
-/* jasmine-given - 2.5.1
+/* jasmine-given - 2.6.0
  * Adds a Given-When-Then DSL to jasmine as an alternative style for specs
  * https://github.com/searls/jasmine-given
  */
+/* jasmine-matcher-wrapper - 0.0.2
+ * Wraps Jasmine 1.x matchers for use with Jasmine 2
+ * https://github.com/testdouble/jasmine-matcher-wrapper
+ */
+(function() {
+  var __slice = [].slice,
+    __hasProp = {}.hasOwnProperty;
+
+  (function(jasmine) {
+    var comparatorFor;
+    if (jasmine == null) {
+      return typeof console !== "undefined" && console !== null ? console.warn("jasmine was not found. Skipping jasmine-matcher-wrapper. Verify your script load order.") : void 0;
+    }
+    if (jasmine.matcherWrapper != null) {
+      return;
+    }
+    comparatorFor = function(matcher, isNot) {
+      return function() {
+        var actual, context, message, params, pass, _ref;
+        actual = arguments[0], params = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+        context = {
+          actual: actual,
+          isNot: isNot
+        };
+        pass = matcher.apply(context, params);
+        if (isNot) {
+          pass = !pass;
+        }
+        if (!pass) {
+          message = (_ref = context.message) != null ? _ref.apply(context, params) : void 0;
+        }
+        return {
+          pass: pass,
+          message: message
+        };
+      };
+    };
+    return jasmine.matcherWrapper = {
+      wrap: function(matchers) {
+        var matcher, name, wrappedMatchers;
+        if (jasmine.addMatchers == null) {
+          return matchers;
+        }
+        wrappedMatchers = {};
+        for (name in matchers) {
+          if (!__hasProp.call(matchers, name)) continue;
+          matcher = matchers[name];
+          wrappedMatchers[name] = function() {
+            return {
+              compare: comparatorFor(matcher, false),
+              negativeCompare: comparatorFor(matcher, true)
+            };
+          };
+        }
+        return wrappedMatchers;
+      }
+    };
+  })(jasmine || getJasmineRequireObj());
+
+}).call(this);
+
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   (function(jasmine) {
-    var Waterfall, additionalInsightsForErrorMessage, apparentReferenceError, attemptedEquality, comparisonInsight, declareJasmineSpec, deepEqualsNotice, doneWrapperFor, evalInContextOfSpec, finalStatementFrom, getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, wasComparison, whenList, wrapAsExpectations;
+    var Waterfall, additionalInsightsForErrorMessage, apparentReferenceError, attemptedEquality, comparisonInsight, currentSpec, declareJasmineSpec, deepEqualsNotice, doneWrapperFor, evalInContextOfSpec, finalStatementFrom, getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, wasComparison, whenList, wrapAsExpectations;
     mostRecentlyUsed = null;
-    beforeEach(function() {
-      return this.addMatchers(jasmine._given.matchers);
-    });
     root = this;
+    currentSpec = null;
+    beforeEach(function() {
+      return currentSpec = this;
+    });
     root.Given = function() {
       mostRecentlyUsed = root.Given;
       return beforeEach(getBlock(arguments));
@@ -50,7 +112,7 @@
       });
       return doneWrapperFor(setupFunction, function(done) {
         var context, result;
-        context = jasmine.getEnv().currentSpec;
+        context = currentSpec;
         result = setupFunction.call(context, done);
         if (assignResultTo) {
           if (!context[assignResultTo]) {
@@ -92,7 +154,7 @@
         expectation = expectations[i];
         _results.push((function(expectation, i) {
           return doneWrapperFor(expectation, function(maybeDone) {
-            return expect(expectation).not.toHaveReturnedFalseFromThen(jasmine.getEnv().currentSpec, i + 1, maybeDone);
+            return expect(expectation).not.toHaveReturnedFalseFromThen(currentSpec, i + 1, maybeDone);
           });
         })(expectation, i));
       }
@@ -230,19 +292,27 @@
       try {
         return (function() {
           return eval(operand);
-        }).call(jasmine.getEnv().currentSpec);
+        }).call(currentSpec);
       } catch (_error) {
         e = _error;
         return "<Error: \"" + ((e != null ? typeof e.message === "function" ? e.message() : void 0 : void 0) || e) + "\">";
       }
     };
     attemptedEquality = function(left, right, comparator) {
-      return (comparator === "==" || comparator === "===") && jasmine.getEnv().equals_(left, right);
+      var _ref;
+      if (!(comparator === "==" || comparator === "===")) {
+        return false;
+      }
+      if (((_ref = jasmine.matchersUtil) != null ? _ref.equals : void 0) != null) {
+        return jasmine.matchersUtil.equals(left, right);
+      } else {
+        return jasmine.getEnv().equals_(left, right);
+      }
     };
     deepEqualsNotice = function(left, right) {
       return "However, these items are deeply equal! Try an expectation like this instead:\n  expect(" + left + ").toEqual(" + right + ")";
     };
-    return Waterfall = (function() {
+    Waterfall = (function() {
       function Waterfall(functions, finalCallback) {
         var func, _i, _len, _ref;
         if (functions == null) {
@@ -294,6 +364,13 @@
       return Waterfall;
 
     })();
+    return beforeEach(function() {
+      if (jasmine.addMatchers != null) {
+        return jasmine.addMatchers(jasmine.matcherWrapper.wrap(jasmine._given.matchers));
+      } else {
+        return this.addMatchers(jasmine._given.matchers);
+      }
+    });
   })(jasmine);
 
 }).call(this);
