@@ -16,3 +16,7 @@ cache:
     - node_modules
     - test/node_modules
     - test/bin
+notifications:
+  webhooks:
+    # slack
+    - secure: "AwFzYQOGpa7pg93by37rbaQ57P/UPRgVdJTWtdYtH4bcGeuwPeFzzm9L71r8xrNqQW8KOOUlM51UEGzNG801tGJWOr9dBxXxlwj/F8qKNFx8IoOb8ZjUJBO2dGu22+cnyiWhXhk4YtRTrGM5GapagAPl5X/9PRt3mu5rn6+c8fI="
