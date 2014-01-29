@@ -8,10 +8,8 @@ module.exports = (phase) ->
     (if config.enableSass && phase == "common" then ["sass"] else [])
     config.appTasks?[phase]
     config.appendTasks?[phase]
+    (if config.enableAssetFingerprint && phase == "dist" then ["assetFingerprint"] else [])
   )).chain().
-    tap((tasks) ->
-      if config.enableAssetFingerprint && phase == "dist"
-        tasks.splice(tasks.indexOf("pages:dist"), 0, "assetFingerprint:dist")
-  ).difference(config.removeTasks?[phase]).
-  compact().
-  value()
+    difference(config.removeTasks?[phase]).
+    compact().
+    value()

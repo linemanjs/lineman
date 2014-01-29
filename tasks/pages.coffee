@@ -55,19 +55,4 @@ module.exports = (grunt) ->
       require("handlebars")
 
   buildTemplateContext = (task) ->
-    _(grunt.config.get()).
-      chain().
-      extend(task.data.context).
-      tap( (context) ->
-        overrideTemplateContextWithFingerprints(context, task)
-      ).value()
-
-  overrideTemplateContextWithFingerprints = (context, task) ->
-    return unless context.enableAssetFingerprint
-    if task.target == "dist"
-      manifest = JSON.parse(grunt.file.read(context.files.assetFingerprint.manifest))
-      context.assets = _({}).extend(context.assets, manifest)
-      context.js = context.assets[context.js] if context.js?
-      context.css = context.assets[context.css] if context.css?
-    else
-      context.assets ||= {}
+    _(grunt.config.get()).extend(task.data.context)

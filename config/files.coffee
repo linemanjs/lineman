@@ -68,3 +68,4 @@ module.exports =
 
   assetFingerprint:
     manifest: "dist/assets.json"
+    textFiles: ["dist/**/*.{js,css,html,xml}"]
