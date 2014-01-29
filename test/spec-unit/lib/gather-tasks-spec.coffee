@@ -76,11 +76,7 @@ describe 'gatherTasks', ->
       Given -> @phase = "dist"
       context "normal", ->
         Given -> @config.appTasks[@phase] = ["foo", "pages:dist"]
-        Then -> expect(@result).toEqual(["foo", "assetFingerprint:dist", "pages:dist"])
-
-      context "with pages removed", ->
-        Given -> @config.appTasks[@phase] = ["foo"]
-        Then -> expect(@result).toEqual(["foo", "assetFingerprint:dist"])
+        Then -> expect(@result).toEqual(["foo", "pages:dist", "assetFingerprint"])
 
     context "non-dist", ->
       Given -> @phase = "bar"
