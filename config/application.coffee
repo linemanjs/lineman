@@ -10,7 +10,7 @@ module.exports =
 
   appTasks:
     common: ["coffee", "less", "jshint", "handlebars", "jst", "concat_sourcemap", "copy:dev", "images:dev", "webfonts:dev", "pages:dev"]
-    dev: ["server", "watch"]
+    dev: ["server", "open", "watch"]
     dist: ["uglify", "cssmin", "copy:dist", "images:dist", "webfonts:dist", "pages:dist"]
 
   removeTasks:

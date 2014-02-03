@@ -55,7 +55,8 @@
     "grunt-concat-sourcemap": "~0.4.0"
   },
   "devDependencies": {
-    "grunt-release": "~0.6.0"
+    "grunt-release": "~0.6.0",
+    "grunt-open": "~0.2.3"
   },
   "keywords": [
     "lineman",

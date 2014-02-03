@@ -21,6 +21,7 @@ module.exports = (grunt) ->
     "grunt-contrib-less"
     "grunt-contrib-cssmin"
     "grunt-contrib-uglify"
+    "grunt-open"
     "grunt-watch-nospawn"
   ]
 
