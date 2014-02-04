@@ -66,7 +66,7 @@ printWelcome = (projectName) ->
                    * `lineman clean` empties the "dist" and "generated" directories
                    * `lineman spec` runs specs from the "specs" directory using testem
 
-               For more info, check out http://github.com/testdouble/lineman
+               For more info, check out http://github.com/linemanjs/lineman
                """
 
 fail = (message) ->

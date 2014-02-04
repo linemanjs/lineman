@@ -2,7 +2,7 @@
   "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
   "version": "0.24.2",
-  "homepage": "https://github.com/testdouble/lineman",
+  "homepage": "https://github.com/linemanjs/lineman",
   "author": {
     "name": "Justin Searls",
     "company": "Test Double",
@@ -11,10 +11,10 @@
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/testdouble/lineman.git"
+    "url": "git://github.com/linemanjs/lineman.git"
   },
   "bugs": {
-    "url": "https://github.com/testdouble/lineman/issues"
+    "url": "https://github.com/linemanjs/lineman/issues"
   },
   "licenses": [
     {

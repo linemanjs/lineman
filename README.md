@@ -1,6 +1,6 @@
 # Lineman
 
-[![Build Status](https://travis-ci.org/testdouble/lineman.png?branch=master)](https://travis-ci.org/testdouble/lineman)
+[![Build Status](https://travis-ci.org/linemanjs/lineman.png?branch=master)](https://travis-ci.org/linemanjs/lineman)
 
 ## Documentation
 

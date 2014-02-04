@@ -3,8 +3,8 @@
  *
  * You can familiarize yourself with Lineman's defaults by checking out:
  *
- *   - https://github.com/testdouble/lineman/blob/master/config/application.coffee
- *   - https://github.com/testdouble/lineman/blob/master/config/plugins
+ *   - https://github.com/linemanjs/lineman/blob/master/config/application.coffee
+ *   - https://github.com/linemanjs/lineman/blob/master/config/plugins
  *
  * You can also ask Lineman's about config from the command line:
  *

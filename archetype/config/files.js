@@ -3,7 +3,7 @@
  *
  * To see the default definitions for Lineman's file paths and globs, see:
  *
- *   - https://github.com/testdouble/lineman/blob/master/config/files.coffee
+ *   - https://github.com/linemanjs/lineman/blob/master/config/files.coffee
  */
 module.exports = function(lineman) {
   //Override file patterns here

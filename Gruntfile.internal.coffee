@@ -17,7 +17,7 @@ module.exports = (grunt) ->
         commitMessage: '<%= version %>'
         tagMessage: '<%= version %>'
         github:
-          repo: 'testdouble/lineman'
+          repo: 'linemanjs/lineman'
           usernameVar: 'GITHUB_USERNAME'
           passwordVar: 'GITHUB_PASSWORD'
 
