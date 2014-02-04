@@ -7,7 +7,6 @@ packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
 ReadsConfiguration = require("./../reads-configuration")
 _ = require("lodash")
-_.mixin(require("underscore.string").exports());
 
 module.exports = ->
   require("./setup-env")()

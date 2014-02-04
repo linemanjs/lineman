@@ -1,4 +1,5 @@
 _ = require("lodash")
+_str = require("underscore.string")
 resolvesQuietly = require('./../lib/resolves-quietly')
 semver = require('semver')
 fs = require('fs')
@@ -21,7 +22,7 @@ packageDependencies = (dir) ->
   packageJson = require("#{dir}/package")
   _({}).extend(packageJson.optionalDependencies, packageJson.devDependencies, packageJson.dependencies)
 
-isLinemanPlugin = (name) -> _.startsWith(name, "lineman-")
+isLinemanPlugin = (name) -> _str.startsWith(name, "lineman-")
 
 pluginObjectBuilder = (dir, depth) ->
   (name) ->

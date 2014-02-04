@@ -1,6 +1,7 @@
 # Synchronous file helpers
 grunt = require('./requires-grunt').require()
 _ = require("lodash")
+_str = require("underscore.string")
 fs = require("fs")
 
 module.exports = fileUtils =
@@ -39,7 +40,7 @@ module.exports = fileUtils =
   overwritePackageJson: (src, name) ->
     linemanPackageJson = grunt.file.readJSON("#{__dirname}/../package.json")
     newPackageJson = _(grunt.file.read(src)).template(
-      name: _(name).dasherize()
+      name: _str.dasherize(name)
       versions:
         lineman: "~" + linemanPackageJson["version"]
     )
