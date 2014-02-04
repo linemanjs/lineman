@@ -1,7 +1,7 @@
 extend = require('config-extend')
-grunt = require('grunt')
+grunt = require('./requires-grunt').require()
 path = require('path')
-_ = grunt.util._
+_ = require("lodash")
 findsPluginModules = require('./finds-plugin-modules')
 
 module.exports =

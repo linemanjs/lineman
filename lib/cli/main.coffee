@@ -1,10 +1,13 @@
 commander = require("commander")
-grunt = require("grunt")
-cli = require("grunt/lib/grunt/cli")
+path = require("path")
+requiresGrunt = require('./../requires-grunt')
+grunt = requiresGrunt.require()
+cli = require(path.join(requiresGrunt.whereIsGrunt(), "lib", "grunt", "cli"))
 packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
 ReadsConfiguration = require("./../reads-configuration")
-_ = grunt.util._
+_ = require("lodash")
+_.mixin(require("underscore.string").exports());
 
 module.exports = ->
   require("./setup-env")()

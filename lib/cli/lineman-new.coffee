@@ -1,6 +1,6 @@
 files = require("./../file-utils")
 fs = require('fs')
-_ = require('grunt').util._
+_ = require("lodash")
 
 module.exports = (projectName, shouldNpmInstall, shouldSkipExamples) ->
   ensureNotEmpty(projectName)

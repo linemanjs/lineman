@@ -1,4 +1,4 @@
-_ = require('grunt').util._
+_ = require("lodash")
 resolvesQuietly = require('./../lib/resolves-quietly')
 semver = require('semver')
 fs = require('fs')
@@ -21,7 +21,7 @@ packageDependencies = (dir) ->
   packageJson = require("#{dir}/package")
   _({}).extend(packageJson.optionalDependencies, packageJson.devDependencies, packageJson.dependencies)
 
-isLinemanPlugin = (name) -> _.str.startsWith(name, "lineman-")
+isLinemanPlugin = (name) -> _.startsWith(name, "lineman-")
 
 pluginObjectBuilder = (dir, depth) ->
   (name) ->

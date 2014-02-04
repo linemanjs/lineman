@@ -2,7 +2,7 @@
 # *  all of the configuration needed by the projects'
 # *  depended-on grunt tasks.
 #
-grunt = require("grunt")
+grunt = require("./../lib/requires-grunt").require()
 module.exports =
   pkg: grunt.file.readJSON("package.json")
   meta:

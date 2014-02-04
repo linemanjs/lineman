@@ -7,8 +7,9 @@ Contributor: @searls
 Configuration:
 "root" - the path to which images will be copied under 'generated' and 'dist' (default: "img")
 ###
+_ = require("lodash")
+
 module.exports = (grunt) ->
-  _ = grunt.util._
   copy = require("./../lib/file-utils").copy
 
   grunt.registerTask "images", "copy images to dist/img", (target) ->

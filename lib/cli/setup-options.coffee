@@ -1,4 +1,4 @@
-_ = require("grunt").util._
+_ = require("lodash")
 
 module.exports = (commander, gruntCli) ->
   commander.option("--install", "lineman new - Perform an `npm install` when creating a new project, effectively freezing lineman with the project")

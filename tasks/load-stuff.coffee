@@ -3,10 +3,9 @@ hooks = require('./../lib/hooks')
 findsPluginModules = require('./../lib/finds-plugin-modules')
 buildsAppConfig = require('./../lib/builds-app-config')
 resolvesQuietly = require('./../lib/resolves-quietly')
+_ = require("lodash")
 
 module.exports = (grunt) ->
-  _ = grunt.util._
-
   config = buildsAppConfig.forGrunt()
   pluginModules = findsPluginModules.find()
 

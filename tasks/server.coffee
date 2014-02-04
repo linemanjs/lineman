@@ -12,8 +12,9 @@ Configuration:
 "apiProxy.host" - the host to which API requests should be proxy, defaults to `localhost`)"
 "apiProxy.prefix" - an api prefix, to be used in conjunction with server.pushState to correctly identify requests that should go to the apiProxy"
 ###
+
 module.exports = (grunt) ->
-  _ = grunt.util._
+  _ = require("lodash")
   http = require("http")
   express = require("express")
   httpProxy = require("http-proxy")

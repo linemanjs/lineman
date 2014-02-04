@@ -1,5 +1,6 @@
-grunt = require("grunt")
+_ = require("lodash")
 exec = require("child_process").exec
+
 module.exports = ((_, exec) ->
   _({}).tap (exports) ->
     exports.installFrom = (path, callback) ->
@@ -14,4 +15,4 @@ module.exports = ((_, exec) ->
 
     command = "npm install"
 
-)(grunt.util._, exec)
+)(_, exec)

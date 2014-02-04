@@ -1,4 +1,6 @@
 require('coffee-script');
+require("lodash").mixin(require("underscore.string").exports());
+requiresGrunt = require('./lib/requires-grunt')
 defaults = require('./lib/builds-app-config').default();
 
 module.exports = {
@@ -11,6 +13,6 @@ module.exports = {
   lib: {
     fileUtils: require(__dirname+"/lib/file-utils")
   },
-  grunt: require('grunt'),
+  grunt: requiresGrunt.require(),
   version: require(__dirname+"/package").version
 };

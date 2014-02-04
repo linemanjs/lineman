@@ -1,5 +1,5 @@
 buildsAppConfig = require('./builds-app-config')
-_ = require('grunt').util._
+_ = require('lodash')
 extend = require('config-extend')
 
 module.exports = (key, config = {}) ->

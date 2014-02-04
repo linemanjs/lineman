@@ -8,7 +8,7 @@ Configuration:
 "root" - the path to which webfonts will be copied under 'generated' and 'dist' (default: "webfonts")
 ###
 module.exports = (grunt) ->
-  _ = grunt.util._
+  _ = require("lodash")
   copy = require(__dirname + "/../lib/file-utils").copy
 
   grunt.registerTask "webfonts", "copy webfonts to dist/webfonts", (target) ->

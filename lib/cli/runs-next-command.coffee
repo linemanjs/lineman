@@ -9,7 +9,7 @@
 #   passed to action A are not retained when we re-parse (or else they'll gum
 #   up the works).
 
-_ = require("grunt").util._
+_ = require("lodash")
 
 module.exports = class RunsNextCommand
   constructor: (commander, currentCommandName) ->

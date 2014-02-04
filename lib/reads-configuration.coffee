@@ -1,4 +1,4 @@
-_ = require('grunt').util._
+_ = require("lodash")
 buildsAppConfig = require('./builds-app-config')
 
 module.exports = class ReadsConfiguration

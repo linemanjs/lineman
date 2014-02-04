@@ -12,9 +12,10 @@ handlebar (aliases: "hb", "handlebars") - handlebars templating
 When the templates are processed, they will be passed the grunt configuration object,
 which contains lots of useful goodies.
 ###
+
 module.exports = (grunt) ->
+  _ = require("lodash")
   fs = require("fs")
-  _ = grunt.util._
 
   grunt.registerMultiTask "pages", "generates static HTML files", ->
     for filePair in @files
