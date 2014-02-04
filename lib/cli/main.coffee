@@ -76,6 +76,14 @@ module.exports = ->
         options:
           gruntfile: "#{__dirname}/../../Gruntfile.coffee"
 
+  # Added by Jason Raede <jason@torchedm.com>
+  commander.
+    command("deploy").
+    description("Deploy your project using a deployment plugin").
+    action (plugin) ->
+      cli.tasks = ['deploy:' + plugin]
+      invokeGrunt(name:'deploy', chainable:true)
+
   commander.outputHelp() if noCommandWasGiven()
 
   commander.command("*").description("unknown command").action ->
