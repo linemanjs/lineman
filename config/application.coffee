@@ -32,3 +32,5 @@ module.exports =
 
   enableSass: false
   enableAssetFingerprint: false
+
+  deployment:{}

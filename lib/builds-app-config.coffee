@@ -45,13 +45,13 @@ pluginModulesFromNpm = ->
   moduleNames = findsPluginModules.find().map (pluginModule) ->
     "#{pluginModule.dir}/config/plugins/**/*"
 
+
 pluginFilesFromUserProject = ->
   ["#{process.cwd()}/config/plugins/**/*"]
 
 requirePlugin = (path, config) ->
   plugin = require(path)
   plugin?(linemanWithPluginConfigSoFar(config)) || plugin
-
 loadUserOverride = (name, config) ->
   requirePlugin("#{process.cwd()}/config/#{name}", config)
 
@@ -65,4 +65,5 @@ overrideAppConfig = (pluginConfig, config) ->
 
 overrideFilesConfig = (pluginFiles, config) ->
   extend(true, config.files, pluginFiles) if pluginFiles?
+
 
