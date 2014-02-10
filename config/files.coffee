@@ -48,7 +48,7 @@ module.exports =
     minifiedWebRelative: "css/app.css"
 
   template:
-    handlebars: ["app/templates/**/*.handlebar", "app/templates/**/*.handlebars", "app/templates/**/*.hb"]
+    handlebars: "app/templates/**/*.{hb,hbs,handlebar,handlebars}"
     underscore: ["app/templates/**/*.underscore", "app/templates/**/*.us"]
     generatedHandlebars: "generated/template/handlebars.js"
     generatedUnderscore: "generated/template/underscore.js"
