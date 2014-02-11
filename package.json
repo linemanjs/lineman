@@ -1,7 +1,7 @@
 {
   "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
-  "version": "0.24.5",
+  "version": "0.24.6",
   "homepage": "https://github.com/linemanjs/lineman",
   "author": {
     "name": "Justin Searls",
@@ -57,7 +57,7 @@
     "underscore.string": "~2.3.3"
   },
   "devDependencies": {
-    "grunt-release": "~0.6.0"
+    "grunt-release": "~0.6.1"
   },
   "keywords": [
     "lineman",
