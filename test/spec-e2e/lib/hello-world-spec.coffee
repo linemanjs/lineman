@@ -7,7 +7,7 @@ describe "the hello world project", ->
   sharedExamplesFor "a hello world", ->
     When -> @el = browser.findElementByCssSelector('.hello')
     Then -> "Hello, World!" == @el.getText()
-    And -> @el.getCssValue('backgroundColor') == "rgb(239, 239, 239)"
+    And -> expect(@el.getCssValue('backgroundColor')).toContain("239, 239, 239")
 
   describe "lineman build", ->
     Given (done) -> lineman.build(done)
