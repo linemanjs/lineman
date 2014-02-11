@@ -1,35 +1,29 @@
-
-global.Wait = (upToSeconds, untilThisReturnsTrue, increment = 2000) ->
-  totalWait = upToSeconds * 1000
+global.Wait = (upToSeconds, untilThisReturnsTrue, increment = 1000, customError) ->
   waitedSoFar = 0
-  everTurnedTrue = false
 
   Given (done) ->
     tryAgain = ->
-      if waitedSoFar > totalWait
-        throw new Error """
-                        Timed out while waiting #{waitedSoFar / 1000.0} seconds for:
+      if waitedSoFar > upToSeconds * 1000
+        console.error """
+                      Timed out while waiting #{waitedSoFar / 1000.0} seconds for:
 
-                        #{untilThisReturnsTrue.toString()}
+                      #{customError || untilThisReturnsTrue.toString()}
 
-                        To return true. It never happened.
-                        """
+                      To return true. It never happened.
+                      """
+        done(false)
       else
         waitedSoFar += increment
-        setTimeout ->
-          console.log("Running after #{waitedSoFar}ms for #{untilThisReturnsTrue.toString()}")
-          if untilThisReturnsTrue() == true
-            done()
-          else
-            tryAgain()
-        , increment
-    if untilThisReturnsTrue()
-      done()
-    else
-      tryAgain()
+        setTimeout(testPredicate, increment)
 
-global.WaitForJs = (upToSeconds, untilThisReturnsTrue, increment = 2000) ->
-  Wait upToSeconds, ->
+    testPredicate = ->
+      if untilThisReturnsTrue() == true then done() else tryAgain()
+
+    testPredicate()
+
+
+global.WaitForJs = (upToSeconds, untilThisReturnsTrue, increment) ->
+  browserPredicate = ->
     browser.navigate().refresh()
     browser.eval("(#{untilThisReturnsTrue.toString()})();")
-  , increment
+  Wait(upToSeconds, browserPredicate, increment, untilThisReturnsTrue.toString())

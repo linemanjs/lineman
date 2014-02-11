@@ -17,10 +17,12 @@ global.lineman = module.exports =
     exec("build", "--stack", standardResponder(callback, done))
 
   run: (done) ->
+    process.env.WEB_PORT = ++currentPort
     _(exec("run", "--stack", ->)).tap (child) ->
-      setTimeout(done, 3000)
+      setTimeout(done, 2000)
 
   projectPath: -> currentLinemanPath
+  baseUrl: -> "http://localhost:#{currentPort}"
 
   kill: ->
     _(currentLinemanRuns).each (process) ->
@@ -29,9 +31,7 @@ global.lineman = module.exports =
 
 exec = (args..., callback) ->
   chdir currentLinemanPath, ->
-    child = spawn linemanBinPath, args #,
-      # env:
-        # WEB_PORT: currentPort++
+    child = spawn(linemanBinPath, args)
     result = ""
     child.stdout.on "data", (data) ->
       result += data.toString()

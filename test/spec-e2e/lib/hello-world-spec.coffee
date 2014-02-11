@@ -16,13 +16,13 @@ describe "the hello world project", ->
 
   describe "lineman run", ->
     Given (done) -> lineman.run(done)
-    Given -> browser.get("http://localhost:8000")
+    Given -> browser.get(lineman.baseUrl())
 
     describe "hello world", ->
       itBehavesLike "a hello world"
 
     describe "adding a CoffeeScript file", ->
-      Given (done) -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'", done)
+      Given -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'")
 
       WaitForJs 5, -> window.pants != undefined
 
@@ -31,14 +31,14 @@ describe "the hello world project", ->
         Then -> browser.eval("pants()") == "yay!"
 
       describe "then editing the file", ->
-        Given (done) -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'", done)
+        Given -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'")
         WaitForJs 5, -> window.hats != undefined
         When -> browser.navigate().refresh()
         Then -> browser.eval("hats()") == "yay!"
         And -> browser.eval("window.pants === undefined")
 
       describe "then removing the file", ->
-        Given (done) -> linemanProject.removeFile("app/js/foo.coffee", done)
+        Given -> linemanProject.removeFile("app/js/foo.coffee")
         WaitForJs 5, -> window.pants == undefined
         When -> browser.navigate().refresh()
         Then -> browser.eval("window.pants === undefined")
