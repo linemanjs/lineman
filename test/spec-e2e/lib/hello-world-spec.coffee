@@ -24,7 +24,7 @@ describe "the hello world project", ->
     describe "adding a CoffeeScript file", ->
       Given -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'")
 
-      WaitForJs 5, -> window.pants != undefined
+      WaitForJs 10, -> window.pants != undefined
 
       describe "without any further tomfoolery", ->
         When -> browser.navigate().refresh()
@@ -32,14 +32,14 @@ describe "the hello world project", ->
 
       describe "then editing the file", ->
         Given -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'")
-        WaitForJs 5, -> window.hats != undefined
+        WaitForJs 10, -> window.hats != undefined
         When -> browser.navigate().refresh()
         Then -> browser.eval("hats()") == "yay!"
         And -> browser.eval("window.pants === undefined")
 
       describe "then removing the file", ->
         Given -> linemanProject.removeFile("app/js/foo.coffee")
-        WaitForJs 5, -> window.pants == undefined
+        WaitForJs 10, -> window.pants == undefined
         When -> browser.navigate().refresh()
         Then -> browser.eval("window.pants === undefined")
 

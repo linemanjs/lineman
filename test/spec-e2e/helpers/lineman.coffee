@@ -19,7 +19,7 @@ global.lineman = module.exports =
   run: (done) ->
     process.env.WEB_PORT = ++currentPort
     _(exec("run", "--stack", ->)).tap (child) ->
-      setTimeout(done, 2000)
+      setTimeout(done, 4000)
 
   projectPath: -> currentLinemanPath
   baseUrl: -> "http://localhost:#{currentPort}"

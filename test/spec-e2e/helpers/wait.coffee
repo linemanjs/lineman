@@ -1,4 +1,4 @@
-global.Wait = (upToSeconds, untilThisReturnsTrue, increment = 1000, customError) ->
+global.Wait = (upToSeconds, untilThisReturnsTrue, increment = 1500, customError) ->
   waitedSoFar = 0
 
   Given (done) ->
