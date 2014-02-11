@@ -3,6 +3,8 @@ _str = require("underscore.string")
 resolvesQuietly = require('./../lib/resolves-quietly')
 semver = require('semver')
 fs = require('fs')
+path = require('path')
+grunt = require('./requires-grunt').require()
 
 module.exports =
   find: ->
@@ -19,16 +21,24 @@ plugins = (dir = process.cwd(), depth = 0, knownPlugins = []) ->
     .value()
 
 packageDependencies = (dir) ->
-  packageJson = require("#{dir}/package")
+  packageJson = require(path.join(dir, "package"))
   _({}).extend(packageJson.optionalDependencies, packageJson.devDependencies, packageJson.dependencies)
 
 isLinemanPlugin = (name) -> _str.startsWith(name, "lineman-")
 
-pluginObjectBuilder = (dir, depth) ->
+pluginObjectBuilder = (basedir, depth) ->
   (name) ->
-    dir = resolvesQuietly.resolve(name, basedir: dir)
-    version = require("#{dir}/package").version
-    {name, version, dir, depth}
+    if dir = resolvesQuietly.resolve(name, basedir: basedir)
+      version = require(path.join(dir, "package")).version
+      {name, version, dir, depth}
+    else
+      grunt.warn """
+                 Could not find plugin "#{name}", even though it was listed in your "package.json" file.
+
+                 You probably need to run `npm install #{name}`
+
+                 (Performed search from "#{basedir}")
+                 """
 
 descendantPluginCollector = (depth, knownPlugins) ->
   (deps, dep) ->
