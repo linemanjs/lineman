@@ -2,11 +2,14 @@ grunt = require('grunt')
 spawn = require("child_process").spawn
 
 currentLinemanPath = null
+currentLinemanRuns = []
 linemanBinPath = "#{process.cwd()}/../cli.js"
+currentPort = 8001
 
 global.lineman = module.exports =
   new: (name, callback, done) ->
     currentLinemanPath = process.env.SPEC_TEMP_DIR
+    name += "-#{new Date().getTime()}"
     exec("new", "--stack", name, standardResponder(callback, done))
     currentLinemanPath += "/#{name}"
 
@@ -19,9 +22,16 @@ global.lineman = module.exports =
 
   projectPath: -> currentLinemanPath
 
+  kill: ->
+    _(currentLinemanRuns).each (process) ->
+      process.kill('SIGKILL')
+    currentLinemanRuns = []
+
 exec = (args..., callback) ->
   chdir currentLinemanPath, ->
-    child = spawn(linemanBinPath, args)
+    child = spawn linemanBinPath, args #,
+      # env:
+        # WEB_PORT: currentPort++
     result = ""
     child.stdout.on "data", (data) ->
       result += data.toString()
@@ -36,6 +46,7 @@ exec = (args..., callback) ->
                         Message:
                         #{result}
                         """
+    currentLinemanRuns.push(child)
     child
 
 chdir = (newPath, doStuff) ->

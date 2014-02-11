@@ -20,6 +20,8 @@ module.exports = (grunt) ->
             showColors: true
             defaultTimeoutInterval: 10000
             onComplete: ->
-              require("./spec-e2e/helpers/tmp").delete()
+              console.log("onComplete running")
+              lineman?.kill()
               browser?.quit()
-              lineman?.currentRun?.kill?('SIGKILL')
+              require('./spec-e2e/helpers/tmp').delete()
+

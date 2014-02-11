@@ -9,7 +9,5 @@ module.exports = tmp =
     if fs.existsSync(tempDir)
       rimraf.sync(process.env.SPEC_TEMP_DIR)
 
-beforeAll ->
-  tmp.delete()
-  tmp.create()
-
+tmp.delete()
+tmp.create()

@@ -1,5 +1,8 @@
 describe "the hello world project", ->
-  beforeAll (done) -> lineman.new("hello-world", done)
+  Given (done) -> lineman.new("hello-world", done)
+
+  afterEach ->
+    lineman.kill()
 
   sharedExamplesFor "a hello world", ->
     When -> @el = browser.findElementByCssSelector('.hello')
@@ -8,31 +11,35 @@ describe "the hello world project", ->
 
   describe "lineman build", ->
     Given (done) -> lineman.build(done)
-    When -> browser.get("file://#{lineman.projectPath()}/dist/index.html")
+    Given -> browser.get("file://#{lineman.projectPath()}/dist/index.html")
     itBehavesLike "a hello world"
 
   describe "lineman run", ->
-    beforeAll (done) -> lineman.currentRun = lineman.run(done)
-    When -> browser.get("http://localhost:8000")
+    Given (done) -> lineman.run(done)
+    Given -> browser.get("http://localhost:8000")
 
-    itBehavesLike "a hello world"
+    describe "hello world", ->
+      itBehavesLike "a hello world"
 
     describe "adding a CoffeeScript file", ->
-      Given -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'")
-      Wait(4)
-      When -> browser.navigate().refresh()
-      Then -> browser.eval("pants()") == "yay!"
+      Given (done) -> linemanProject.addFile("app/js/foo.coffee", "window.pants = -> 'yay!'", done)
+
+      WaitForJs 5, -> window.pants != undefined
+
+      describe "without any further tomfoolery", ->
+        When -> browser.navigate().refresh()
+        Then -> browser.eval("pants()") == "yay!"
 
       describe "then editing the file", ->
-        Given -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'")
-        Wait(4)
+        Given (done) -> linemanProject.addFile("app/js/foo.coffee", "window.hats = -> 'yay!'", done)
+        WaitForJs 5, -> window.hats != undefined
         When -> browser.navigate().refresh()
         Then -> browser.eval("hats()") == "yay!"
         And -> browser.eval("window.pants === undefined")
 
       describe "then removing the file", ->
-        Given -> linemanProject.removeFile("app/js/foo.coffee")
-        Wait(4)
+        Given (done) -> linemanProject.removeFile("app/js/foo.coffee", done)
+        WaitForJs 5, -> window.pants == undefined
         When -> browser.navigate().refresh()
         Then -> browser.eval("window.pants === undefined")
 
