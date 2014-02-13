@@ -6,6 +6,8 @@ cli = require(path.join(requiresGrunt.whereIsGrunt(), "lib", "grunt", "cli"))
 packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
 ReadsConfiguration = require("./../reads-configuration")
+prettyPrintsValue = require("./../pretty-prints-value")
+
 _ = require("lodash")
 
 module.exports = ->
@@ -57,9 +59,9 @@ module.exports = ->
     command("config").
     description(" - get a value from lineman's configuration").
     action ->
-      path = @args[0] if _(@args[0]).isString()
-      value = new ReadsConfiguration().read(path)
-      console.log(value)
+      configPropertyPath = if _(@args[0]).isString() then @args[0] else undefined
+      value = new ReadsConfiguration().read(configPropertyPath)
+      console.log(prettyPrintsValue.prettyPrint(value))
 
   commander.
     command("clean").
