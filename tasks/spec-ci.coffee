@@ -4,6 +4,9 @@ Description: run specs in ci mode
 Dependencies: grunt
 Contributor: @davemo
 ###
+
+findsForwardedArgs = require("./../lib/finds-forwarded-args")
+
 getRandomPort = ->
   server = require('net').createServer()
   port = server.listen(0).address().port
@@ -22,7 +25,7 @@ module.exports = (grunt) ->
         "ci",
         "-f", path.resolve("#{process.cwd()}/config/spec.json"),
         "-p", getRandomPort()
-      ]
+      ].concat(findsForwardedArgs.find())
       options = { stdio: 'inherit'}
       child = spawn(testemRunnerPath(), args, options)
 
