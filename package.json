@@ -57,7 +57,7 @@
     "underscore.string": "~2.3.3"
   },
   "devDependencies": {
-    "grunt-release": "~0.6.1"
+    "grunt-release": "~0.7.0"
   },
   "keywords": [
     "lineman",
