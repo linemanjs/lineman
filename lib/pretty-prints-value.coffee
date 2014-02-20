@@ -5,6 +5,7 @@ replacer = (key, value) ->
 
 module.exports =
   prettyPrint: (value) ->
+    return value if _(value).isString()
     try
       JSON.stringify(value, replacer, indentation = 2)
     catch e
