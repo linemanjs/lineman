@@ -1,5 +1,3 @@
-
-
 describe "prettyPrintsValue", ->
   Given -> @subject = requireSubject("lib/pretty-prints-value")
 
@@ -20,10 +18,16 @@ describe "prettyPrintsValue", ->
       }
       """
 
+    describe "doesn't omit function properties", ->
+      Then -> expect(@subject.prettyPrint({f: ->})).toEqual """
+      {
+        "f": "[Function]"
+      }
+      """
+
     describe "catch on cyclical exceptions and revert to default object", ->
       Given -> @foo = a: 'b'
       Given -> @bar = foo: @foo
       Given -> @foo.bar = @bar
       When -> @result = @subject.prettyPrint(@foo)
       Then -> @result == @foo
-
