@@ -6,6 +6,6 @@ replacer = (key, value) ->
 module.exports =
   prettyPrint: (value) ->
     try
-      return JSON.stringify(value, replacer, indentation = 2)
+      JSON.stringify(value, replacer, indentation = 2)
     catch e
       value

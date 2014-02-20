@@ -2,10 +2,9 @@ describe "prettyPrintsValue", ->
   Given -> @subject = requireSubject("lib/pretty-prints-value")
 
   describe ".prettyPrint", ->
-    Then -> @subject.prettyPrint("blah") == "blah"
-    Then -> @subject.prettyPrint(true) == true
-    Then -> @subject.prettyPrint(false) == false
-    Then -> @subject.prettyPrint(39) == 39
+    Then -> @subject.prettyPrint(true) == "true"
+    Then -> @subject.prettyPrint(false) == "false"
+    Then -> @subject.prettyPrint(39) == "39"
     Then -> @subject.prettyPrint(undefined) == undefined
     Then -> @subject.prettyPrint({}) == "{}"
     Then -> expect(@subject.prettyPrint({foo: 'bar', baz: 'biz', nest: {wow: 18}})).toEqual """
