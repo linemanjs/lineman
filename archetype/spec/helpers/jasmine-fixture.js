@@ -1,19 +1,16 @@
-
-/*
-jasmine-fixture 1.0.5
-Makes injecting HTML snippets into the DOM easy & clean!
-site: https://github.com/searls/jasmine-fixture
-*/
-
-
+/* jasmine-fixture - 1.2.0
+ * Makes injecting HTML snippets into the DOM easy & clean!
+ * https://github.com/searls/jasmine-fixture
+ */
 (function() {
-  var createHTMLBlock;
+  var createHTMLBlock,
+    __slice = [].slice;
 
   (function($) {
-    var jasmineFixture, originalAffix, originalInject, originalJasmineFixture, root, _;
+    var ewwSideEffects, jasmineFixture, originalAffix, originalJasmineDotFixture, originalJasmineFixture, root, _, _ref;
     root = this;
     originalJasmineFixture = root.jasmineFixture;
-    originalInject = root.inject;
+    originalJasmineDotFixture = (_ref = root.jasmine) != null ? _ref.fixture : void 0;
     originalAffix = root.affix;
     _ = function(list) {
       return {
@@ -29,8 +26,11 @@ site: https://github.com/searls/jasmine-fixture
       };
     };
     root.jasmineFixture = function($) {
-      var $whatsTheRootOf, applyAttributes, defaultConfiguration, defaults, init, injectContents, isReady, isString, itLooksLikeHtml, rootId, tidyUp;
-      $.fn.affix = root.affix = function(selectorOptions) {
+      var $whatsTheRootOf, affix, create, jasmineFixture, noConflict;
+      affix = function(selectorOptions) {
+        return create.call(this, selectorOptions, true);
+      };
+      create = function(selectorOptions, attach) {
         var $top;
         $top = null;
         _(selectorOptions.split(/[ ](?=[^\]]*?(?:\[|$))/)).inject(function($parent, elementSelector) {
@@ -38,11 +38,24 @@ site: https://github.com/searls/jasmine-fixture
           if (elementSelector === ">") {
             return $parent;
           }
-          $el = createHTMLBlock($, elementSelector).appendTo($parent);
+          $el = createHTMLBlock($, elementSelector);
+          if (attach || $top) {
+            $el.appendTo($parent);
+          }
           $top || ($top = $el);
           return $el;
         }, $whatsTheRootOf(this));
         return $top;
+      };
+      noConflict = function() {
+        var currentJasmineFixture, _ref1;
+        currentJasmineFixture = jasmine.fixture;
+        root.jasmineFixture = originalJasmineFixture;
+        if ((_ref1 = root.jasmine) != null) {
+          _ref1.fixture = originalJasmineDotFixture;
+        }
+        root.affix = originalAffix;
+        return currentJasmineFixture;
       };
       $whatsTheRootOf = function(that) {
         if (that.jquery != null) {
@@ -53,114 +66,39 @@ site: https://github.com/searls/jasmine-fixture
           return $('<div id="jasmine_content"></div>').appendTo('body');
         }
       };
-      afterEach(function() {
+      jasmineFixture = {
+        affix: affix,
+        create: create,
+        noConflict: noConflict
+      };
+      ewwSideEffects(jasmineFixture);
+      return jasmineFixture;
+    };
+    ewwSideEffects = function(jasmineFixture) {
+      var _ref1;
+      if ((_ref1 = root.jasmine) != null) {
+        _ref1.fixture = jasmineFixture;
+      }
+      $.fn.affix = root.affix = jasmineFixture.affix;
+      return afterEach(function() {
         return $('#jasmine_content').remove();
       });
-      isReady = false;
-      rootId = "specContainer";
-      defaultConfiguration = {
-        el: "div",
-        cssClass: "",
-        id: "",
-        text: "",
-        html: "",
-        defaultAttribute: "class",
-        attrs: {}
-      };
-      defaults = $.extend({}, defaultConfiguration);
-      $.jasmine = {
-        inject: function(arg, context) {
-          var $toInject, config, parent;
-          if (isReady !== true) {
-            init();
-          }
-          parent = (context ? context : $("#" + rootId));
-          $toInject = void 0;
-          if (itLooksLikeHtml(arg)) {
-            $toInject = $(arg);
-          } else {
-            config = $.extend({}, defaults, arg, {
-              userString: arg
-            });
-            $toInject = $("<" + config.el + "></" + config.el + ">");
-            applyAttributes($toInject, config);
-            injectContents($toInject, config);
-          }
-          return $toInject.appendTo(parent);
-        },
-        configure: function(config) {
-          return $.extend(defaults, config);
-        },
-        restoreDefaults: function() {
-          return defaults = $.extend({}, defaultConfiguration);
-        },
-        noConflict: function() {
-          root.jasmineFixture = originalJasmineFixture;
-          root.inject = originalInject;
-          root.affix = originalAffix;
-          return this;
-        }
-      };
-      $.fn.inject = function(html) {
-        return $.jasmine.inject(html, $(this));
-      };
-      applyAttributes = function($html, config) {
-        var attrs, key, _results;
-        attrs = $.extend({}, {
-          id: config.id,
-          "class": config["class"] || config.cssClass
-        }, config.attrs);
-        if (isString(config.userString)) {
-          attrs[config.defaultAttribute] = config.userString;
-        }
-        _results = [];
-        for (key in attrs) {
-          if (attrs[key]) {
-            _results.push($html.attr(key, attrs[key]));
-          } else {
-            _results.push(void 0);
-          }
-        }
-        return _results;
-      };
-      injectContents = function($el, config) {
-        if (config.text && config.html) {
-          throw "Error: because they conflict, you may only configure inject() to set `html` or `text`, not both! \n\nHTML was: " + config.html + " \n\n Text was: " + config.text;
-        } else if (config.text) {
-          return $el.text(config.text);
-        } else {
-          if (config.html) {
-            return $el.html(config.html);
-          }
-        }
-      };
-      itLooksLikeHtml = function(arg) {
-        return isString(arg) && arg.indexOf("<") !== -1;
-      };
-      isString = function(arg) {
-        return arg && arg.constructor === String;
-      };
-      init = function() {
-        $("body").append("<div id=\"" + rootId + "\"></div>");
-        return isReady = true;
-      };
-      tidyUp = function() {
-        $("#" + rootId).remove();
-        return isReady = false;
-      };
-      $(function($) {
-        return init();
-      });
-      afterEach(function() {
-        return tidyUp();
-      });
-      return $.jasmine;
     };
     if ($) {
-      jasmineFixture = root.jasmineFixture($);
-      return root.inject = root.inject || jasmineFixture.inject;
+      return jasmineFixture = root.jasmineFixture($);
+    } else {
+      return root.affix = function() {
+        var nowJQueryExists;
+        nowJQueryExists = window.jQuery || window.$;
+        if (nowJQueryExists != null) {
+          jasmineFixture = root.jasmineFixture(nowJQueryExists);
+          return affix.call.apply(affix, [this].concat(__slice.call(arguments)));
+        } else {
+          throw new Error("jasmine-fixture requires jQuery to be defined at window.jQuery or window.$");
+        }
+      };
     }
-  })(window.jQuery);
+  })(window.jQuery || window.$);
 
   createHTMLBlock = (function() {
     var bindData, bindEvents, parseAttributes, parseClasses, parseContents, parseEnclosure, parseReferences, parseVariableScope, regAttr, regAttrDfn, regAttrs, regCBrace, regClass, regClasses, regData, regDatas, regEvent, regEvents, regExclamation, regId, regReference, regTag, regTagNotContent, regZenTagDfn;
@@ -471,14 +409,14 @@ site: https://github.com/searls/jasmine-fixture
     };
     regZenTagDfn = /([#\.\@]?[\w-]+|\[([\w-!?=:"']+(="([^"]|\\")+")? {0,})+\]|\~[\w$]+=[\w$]+|&[\w$]+(=[\w$]+)?|[#\.\@]?!([^!]|\\!)+!){0,}(\{([^\}]|\\\})+\})?/i;
     regTag = /(\w+)/i;
-    regId = /#([\w-!]+)/i;
+    regId = /(?:^|\b)#([\w-!]+)/i;
     regTagNotContent = /((([#\.]?[\w-]+)?(\[([\w!]+(="([^"]|\\")+")? {0,})+\])?)+)/i;
     regClasses = /(\.[\w-]+)/g;
     regClass = /\.([\w-]+)/i;
     regReference = /(@[\w$_][\w$_\d]+)/i;
     regAttrDfn = /(\[([\w-!]+(="?([^"]|\\")+"?)? {0,})+\])/ig;
     regAttrs = /([\w-!]+(="([^"]|\\")+")?)/g;
-    regAttr = /([\w-!]+)(="?(([^"\]]|\\")+)"?)?/i;
+    regAttr = /([\w-!]+)(="?((([\w]+\[.*?\])|[^"\]]|\\")+)"?)?/i;
     regCBrace = /\{(([^\}]|\\\})+)\}/i;
     regExclamation = /(?:([^\\]|^))!([^!]|\\!)+!/g;
     regEvents = /\~[\w$]+(=[\w$]+)?/g;
