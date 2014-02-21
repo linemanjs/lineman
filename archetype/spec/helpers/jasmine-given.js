@@ -1,24 +1,47 @@
-/* jasmine-given - 2.6.0
+/* jasmine-given - 2.6.1
  * Adds a Given-When-Then DSL to jasmine as an alternative style for specs
  * https://github.com/searls/jasmine-given
  */
-/* jasmine-matcher-wrapper - 0.0.2
+/* jasmine-matcher-wrapper - 0.0.3
  * Wraps Jasmine 1.x matchers for use with Jasmine 2
  * https://github.com/testdouble/jasmine-matcher-wrapper
  */
 (function() {
-  var __slice = [].slice,
-    __hasProp = {}.hasOwnProperty;
+  var __hasProp = {}.hasOwnProperty,
+    __slice = [].slice;
 
   (function(jasmine) {
-    var comparatorFor;
+    var comparatorFor, createMatcher;
     if (jasmine == null) {
       return typeof console !== "undefined" && console !== null ? console.warn("jasmine was not found. Skipping jasmine-matcher-wrapper. Verify your script load order.") : void 0;
     }
     if (jasmine.matcherWrapper != null) {
       return;
     }
-    comparatorFor = function(matcher, isNot) {
+    jasmine.matcherWrapper = {
+      wrap: function(matchers) {
+        var matcher, name, wrappedMatchers;
+        if (jasmine.addMatchers == null) {
+          return matchers;
+        }
+        wrappedMatchers = {};
+        for (name in matchers) {
+          if (!__hasProp.call(matchers, name)) continue;
+          matcher = matchers[name];
+          wrappedMatchers[name] = createMatcher(name, matcher);
+        }
+        return wrappedMatchers;
+      }
+    };
+    createMatcher = function(name, matcher) {
+      return function() {
+        return {
+          compare: comparatorFor(matcher, false),
+          negativeCompare: comparatorFor(matcher, true)
+        };
+      };
+    };
+    return comparatorFor = function(matcher, isNot) {
       return function() {
         var actual, context, message, params, pass, _ref;
         actual = arguments[0], params = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
@@ -38,26 +61,6 @@
           message: message
         };
       };
-    };
-    return jasmine.matcherWrapper = {
-      wrap: function(matchers) {
-        var matcher, name, wrappedMatchers;
-        if (jasmine.addMatchers == null) {
-          return matchers;
-        }
-        wrappedMatchers = {};
-        for (name in matchers) {
-          if (!__hasProp.call(matchers, name)) continue;
-          matcher = matchers[name];
-          wrappedMatchers[name] = function() {
-            return {
-              compare: comparatorFor(matcher, false),
-              negativeCompare: comparatorFor(matcher, true)
-            };
-          };
-        }
-        return wrappedMatchers;
-      }
     };
   })(jasmine || getJasmineRequireObj());
 
