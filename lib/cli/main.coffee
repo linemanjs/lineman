@@ -38,7 +38,10 @@ module.exports = ->
     command("build").
     description(" - compiles all assets into a production ready form in the /dist folder").
     action ->
-      cli.tasks = ["common", "dist"]
+      cli.tasks = if commander.skipClean
+        ["common", "dist"]
+      else
+        ["clean", "common", "dist"]
       invokeGrunt(name: "build", chainable: true)
 
   commander.
