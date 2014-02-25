@@ -63,7 +63,7 @@ module.exports = ->
     description(" - get a value from lineman's configuration").
     action ->
       configPropertyPath = if _(@args[0]).isString() then @args[0] else undefined
-      value = new ReadsConfiguration().read(configPropertyPath)
+      value = new ReadsConfiguration().read(configPropertyPath, commander.process)
       console.log(prettyPrintsValue.prettyPrint(value))
 
   commander.
