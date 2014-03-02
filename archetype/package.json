@@ -1,12 +1,9 @@
 {
   "name": "<%= name %>",
-  "title": "An HTML/JS/CSS app",
+  "description": "An HTML/JS/CSS app",
   "version": "0.0.1",
   "private": true,
-  "author": {
-    "name": "John Doe",
-    "company": "ACME, Inc."
-  },
+  "author": "John Doe",
   "devDependencies": {
     "lineman": "<%= versions.lineman %>"
   },
