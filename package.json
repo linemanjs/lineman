@@ -54,7 +54,8 @@
     "resolve": "~0.6.1",
     "grunt-concat-sourcemap": "~0.4.0",
     "lodash": "~0.9.0",
-    "underscore.string": "~2.3.3"
+    "underscore.string": "~2.3.3",
+    "normalize-package-data": "~0.2.9"
   },
   "devDependencies": {
     "grunt-release": "~0.7.0"
