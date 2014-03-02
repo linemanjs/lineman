@@ -3,8 +3,15 @@
 # *  depended-on grunt tasks.
 #
 grunt = require("./../lib/requires-grunt").require()
+normalizePackage = require("normalize-package-data")
+
+normalizedPackageJson = (packageFile = "package.json") ->
+  pkg = grunt.file.readJSON(packageFile)
+  normalizePackage pkg
+  pkg
+
 module.exports =
-  pkg: grunt.file.readJSON("package.json")
+  pkg: normalizedPackageJson()
   meta:
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
 
