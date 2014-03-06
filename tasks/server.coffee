@@ -89,7 +89,7 @@ module.exports = (grunt) ->
     res.write("API Proxying to `#{req.url}` failed with: `#{err.toString()}`")
     res.end()
 
-  prefixMatchingApiProxy = (prefix, host, port, changeOrigin, relativeUrlRoot, proxy) ->
+  prefixMatchingApiProxy = (prefix, host, port, changeOrigin, relativeUrlRoot = "", proxy) ->
     prefixMatcher = new RegExp(prefix)
 
     proxy.on "proxyError", handleProxyError
@@ -101,7 +101,7 @@ module.exports = (grunt) ->
       else
         next()
 
-  apiProxy = (host, port, changeOrigin, relativeUrlRoot, proxy) ->
+  apiProxy = (host, port, changeOrigin, relativeUrlRoot = "", proxy) ->
     proxy.on "proxyError", handleProxyError
 
     return (req, res, next) ->
