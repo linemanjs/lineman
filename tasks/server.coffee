@@ -43,6 +43,7 @@ module.exports = (grunt) ->
     app.configure ->
       app.use(express.compress())
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
+      app.use(express.cookieParser())
       mountUserStaticRoutes(app, webRoot, staticRoutes)
 
       userConfig.drawRoutes?(app)
