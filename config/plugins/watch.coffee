@@ -5,10 +5,6 @@ module.exports = (lineman) ->
         files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
         tasks: ["concat_sourcemap:js"]
 
-      coffee:
-        files: "<%= files.coffee.app %>"
-        tasks: ["coffee", "concat_sourcemap:js"]
-
       jsSpecs:
         files: ["<%= files.js.specHelpers %>", "<%= files.js.spec %>"]
         tasks: ["concat_sourcemap:spec"]

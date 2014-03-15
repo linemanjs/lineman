@@ -4,8 +4,9 @@
   "version": "0.0.1",
   "private": true,
   "author": "John Doe",
-  "devDependencies": {
-    "lineman": "<%= versions.lineman %>"
+  "dependencies": {
+    "lineman": "<%= versions.lineman %>",
+    "lineman-coffee": "~0.0.2"
   },
   "scripts": {
     "start": "lineman run",

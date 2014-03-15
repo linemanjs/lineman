@@ -9,14 +9,6 @@
 # *  lifecycle.
 #
 module.exports =
-  coffee:
-    app: "app/js/**/*.coffee"
-    spec: "spec/**/*.coffee"
-    specHelpers: "spec/helpers/**/*.coffee"
-    generated: "generated/js/app.coffee.js"
-    generatedSpec: "generated/js/spec.coffee.js"
-    generatedSpecHelpers: "generated/js/spec-helpers.coffee.js"
-
   js:
     app: "app/js/**/*.js"
     vendor: "vendor/js/**/*.js"
