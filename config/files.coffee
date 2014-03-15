@@ -27,12 +27,6 @@ module.exports =
     minified: "dist/js/app.js"
     minifiedWebRelative: "js/app.js"
 
-  less:
-    app: "app/css/**/*.less"
-    vendor: "vendor/css/**/*.less"
-    generatedApp: "generated/css/app.less.css"
-    generatedVendor: "generated/css/vendor.less.css"
-
   sass:
     main: ["app/css/main.scss","app/css/main.sass"]
     vendor: ["vendor/css/**/*.scss", "vendor/css/**/*.sass"]

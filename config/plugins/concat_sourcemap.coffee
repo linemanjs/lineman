@@ -24,10 +24,8 @@ module.exports = (lineman) ->
 
       css:
         src: [
-          "<%= files.less.generatedVendor %>"
           "<%= files.sass.generatedVendor %>"
           "<%= files.css.vendor %>"
-          "<%= files.less.generatedApp %>"
           "<%= files.sass.generatedApp %>"
           "<%= files.css.app %>"
         ]

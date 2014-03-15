@@ -37,7 +37,6 @@
     "grunt-contrib-handlebars": "0.5.10",
     "grunt-contrib-jshint": "0.6.4",
     "grunt-contrib-jst": "0.5.1",
-    "grunt-contrib-less": "0.7.0",
     "grunt-contrib-sass": "0.5.0",
     "grunt-contrib-cssmin": "0.6.1",
     "grunt-contrib-uglify": "0.2.4",
