@@ -6,7 +6,8 @@
   "author": "John Doe",
   "dependencies": {
     "lineman": "<%= versions.lineman %>",
-    "lineman-coffee": "~0.0.2"
+    "lineman-coffee": "linemanjs/lineman-coffee",
+    "lineman-less": "linemanjs/lineman-less"
   },
   "scripts": {
     "start": "lineman run",
