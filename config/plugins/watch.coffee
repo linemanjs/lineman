@@ -17,10 +17,6 @@ module.exports = (lineman) ->
         files: ["<%= files.css.vendor %>", "<%= files.css.app %>"]
         tasks: ["concat_sourcemap:css"]
 
-      less:
-        files: ["<%= files.less.vendor %>", "<%= files.less.app %>"]
-        tasks: ["less", "concat_sourcemap:css"]
-
       sass:
         files: ["<%= files.sass.vendor %>", "<%= files.sass.app %>"]
         tasks: ["sass", "concat_sourcemap:css"]

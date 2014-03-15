@@ -16,7 +16,6 @@ module.exports = (grunt) ->
     "grunt-contrib-handlebars"
     "grunt-contrib-jshint"
     "grunt-contrib-jst"
-    "grunt-contrib-less"
     "grunt-contrib-cssmin"
     "grunt-contrib-uglify"
     "grunt-watch-nospawn"
