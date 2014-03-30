@@ -2,33 +2,23 @@
   "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
   "version": "0.28.2",
-  "homepage": "https://github.com/linemanjs/lineman",
+  "homepage": "http://linemanjs.com",
   "author": {
     "name": "Justin Searls",
-    "company": "Test Double",
     "email": "justin@testdouble.com"
   },
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/linemanjs/lineman.git"
+    "url": "https://github.com/linemanjs/lineman.git"
   },
   "bugs": {
     "url": "https://github.com/linemanjs/lineman/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://mit-license.org"
-    }
-  ],
   "bin": {
     "lineman": "./cli.js"
   },
   "main": "lineman",
-  "engines": {
-    "node": "*"
-  },
   "dependencies": {
     "grunt": "0.4.1",
     "grunt-contrib-clean": "0.5.0",
@@ -59,11 +49,18 @@
   "devDependencies": {
     "grunt-release": "~0.7.0"
   },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://testdouble.mit-license.org"
+    }
+  ],
   "keywords": [
     "lineman",
     "grunt",
     "yeoman",
     "build",
-    "happiness"
+    "happiness",
+    "scaffold"
   ]
 }
