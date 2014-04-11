@@ -16,6 +16,7 @@ getRandomPort = ->
 module.exports = (grunt) ->
   path = require("path")
   spawn = require("child_process").spawn
+  fs = require("fs")
   testemRunnerPath = require("./../lib/testem-utils").testemRunnerPath
 
   grunt.registerTask "spec-ci", "run specs in ci mode", (target) ->
@@ -26,8 +27,18 @@ module.exports = (grunt) ->
         "-f", path.resolve("#{process.cwd()}/config/spec.json"),
         "-p", getRandomPort()
       ].concat(findsForwardedArgs.find())
-      options = { stdio: 'inherit'}
-      child = spawn(testemRunnerPath(), args, options)
+      if this.options().reporter
+        args.push "-R"
+        args.push this.options().reporter
+      child = spawn(testemRunnerPath(), args)
+
+      child.stdout.on "data", (data) =>
+        console.log String(data)
+        if this.options().reporterOutput
+          outdir = path.dirname(this.options().reporterOutput)
+          unless fs.existsSync(outdir)
+            fs.mkdirSync(outdir)
+          fs.writeFileSync(this.options().reporterOutput, data, 'utf-8')
 
       child.on "exit", (code, signal) ->
         if code != 0
