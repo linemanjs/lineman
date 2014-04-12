@@ -20,18 +20,17 @@ module.exports = (grunt) ->
 
     try
       done = @async()
-      args = [
-        "ci",
-        "-f", path.resolve("#{process.cwd()}/config/spec.json"),
-        "-p", getRandomPort()
-      ].concat(findsForwardedArgs.find())
-      args.push("-R", reporter.type) if reporter.type?
+      args = _(["ci"]).chain().
+        concat("-f", path.resolve("#{process.cwd()}/config/spec.json")).
+        concat("-p", getRandomPort()).
+        concat(findsForwardedArgs.find()).
+        concat(["-R", reporter.type] if reporter.type?).
+        compact().value()
 
       grunt.log.writeln("Will write spec-ci report results to `#{reporter.dest}`") if reporter.dest?
 
       child = spawn(testemRunnerPath(), args)
       stdout = new AccumulatesStreams(child.stdout).accumulate()
-
       child.on "exit", (code, signal) ->
         writeReport(stdout.getValue(), reporter.dest)
         if code != 0
