@@ -27,6 +27,8 @@ module.exports = (grunt) ->
       ].concat(findsForwardedArgs.find())
       args.push("-R", reporter.type) if reporter.type?
 
+      grunt.log.writeln("Will write spec-ci report results to `#{reporter.dest}`") if reporter.dest?
+
       child = spawn(testemRunnerPath(), args)
       stdout = new AccumulatesStreams(child.stdout).accumulate()
 
@@ -48,4 +50,3 @@ module.exports = (grunt) ->
     return unless dest?
     grunt.file.mkdir(path.dirname(dest))
     grunt.file.write(dest, report, encoding: 'utf-8')
-    grunt.log.writeln("Wrote spec-ci report results to `#{dest}`")
