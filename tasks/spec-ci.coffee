@@ -6,6 +6,7 @@ Contributor: @davemo
 ###
 
 findsForwardedArgs = require("./../lib/finds-forwarded-args")
+AccumulatesStreams = require("./../lib/accumulates_streams")
 
 getRandomPort = ->
   server = require('net').createServer()
@@ -31,14 +32,10 @@ module.exports = (grunt) ->
       args.push("-R", reporter.type) if reporter.type?
 
       child = spawn(testemRunnerPath(), args)
-
-      output = ""
-      child.stdout.on "data", (data) =>
-        process.stdout.write(chunk = data.toString())
-        output += chunk
+      stdout = new AccumulatesStreams(child.stdout).accumulate()
 
       child.on "exit", (code, signal) ->
-        writeReport(output, reporter.dest)
+        writeReport(stdout.getValue(), reporter.dest)
         if code != 0
           grunt.warn("Spec execution appears to have failed.")
           done(false)
