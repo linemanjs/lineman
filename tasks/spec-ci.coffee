@@ -16,10 +16,11 @@ getRandomPort = ->
 module.exports = (grunt) ->
   path = require("path")
   spawn = require("child_process").spawn
-  fs = require("fs")
   testemRunnerPath = require("./../lib/testem-utils").testemRunnerPath
 
   grunt.registerTask "spec-ci", "run specs in ci mode", (target) ->
+    reporter = @options(reporter: {}).reporter
+
     try
       done = @async()
       args = [
@@ -27,20 +28,17 @@ module.exports = (grunt) ->
         "-f", path.resolve("#{process.cwd()}/config/spec.json"),
         "-p", getRandomPort()
       ].concat(findsForwardedArgs.find())
-      if this.options().reporter
-        args.push "-R"
-        args.push this.options().reporter
+      args.push("-R", reporter.type) if reporter.type?
+
       child = spawn(testemRunnerPath(), args)
 
+      output = ""
       child.stdout.on "data", (data) =>
-        console.log String(data)
-        if this.options().reporterOutput
-          outdir = path.dirname(this.options().reporterOutput)
-          unless fs.existsSync(outdir)
-            fs.mkdirSync(outdir)
-          fs.writeFileSync(this.options().reporterOutput, data, 'utf-8')
+        process.stdout.write(chunk = data.toString())
+        output += chunk
 
       child.on "exit", (code, signal) ->
+        writeReport(output, reporter.dest)
         if code != 0
           grunt.warn("Spec execution appears to have failed.")
           done(false)
@@ -49,3 +47,10 @@ module.exports = (grunt) ->
     catch e
       grunt.fatal(e)
       throw e
+
+  writeReport = (report, dest) ->
+    return unless dest?
+    grunt.file.mkdir(path.dirname(dest))
+    grunt.file.write(dest, report, encoding: 'utf-8')
+    grunt.log.writeln("Wrote spec-ci report results to `#{dest}`")
+
