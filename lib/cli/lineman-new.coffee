@@ -39,7 +39,7 @@ copyArchetype = (dest, projectName) ->
 
 deleteExampleFiles = (dest) ->
   _([
-    "app/css/style.less",
+    "app/css/style.css",
     "app/js/hello.coffee",
     "app/templates/hello.us",
     "app/static/favicon.ico",

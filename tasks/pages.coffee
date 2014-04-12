@@ -42,7 +42,7 @@ module.exports = (grunt) ->
   htmlFor = (format, source, context) ->
     if format in ["underscore", "us", "jst"]
       _(source).template()(context)
-    else if format in ["handlebar", "hb", "handlebars"]
+    else if format in ["handlebar", "hb", "hbs", "handlebars"]
       locateHandlebars().compile(source)(context)
     else
       ""

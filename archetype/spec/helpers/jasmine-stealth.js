@@ -1,4 +1,4 @@
-/* jasmine-stealth - 0.0.15
+/* jasmine-stealth - 0.0.16
  * Makes Jasmine spies a bit more robust
  * https://github.com/searls/jasmine-stealth
  */
@@ -138,7 +138,7 @@
       var addStubbing;
       addStubbing = function(satisfaction) {
         return function(thenThat) {
-          spy._stealth_stubbings.push({
+          spy._stealth_stubbings.unshift({
             type: type,
             ifThis: ifThis,
             satisfaction: satisfaction,
