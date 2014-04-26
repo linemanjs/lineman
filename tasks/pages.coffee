@@ -52,7 +52,11 @@ module.exports = (grunt) ->
     if fs.existsSync(handlebarsPath)
       require(handlebarsPath)
     else
-      grunt.log.writeln('NOTE: please add the `handlebars` module to your package.json, as Lineman doesn\'t include it directly. Attempting to Handlebars load naively (this may blow up).').
+      grunt.log.writeln """
+        NOTE: please add the `handlebars` module to your package.json, as Lineman doesn't include
+        it directly. Attempting to Handlebars load naively (this may blow up). Also be sure to
+        add the Handlebars runtime to your `vendor/js` directory (http://handlebarsjs.com)
+        """
       require("handlebars")
 
   buildTemplateContext = (task) ->
