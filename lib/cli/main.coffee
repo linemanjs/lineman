@@ -83,11 +83,10 @@ module.exports = ->
         options:
           gruntfile: "#{__dirname}/../../Gruntfile.coffee"
 
-  commander.outputHelp() if noCommandWasGiven()
+  process.argv[2] = "help" if noCommandWasGiven()
 
   commander.command("*").description("unknown command").action ->
     commander.help()
-
 
   commander.parse(process.argv)
 
@@ -96,4 +95,3 @@ invokeGrunt = (config = {}) ->
   grunt.cli(config.options || {}, done)
 
 noCommandWasGiven = -> _(process.argv[2]).isEmpty()
-
