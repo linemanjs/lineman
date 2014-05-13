@@ -10,7 +10,7 @@ global.lineman = module.exports =
   new: (name, callback, done) ->
     currentLinemanPath = process.env.SPEC_TEMP_DIR
     name += "-#{new Date().getTime()}"
-    exec("new", "--stack", name, standardResponder(callback, done))
+    exec("new", "--coffee", "--stack", name, standardResponder(callback, done))
     currentLinemanPath += "/#{name}"
 
   build: (callback, done) ->

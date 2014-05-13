@@ -2,12 +2,13 @@ files = require("./../file-utils")
 fs = require('fs')
 _ = require("lodash")
 
-module.exports = (projectName, shouldNpmInstall, shouldSkipExamples) ->
+module.exports = (projectName, shouldNpmInstall, shouldSkipExamples, shouldCoffeeify) ->
   ensureNotEmpty(projectName)
   dest = "#{process.cwd()}/#{projectName}"
   ensureNew(dest)
   printHello(dest)
   copyArchetype(dest, projectName)
+  convertJs2Coffee(dest) if shouldCoffeeify
   deleteExampleFiles(dest) if shouldSkipExamples
   if shouldNpmInstall
     npmInstallTo(dest, projectName)
@@ -36,6 +37,9 @@ copyArchetype = (dest, projectName) ->
   files.copyDir("#{__dirname}/../../archetype/", dest)
   files.overwritePackageJson("#{dest}/package.json", projectName)
   files.copy("#{dest}/.npmignore", "#{dest}/.gitignore")
+
+convertJs2Coffee = (dest) ->
+  require("./../coffeeifies-archetype").coffeeify(dest)
 
 deleteExampleFiles = (dest) ->
   _([
