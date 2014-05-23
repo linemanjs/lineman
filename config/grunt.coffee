@@ -4,7 +4,7 @@ fs = require('fs')
 
 module.exports =
   run: (grunt) ->
-    grunt.registerTask('default', []);
+    grunt.registerTask('default', [])
     grunt.initConfig(buildsAppConfig.forGrunt())
     loadLinemanTasks(grunt)
     loadPluginTasks(grunt)
