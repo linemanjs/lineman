@@ -69,6 +69,8 @@ printWelcome = (projectName) ->
                    * `lineman build` bundles a distribution in the "dist" directory
                    * `lineman clean` empties the "dist" and "generated" directories
                    * `lineman spec` runs specs from the "specs" directory using testem
+                   * `lineman config <property path>` reads a configuration value
+                   * `lineman fetch <library name>` downloads a 3rd-party library
 
                For more info, check out http://github.com/linemanjs/lineman
                """
