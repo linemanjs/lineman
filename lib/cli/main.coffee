@@ -83,6 +83,25 @@ module.exports = ->
         options:
           gruntfile: "#{__dirname}/../../Gruntfile.coffee"
 
+  commander.
+    command('fetch').
+    description("Fetch a library and add it to your Lineman project").
+    action ->
+      if !_(@args[0]).isString()
+        return grunt.warn """
+
+                          Usage: `lineman fetch <recipe_name>`
+
+                          For a list of available recipes, see:
+                          https://github.com/linemanjs/fetcher-recipes/tree/master/recipes
+
+                          """
+      else
+        fetcher = require('fetcher')
+        fetcher @args[0], (er) ->
+          grunt.warn(er) if er?
+
+
   process.argv[2] = "help" if noCommandWasGiven()
 
   commander.command("*").description("unknown command").action ->
