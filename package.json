@@ -1,7 +1,7 @@
 {
   "name": "lineman",
   "description": "A grunt-based project scaffold for HTML/CSS/JS apps",
-  "version": "0.29.3",
+  "version": "0.30.0",
   "homepage": "http://linemanjs.com",
   "author": {
     "name": "Justin Searls",
