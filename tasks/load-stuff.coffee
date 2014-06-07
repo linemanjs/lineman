@@ -41,7 +41,7 @@ module.exports = (grunt) ->
       .value()
 
   npmTasks = _(linemanNpmTasks).chain().
-    union("grunt-contrib-sass" if config.enableSass).
+    union("grunt-sass" if config.enableSass).
     union("grunt-asset-fingerprint" if config.enableAssetFingerprint).
     union(config.loadNpmTasks).
     compact().value()
