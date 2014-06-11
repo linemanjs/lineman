@@ -16,6 +16,7 @@ module.exports = class RunsNextCommand
     @commander = commander
     @currentCommandName = currentCommandName
     @nextCommand = @findChainedCommand()
+    @overrideLinemanEnv()
 
   run: =>
     return unless @nextCommand?
@@ -33,4 +34,6 @@ module.exports = class RunsNextCommand
     nextCommandIndex = process.argv.indexOf(@nextCommand._name, currentCommandIndex + 1)
     argv.slice(0, currentCommandIndex).concat(argv.slice(nextCommandIndex))
 
-
+  overrideLinemanEnv: ->
+    return process.env["LINEMAN_ENV"] = "production" if _(process.argv).include("build")
+    return process.env["LINEMAN_ENV"] = "test" if _(process.argv).include("spec") || _(process.argv).include("spec-ci")

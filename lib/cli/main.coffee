@@ -38,7 +38,6 @@ module.exports = ->
     command("build").
     description(" - compiles all assets into a production ready form in the /dist folder").
     action ->
-      process.env["LINEMAN_ENV"] = "production"
       cli.tasks = if commander.skipClean
         ["common", "dist"]
       else
@@ -49,7 +48,6 @@ module.exports = ->
     command("spec").
     description(" - runs specs in Chrome, override in config/spec.json").
     action ->
-      process.env["LINEMAN_ENV"] = "test"
       cli.tasks = ["spec"]
       invokeGrunt()
 
@@ -57,7 +55,6 @@ module.exports = ->
     command("spec-ci").
     description(" - runs specs in a single pass using PhantomJS (which must be on your PATH) and outputs in TAP13 format, override in config/spec.json").
     action ->
-      process.env["LINEMAN_ENV"] = "test"
       cli.tasks = ["common", "spec-ci"]
       invokeGrunt(name: "spec-ci", chainable: true)
 
