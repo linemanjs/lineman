@@ -3,7 +3,7 @@ fetcher = require('fetcher')
 
 module.exports = (recipes = [], cb) ->
   return displayHelp() if recipes.length == 0
-  fetcher recipes, {recipeRepo: "git@github.com:linemanjs/fetcher-recipes.git"}, (er) ->
+  fetcher recipes, {recipeRepo: "https://github.com/linemanjs/fetcher-recipes.git"}, (er) ->
     grunt.warn(er) if er?
     return cb?(er) if er?
     cb?(null)
