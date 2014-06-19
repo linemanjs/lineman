@@ -28,6 +28,8 @@ module.exports = (grunt) ->
     apiProxyPrefix  = grunt.config.get("server.apiProxy.prefix") || undefined
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin") || true
+    liveReloadEnabled = grunt.config.get("server.liveReload.enabled")
+    liveReloadPort = grunt.config.get("server.liveReload.port")
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     staticRoutes = grunt.config.get("server.staticRoutes")
@@ -42,6 +44,13 @@ module.exports = (grunt) ->
 
     app.configure ->
       app.use(express.compress())
+
+      if liveReloadEnabled
+        grunt.log.writeln("Connected LiveReload middleware on port: #{liveReloadPort}")
+        app.use(require('connect-livereload')(
+          port: liveReloadPort
+        ))
+
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
       mountUserStaticRoutes(app, webRoot, staticRoutes)
 
