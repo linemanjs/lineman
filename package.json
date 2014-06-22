@@ -37,7 +37,7 @@
     "grunt-contrib-jst": "0.5.1",
     "grunt-contrib-sass": "0.5.0",
     "grunt-contrib-uglify": "0.2.4",
-    "grunt-watch-nospawn": "0.0.5",
+    "grunt-watch-nospawn": "0.0.6",
     "http-proxy": "0.10.3",
     "js2coffee": "~0.2.7",
     "lodash": "~0.9.0",
