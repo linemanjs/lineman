@@ -63,8 +63,11 @@ module.exports = ->
     description(" - get a value from lineman's configuration").
     action ->
       configPropertyPath = if _(@args[0]).isString() then @args[0] else undefined
-      value = new ReadsConfiguration().read(configPropertyPath, commander.process)
-      console.log(prettyPrintsValue.prettyPrint(value))
+      flags =
+        processConfigInterpolations : commander.process
+        expandFileGlobs             : commander.expand
+      value = new ReadsConfiguration().read(configPropertyPath, flags)
+      console.log(prettyPrintsValue.prettyPrint(value, flags.expandFileGlobs))
 
   commander.
     command("clean").
