@@ -46,5 +46,14 @@ module.exports = function(lineman) {
     //
     // enableAssetFingerprint: true
 
+    // LiveReload
+    //
+    // Lineman can LiveReload browsers whenever a file is changed that results in
+    // assets to be processed, preventing the need to hit F5/Cmd-R every time you
+    // make a change in each browser you're working against. To enable LiveReload,
+    // comment out the following line:
+    //
+    // livereload: true
+
   };
 };
