@@ -28,8 +28,6 @@ module.exports = (grunt) ->
     apiProxyPrefix  = grunt.config.get("server.apiProxy.prefix") || undefined
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin") || true
-    liveReloadEnabled = grunt.config.get("server.liveReload.enabled")
-    liveReloadPort = grunt.config.get("server.liveReload.port")
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     staticRoutes = grunt.config.get("server.staticRoutes")
@@ -37,6 +35,7 @@ module.exports = (grunt) ->
     pushStateEnabled = grunt.config.get("server.pushState")
     relativeUrlRoot = grunt.config.get("server.relativeUrlRoot")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
+
     app = express()
     server = http.createServer(app)
 
@@ -44,13 +43,7 @@ module.exports = (grunt) ->
 
     app.configure ->
       app.use(express.compress())
-
-      if liveReloadEnabled
-        grunt.log.writeln("Connected LiveReload middleware on port: #{liveReloadPort}")
-        app.use(require('connect-livereload')(
-          port: liveReloadPort
-        ))
-
+      configureLiveReloadMiddleware(app)
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
       mountUserStaticRoutes(app, webRoot, staticRoutes)
 
@@ -81,6 +74,13 @@ module.exports = (grunt) ->
     grunt.log.writeln("Mounting application at path '#{relativeUrlRoot}'.")
     _(express()).tap (otherApp) ->
       otherApp.use(relativeUrlRoot, app)
+
+  configureLiveReloadMiddleware = (app) ->
+    return unless livereload = grunt.config.get("livereload")
+    return if livereload.injectScript == false
+    port = livereload.port || 35729
+    grunt.log.writeln("Injecting LiveReload script into HTML documents (port: #{port})")
+    app.use(require('connect-livereload')({port}))
 
   mountUserStaticRoutes = (app, webRoot, staticRoutes) ->
     _(staticRoutes).each (src, dest) ->
