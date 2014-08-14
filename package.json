@@ -43,6 +43,7 @@
     "js2coffee": "~0.2.7",
     "lodash": "~0.9.0",
     "normalize-package-data": "~0.2.9",
+    "pem": "~1.4.1",
     "resolve": "~0.6.1",
     "semver": "2.1.0",
     "testem": "0.6.15",
