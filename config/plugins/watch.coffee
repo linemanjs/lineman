@@ -1,6 +1,8 @@
 module.exports = (lineman) ->
   config:
     watch:
+      options:
+        spawn: false
       js:
         files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
         tasks: ["concat_sourcemap:js"]
