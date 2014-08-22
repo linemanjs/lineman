@@ -1,6 +1,10 @@
 module.exports = (lineman) ->
   config:
     watch:
+      options:
+        spawn: false
+        module: "grunt-watch-nospawn"
+
       js:
         files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
         tasks: ["concat_sourcemap:js"]
