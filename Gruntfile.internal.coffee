@@ -6,7 +6,7 @@
 #
 # Running internal grunt commands requires the --gruntfile option
 #
-#   $ grunt release --no-write --gruntfile Gruntfile.internal.coffee
+#   $ grunt release --gruntfile Gruntfile.internal.coffee --no-write
 
 module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-release')
@@ -20,4 +20,3 @@ module.exports = (grunt) ->
           repo: 'linemanjs/lineman'
           usernameVar: 'GITHUB_USERNAME'
           passwordVar: 'GITHUB_PASSWORD'
-
