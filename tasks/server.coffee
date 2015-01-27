@@ -16,6 +16,8 @@ Configuration:
 module.exports = (grunt) ->
   _ = require("lodash")
   http = require("http")
+  https = require("https")
+  pem = require('pem')
   express = require("express")
   httpProxy = require("http-proxy")
   fileUtils = require("./../lib/file-utils")
@@ -29,6 +31,7 @@ module.exports = (grunt) ->
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin")
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
+    httpsPort = process.env.HTTPS_PORT || grunt.config.get("server.web.httpsPort") || 8443
     webRoot = grunt.config.get("server.base") || "generated"
     staticRoutes = grunt.config.get("server.staticRoutes")
     userConfig = fileUtils.loadConfigurationFile("server")
@@ -36,38 +39,45 @@ module.exports = (grunt) ->
     relativeUrlRoot = grunt.config.get("server.relativeUrlRoot")
     @requiresConfig("server.apiProxy.prefix") if pushStateEnabled and apiProxyEnabled
 
-    app = express()
-    server = http.createServer(app)
+    pem.createCertificate {days:1, selfSigned:true}, (err, keys) ->
+      app = express()
 
-    userConfig.modifyHttpServer?(server)
+      httpServer = http.createServer(app)
+      httpsServer = https.createServer({key: keys.serviceKey, cert: keys.certificate}, app)
 
-    app.configure ->
-      app.use(express.compress())
-      configureLiveReloadMiddleware(app)
-      app.use(express.static("#{process.cwd()}/#{webRoot}"))
-      mountUserStaticRoutes(app, webRoot, staticRoutes)
+      userConfig.modifyHttpServer?(httpServer)
+      userConfig.modifyHttpServer?(httpsServer)
 
-      userConfig.drawRoutes?(app)
-      addBodyParserCallbackToRoutes(app)
+      app.configure ->
+        app.use(express.compress())
+        configureLiveReloadMiddleware(app)
+        app.use(express.static("#{process.cwd()}/#{webRoot}"))
+        mountUserStaticRoutes(app, webRoot, staticRoutes)
 
-      if apiProxyEnabled
-        if pushStateEnabled
-          grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
-        else
-          grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
-          app.use(apiProxy(apiProxyHost, apiPort, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
+        userConfig.drawRoutes?(app)
+        addBodyParserCallbackToRoutes(app)
 
-      app.use(express.bodyParser())
-      app.use(express.errorHandler())
-      userConfig.drawRoutes?(app)
-      app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
+        if apiProxyEnabled
+          if pushStateEnabled
+            grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
+            app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
+          else
+            grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+            app.use(apiProxy(apiProxyHost, apiPort, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
 
-    grunt.log.writeln("Starting express web server in '#{webRoot}' on port #{webPort}")
+        app.use(express.bodyParser())
+        app.use(express.errorHandler())
+        userConfig.drawRoutes?(app)
+        app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
+
+      applyRelativeUrlRoot(httpServer, relativeUrlRoot).listen webPort, ->
+        resetRoutesOnServerConfigChange(app)
+
+      applyRelativeUrlRoot(httpsServer, relativeUrlRoot).listen httpsPort, ->
+        resetRoutesOnServerConfigChange(app)
+
+    grunt.log.writeln("Starting express web server in '#{webRoot}' on port #{webPort} and https port #{httpsPort}")
     grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
-
-    applyRelativeUrlRoot(app, relativeUrlRoot).listen webPort, ->
-      resetRoutesOnServerConfigChange(app)
 
   applyRelativeUrlRoot = (app, relativeUrlRoot) ->
     return app unless relativeUrlRoot?

@@ -4,6 +4,7 @@ module.exports = (lineman) ->
       base: "generated"
       web:
         port: 8000
+        httpsPort: 8443
 
       apiProxy:
         enabled: false
