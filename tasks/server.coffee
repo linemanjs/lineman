@@ -8,6 +8,7 @@ Configuration:
 "base" - the path from which to serve static assets from (this should almost always be left to the default value of "generated")
 "web.port" - the port from which to run the development server (defaults to 8000, can be overridden with ENV variable WEB_PORT)
 "apiProxy.port" - the port of the server running an API we want to proxy (does not proxy by default, can be overridden with ENV variable API_PORT)
+"apiProxy.useSsl" - Whether SSL/TLS should be used to connect to the API server (Default false. Can be overridden with ENV variable API_USE_SSL)
 "apiProxy.enabled" - set to true to enable API proxying; if Lineman can't respond to a request, it will forward it to the API proxy
 "apiProxy.host" - the host to which API requests should be proxy, defaults to `localhost`)"
 "apiProxy.prefix" - an api prefix, to be used in conjunction with server.pushState to correctly identify requests that should go to the apiProxy"
@@ -28,6 +29,7 @@ module.exports = (grunt) ->
     apiProxyPrefix  = grunt.config.get("server.apiProxy.prefix") || undefined
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin")
+    apiProxyUseSsl = process.env.API_USE_SSL || grunt.config.get("server.apiProxy.useSsl") || false
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     staticRoutes = grunt.config.get("server.staticRoutes")
@@ -53,10 +55,10 @@ module.exports = (grunt) ->
       if apiProxyEnabled
         if pushStateEnabled
           grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
+          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyUseSsl, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
         else
           grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
-          app.use(apiProxy(apiProxyHost, apiPort, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
+          app.use(apiProxy(apiProxyHost, apiPort, apiProxyUseSsl, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
 
       app.use(express.bodyParser())
       app.use(express.errorHandler())
@@ -98,7 +100,7 @@ module.exports = (grunt) ->
     res.write("API Proxying to `#{req.url}` failed with: `#{err.toString()}`")
     res.end()
 
-  prefixMatchingApiProxy = (prefix, host, port, changeOrigin, relativeUrlRoot = "", proxy) ->
+  prefixMatchingApiProxy = (prefix, host, port, useSsl, changeOrigin, relativeUrlRoot = "", proxy) ->
     prefixMatcher = new RegExp(prefix)
 
     proxy.on "proxyError", handleProxyError
@@ -106,16 +108,16 @@ module.exports = (grunt) ->
     return (req, res, next) ->
       if prefix and prefixMatcher.exec(req.path)
         req.url = relativeUrlRoot + req.url
-        proxy.proxyRequest(req, res, {host, port, changeOrigin})
+        proxy.proxyRequest(req, res, {host, port, changeOrigin, target: { https: useSsl }})
       else
         next()
 
-  apiProxy = (host, port, changeOrigin, relativeUrlRoot = "", proxy) ->
+  apiProxy = (host, port, useSsl, changeOrigin, relativeUrlRoot = "", proxy) ->
     proxy.on "proxyError", handleProxyError
 
     return (req, res, next) ->
       req.url = relativeUrlRoot + req.url
-      proxy.proxyRequest(req, res, {host, port, changeOrigin})
+      proxy.proxyRequest(req, res, {host, port, changeOrigin, target: { https: useSsl }})
 
   addBodyParserCallbackToRoutes = (app) ->
     bodyParser = express.bodyParser()
