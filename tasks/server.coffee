@@ -8,7 +8,7 @@ Configuration:
 "base" - the path from which to serve static assets from (this should almost always be left to the default value of "generated")
 "web.port" - the port from which to run the development server (defaults to 8000, can be overridden with ENV variable WEB_PORT)
 "apiProxy.port" - the port of the server running an API we want to proxy (does not proxy by default, can be overridden with ENV variable API_PORT)
-"apiProxy.useSsl" - Whether SSL/TLS should be used to connect to the API server (Default false. Can be overridden with ENV variable API_USE_SSL)
+"apiProxy.useSsl" - Whether SSL/TLS should be used to connect to the API server (defaults to false)
 "apiProxy.enabled" - set to true to enable API proxying; if Lineman can't respond to a request, it will forward it to the API proxy
 "apiProxy.host" - the host to which API requests should be proxy, defaults to `localhost`)"
 "apiProxy.prefix" - an api prefix, to be used in conjunction with server.pushState to correctly identify requests that should go to the apiProxy"
@@ -29,7 +29,7 @@ module.exports = (grunt) ->
     apiProxyPrefix  = grunt.config.get("server.apiProxy.prefix") || undefined
     apiProxyHost = grunt.config.get("server.apiProxy.host") || "localhost"
     apiProxyChangeOrigin = grunt.config.get("server.apiProxy.changeOrigin")
-    apiProxyUseSsl = process.env.API_USE_SSL || grunt.config.get("server.apiProxy.useSsl") || false
+    apiProxyUseSsl = grunt.config.get("server.apiProxy.useSsl") || false
     webPort = process.env.WEB_PORT || grunt.config.get("server.web.port") || 8000
     webRoot = grunt.config.get("server.base") || "generated"
     staticRoutes = grunt.config.get("server.staticRoutes")
