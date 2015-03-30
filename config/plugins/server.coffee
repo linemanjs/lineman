@@ -7,8 +7,10 @@ module.exports = (lineman) ->
 
       apiProxy:
         enabled: false
+        changeOrigin: true
         host: "localhost"
         port: 3000
+        useSsl: false
 
       liveReload:
         enabled: false

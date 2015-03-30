@@ -1,4 +1,4 @@
-/* jasmine-fixture - 1.2.0
+/* jasmine-fixture - 1.2.1
  * Makes injecting HTML snippets into the DOM easy & clean!
  * https://github.com/searls/jasmine-fixture
  */
@@ -416,7 +416,7 @@
     regReference = /(@[\w$_][\w$_\d]+)/i;
     regAttrDfn = /(\[([\w-!]+(="?([^"]|\\")+"?)? {0,})+\])/ig;
     regAttrs = /([\w-!]+(="([^"]|\\")+")?)/g;
-    regAttr = /([\w-!]+)(="?((([\w]+\[.*?\])|[^"\]]|\\")+)"?)?/i;
+    regAttr = /([\w-!]+)(="?((([\w]+(\[.*?\])+)|[^"\]]|\\")+)"?)?/i;
     regCBrace = /\{(([^\}]|\\\})+)\}/i;
     regExclamation = /(?:([^\\]|^))!([^!]|\\!)+!/g;
     regEvents = /\~[\w$]+(=[\w$]+)?/g;
