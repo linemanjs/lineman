@@ -1,12 +1,12 @@
 /* Exports a function which returns an object that overrides the default &
  *   plugin grunt configuration object.
  *
- * You can familiarize yourself with Lineman's defaults by checking out:
+ * You can familiarize yourself with Lineman's defaults by looking at:
  *
  *   - https://github.com/linemanjs/lineman/blob/master/config/application.coffee
  *   - https://github.com/linemanjs/lineman/blob/master/config/plugins
  *
- * You can also ask Lineman's about config from the command line:
+ * You can also ask about Lineman's  config from the command line:
  *
  *   $ lineman config #=> to print the entire config
  *   $ lineman config concat_sourcemap.js #=> to see the JS config for the concat task.
@@ -28,15 +28,15 @@ module.exports = function(lineman) {
     //     host: 'localhost',
     //     port: 3000
     //   }
-    // }
+    // },
 
     // Sass
     //
     // Lineman supports Sass via grunt-contrib-sass, which requires you first
-    // have Ruby installed as well as the `sass` gem. To enable it, comment out the
+    // have Ruby installed as well as the `sass` gem. To enable it, uncomment the
     // following line:
     //
-    // enableSass: true
+    // enableSass: true,
 
     // Asset Fingerprints
     //
@@ -44,7 +44,7 @@ module.exports = function(lineman) {
     // and logging a manifest of logical-to-hashed filenames in dist/assets.json
     // via grunt-asset-fingerprint
     //
-    // enableAssetFingerprint: true
+    // enableAssetFingerprint: true,
 
     // LiveReload
     //
