@@ -1,4 +1,4 @@
-/* jasmine-only - 0.1.0
+/* jasmine-only - 0.1.1
  * Exclusivity spec helpers for jasmine: `describe.only` and `it.only`
  * https://github.com/davemo/jasmine-only
  */
@@ -8,12 +8,10 @@
 
   (function(jasmine) {
     var describeOnly, env, itOnly, root;
-
-    root = this;
+    root = (1, eval)('this');
     env = jasmine.getEnv();
     describeOnly = function(description, specDefinitions) {
       var suite;
-
       suite = new jasmine.Suite(this, description, null, this.currentSuite);
       suite.exclusive_ = 1;
       this.exclusive_ = Math.max(this.exclusive_, 1);
@@ -21,7 +19,6 @@
     };
     itOnly = function(description, func) {
       var spec;
-
       spec = this.it(description, func);
       spec.exclusive_ = 2;
       this.exclusive_ = 2;
@@ -30,13 +27,11 @@
     env.exclusive_ = 0;
     env.describe = function(description, specDefinitions) {
       var suite;
-
       suite = new jasmine.Suite(this, description, null, this.currentSuite);
       return this.describe_(suite, specDefinitions);
     };
     env.describe_ = function(suite, specDefinitions) {
       var declarationError, e, parentSuite;
-
       parentSuite = this.currentSuite;
       if (parentSuite) {
         parentSuite.add(suite);

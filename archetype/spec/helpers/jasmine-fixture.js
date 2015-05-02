@@ -1,4 +1,4 @@
-/* jasmine-fixture - 1.2.1
+/* jasmine-fixture - 1.3.1
  * Makes injecting HTML snippets into the DOM easy & clean!
  * https://github.com/searls/jasmine-fixture
  */
@@ -8,7 +8,7 @@
 
   (function($) {
     var ewwSideEffects, jasmineFixture, originalAffix, originalJasmineDotFixture, originalJasmineFixture, root, _, _ref;
-    root = this;
+    root = (1, eval)('this');
     originalJasmineFixture = root.jasmineFixture;
     originalJasmineDotFixture = (_ref = root.jasmine) != null ? _ref.fixture : void 0;
     originalAffix = root.affix;
@@ -33,7 +33,7 @@
       create = function(selectorOptions, attach) {
         var $top;
         $top = null;
-        _(selectorOptions.split(/[ ](?=[^\]]*?(?:\[|$))/)).inject(function($parent, elementSelector) {
+        _(selectorOptions.split(/[ ](?![^\{]*\})(?=[^\]]*?(?:\[|$))/)).inject(function($parent, elementSelector) {
           var $el;
           if (elementSelector === ">") {
             return $parent;
@@ -411,7 +411,11 @@
     regTag = /(\w+)/i;
     regId = /(?:^|\b)#([\w-!]+)/i;
     regTagNotContent = /((([#\.]?[\w-]+)?(\[([\w!]+(="([^"]|\\")+")? {0,})+\])?)+)/i;
-    regClasses = /(\.[\w-]+)/g;
+    /*
+     See lookahead syntax (?!) at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+    */
+
+    regClasses = /(\.[\w-]+)(?!["\w])/g;
     regClass = /\.([\w-]+)/i;
     regReference = /(@[\w$_][\w$_\d]+)/i;
     regAttrDfn = /(\[([\w-!]+(="?([^"]|\\")+"?)? {0,})+\])/ig;

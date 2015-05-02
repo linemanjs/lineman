@@ -1,4 +1,4 @@
-/* jasmine-given - 2.6.1
+/* jasmine-given - 2.6.3
  * Adds a Given-When-Then DSL to jasmine as an alternative style for specs
  * https://github.com/searls/jasmine-given
  */
@@ -67,12 +67,12 @@
 }).call(this);
 
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __slice = [].slice;
 
   (function(jasmine) {
-    var Waterfall, additionalInsightsForErrorMessage, apparentReferenceError, attemptedEquality, comparisonInsight, currentSpec, declareJasmineSpec, deepEqualsNotice, doneWrapperFor, evalInContextOfSpec, finalStatementFrom, getBlock, invariantList, mostRecentExpectations, mostRecentlyUsed, o, root, stringifyExpectation, wasComparison, whenList, wrapAsExpectations;
+    var Waterfall, additionalInsightsForErrorMessage, apparentReferenceError, attemptedEquality, cloneArray, comparisonInsight, currentSpec, declareJasmineSpec, deepEqualsNotice, doneWrapperFor, errorWithRemovedLines, evalInContextOfSpec, finalStatementFrom, getBlock, invariantList, mostRecentExpectations, mostRecentStacks, mostRecentlyUsed, o, root, stringifyExpectation, wasComparison, whenList, wrapAsExpectations;
     mostRecentlyUsed = null;
-    root = this;
+    root = (1, eval)('this');
     currentSpec = null;
     beforeEach(function() {
       return currentSpec = this;
@@ -127,8 +127,9 @@
       });
     };
     mostRecentExpectations = null;
+    mostRecentStacks = null;
     declareJasmineSpec = function(specArgs, itFunction) {
-      var expectationFunction, expectations, label;
+      var expectationFunction, expectations, label, stacks;
       if (itFunction == null) {
         itFunction = it;
       }
@@ -140,24 +141,25 @@
       });
       mostRecentlyUsed = root.subsequentThen;
       mostRecentExpectations = expectations = [expectationFunction];
-      itFunction("then " + (label != null ? label : stringifyExpectation(expectations)), function(jasmineDone) {
+      mostRecentStacks = stacks = [errorWithRemovedLines("failed expectation", 3)];
+      itFunction("then " + (label != null ? label : stringifyExpectation(expectations)), doneWrapperFor(expectationFunction, function(jasmineDone) {
         var userCommands;
-        userCommands = [].concat(whenList, invariantList, wrapAsExpectations(expectations));
+        userCommands = [].concat(whenList, invariantList, wrapAsExpectations(expectations, stacks));
         return new Waterfall(userCommands, jasmineDone).flow();
-      });
+      }));
       return {
         Then: subsequentThen,
         And: subsequentThen
       };
     };
-    wrapAsExpectations = function(expectations) {
+    wrapAsExpectations = function(expectations, stacks) {
       var expectation, i, _i, _len, _results;
       _results = [];
       for (i = _i = 0, _len = expectations.length; _i < _len; i = ++_i) {
         expectation = expectations[i];
         _results.push((function(expectation, i) {
           return doneWrapperFor(expectation, function(maybeDone) {
-            return expect(expectation).not.toHaveReturnedFalseFromThen(currentSpec, i + 1, maybeDone);
+            return expect(expectation).not.toHaveReturnedFalseFromThen(currentSpec, i + 1, stacks[i], maybeDone);
           });
         })(expectation, i));
       }
@@ -182,7 +184,15 @@
     };
     root.subsequentThen = function(additionalExpectation) {
       mostRecentExpectations.push(additionalExpectation);
+      mostRecentStacks.push(errorWithRemovedLines("failed expectation", 3));
       return this;
+    };
+    errorWithRemovedLines = function(msg, n) {
+      var error, lines, stack, _ref;
+      if (stack = new Error(msg).stack) {
+        _ref = stack.split("\n"), error = _ref[0], lines = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
+        return "" + error + "\n" + (lines.slice(n).join("\n"));
+      }
     };
     mostRecentlyUsed = root.Given;
     root.And = function() {
@@ -209,9 +219,41 @@
         }
       };
     };
+    Waterfall = (function() {
+      function Waterfall(functions, finalCallback) {
+        if (functions == null) {
+          functions = [];
+        }
+        this.finalCallback = finalCallback != null ? finalCallback : function() {};
+        this.functions = cloneArray(functions);
+      }
+
+      Waterfall.prototype.flow = function() {
+        var func,
+          _this = this;
+        if (this.functions.length === 0) {
+          return this.finalCallback();
+        }
+        func = this.functions.shift();
+        if (func.length > 0) {
+          return func(function() {
+            return _this.flow();
+          });
+        } else {
+          func();
+          return this.flow();
+        }
+      };
+
+      return Waterfall;
+
+    })();
+    cloneArray = function(a) {
+      return a.slice(0);
+    };
     jasmine._given = {
       matchers: {
-        toHaveReturnedFalseFromThen: function(context, n, done) {
+        toHaveReturnedFalseFromThen: function(context, n, stackTrace, done) {
           var e, exception, result;
           result = false;
           exception = void 0;
@@ -231,11 +273,15 @@
               msg += "returning false";
             }
             msg += additionalInsightsForErrorMessage(stringyExpectation);
+            if (stackTrace != null) {
+              msg += "\n\n" + stackTrace;
+            }
             return msg;
           };
           return result === false;
         }
-      }
+      },
+      __Waterfall__: Waterfall
     };
     stringifyExpectation = function(expectation) {
       var matches;
@@ -315,58 +361,6 @@
     deepEqualsNotice = function(left, right) {
       return "However, these items are deeply equal! Try an expectation like this instead:\n  expect(" + left + ").toEqual(" + right + ")";
     };
-    Waterfall = (function() {
-      function Waterfall(functions, finalCallback) {
-        var func, _i, _len, _ref;
-        if (functions == null) {
-          functions = [];
-        }
-        this.flow = __bind(this.flow, this);
-        this.invokeFinalCallbackIfNecessary = __bind(this.invokeFinalCallbackIfNecessary, this);
-        this.asyncTaskCompleted = __bind(this.asyncTaskCompleted, this);
-        this.functions = functions.slice(0);
-        this.finalCallback = finalCallback;
-        this.asyncCount = 0;
-        _ref = this.functions;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          func = _ref[_i];
-          if (func.length > 0) {
-            this.asyncCount += 1;
-          }
-        }
-      }
-
-      Waterfall.prototype.asyncTaskCompleted = function() {
-        this.asyncCount -= 1;
-        return this.flow();
-      };
-
-      Waterfall.prototype.invokeFinalCallbackIfNecessary = function() {
-        if (this.asyncCount === 0) {
-          if (typeof this.finalCallback === "function") {
-            this.finalCallback();
-          }
-          return this.finalCallback = void 0;
-        }
-      };
-
-      Waterfall.prototype.flow = function() {
-        var func;
-        if (this.functions.length === 0) {
-          return this.invokeFinalCallbackIfNecessary();
-        }
-        func = this.functions.shift();
-        if (func.length > 0) {
-          return func(this.asyncTaskCompleted);
-        } else {
-          func();
-          return this.flow();
-        }
-      };
-
-      return Waterfall;
-
-    })();
     return beforeEach(function() {
       if (jasmine.addMatchers != null) {
         return jasmine.addMatchers(jasmine.matcherWrapper.wrap(jasmine._given.matchers));

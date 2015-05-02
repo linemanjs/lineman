@@ -1,4 +1,2 @@
-var root = this;
-
-root.context = root.describe;
-root.xcontext = root.xdescribe;
+window.context = window.describe;
+window.xcontext = window.xdescribe;
