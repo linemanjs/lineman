@@ -1,4 +1,4 @@
-/* jasmine-fixture - 1.3.1
+/* jasmine-fixture - 1.3.2
  * Makes injecting HTML snippets into the DOM easy & clean!
  * https://github.com/searls/jasmine-fixture
  */
@@ -58,7 +58,7 @@
         return currentJasmineFixture;
       };
       $whatsTheRootOf = function(that) {
-        if (that.jquery != null) {
+        if ((that != null ? that.jquery : void 0) != null) {
           return that;
         } else if ($('#jasmine_content').length > 0) {
           return $('#jasmine_content');
