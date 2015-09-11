@@ -7,6 +7,7 @@ packageJson = require("./../../package")
 RunsNextCommand = require("./runs-next-command")
 ReadsConfiguration = require("./../reads-configuration")
 prettyPrintsValue = require("./../pretty-prints-value")
+buildsAppConfig = require('./../builds-app-config')
 
 _ = require("lodash")
 
@@ -88,9 +89,11 @@ module.exports = ->
     description("Fetch a library and add it to your Lineman project").
     action ->
       recipes = _(@args).filter(_.isString)
-      require('./lineman-fetch')(recipes)
-
-
+      recipeRepo = buildsAppConfig.withUserOverrides().application.fetcher?.recipeRepo
+      if recipeRepo
+        require('./lineman-fetch')(recipes, recipeRepo)
+      else
+        require('./lineman-fetch')(recipes)
 
   process.argv[2] = "help" if noCommandWasGiven()
 
