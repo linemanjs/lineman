@@ -8,8 +8,8 @@ module.exports = (projectName, shouldNpmInstall, shouldSkipExamples, shouldCoffe
   ensureNew(dest)
   printHello(dest)
   copyArchetype(dest, projectName)
-  convertJs2Coffee(dest) if shouldCoffeeify
   deleteExampleFiles(dest) if shouldSkipExamples
+  convertJs2Coffee(dest) if shouldCoffeeify
   if shouldNpmInstall
     npmInstallTo(dest, projectName)
   else
@@ -44,10 +44,10 @@ convertJs2Coffee = (dest) ->
 deleteExampleFiles = (dest) ->
   _([
     "app/css/style.css",
-    "app/js/hello.coffee",
+    "app/js/hello.js",
     "app/templates/hello.us",
     "app/static/favicon.ico",
-    "spec/hello-spec.coffee",
+    "spec/hello-spec.js",
     "vendor/js/underscore.js"
   ]).each (path) ->
     fs.unlink("#{dest}/#{path}")
