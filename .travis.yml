@@ -10,7 +10,7 @@ before_install:
 install: "npm install"
 script:
   - "grunt spec:unit --stack"
-  - "grunt spec:e2e --stack"
+  # "grunt spec:e2e --stack"
 cache:
   directories:
     - node_modules
