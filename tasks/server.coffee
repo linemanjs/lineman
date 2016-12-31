@@ -47,6 +47,7 @@ module.exports = (grunt) ->
       app.use(express.compress())
       configureLiveReloadMiddleware(app)
       app.use(express.static("#{process.cwd()}/#{webRoot}"))
+      app.use(express.cookieParser())
       mountUserStaticRoutes(app, webRoot, staticRoutes)
 
       userConfig.drawRoutes?(app)
