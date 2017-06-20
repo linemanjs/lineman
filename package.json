@@ -19,6 +19,11 @@
     "lineman": "./cli.js"
   },
   "main": "lineman",
+  "scripts": {
+    "test": "cd test && npm test",
+    "test:unit": "cd test && npm test:unit",
+    "test:e2e": "cd test && npm test:e2e"
+  },
   "dependencies": {
     "coffee-script": "1.6.3",
     "commander": "1.3.2",
