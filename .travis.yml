@@ -8,6 +8,7 @@ env:
 before_install:
   - npm install
   - cd test
+  - jdk_switcher use oraclejdk8
 cache:
   directories:
     - node_modules
