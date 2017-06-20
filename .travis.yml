@@ -5,6 +5,8 @@ node_js:
   - 4
 env:
   - HEADLESS=true
+addons:
+  chrome: stable
 before_install:
   - npm install
   - cd test
