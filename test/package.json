@@ -3,8 +3,14 @@
   "description": "",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "test": "grunt spec",
+    "test:unit": "grunt spec:unit",
+    "test:e2e": "grunt spec:e2e"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-cli": "^1.2.0",
     "grunt-jasmine-bundle": ">= 0.1.4",
     "sandboxed-module": "~0.2.2",
     "underscore": "~1.5.2",
