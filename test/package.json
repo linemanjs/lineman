@@ -12,9 +12,9 @@
     "grunt": "~0.4.1",
     "grunt-cli": "^1.2.0",
     "grunt-jasmine-bundle": ">= 0.1.4",
+    "rimraf": "~2.2.4",
     "sandboxed-module": "~0.2.2",
     "underscore": "~1.5.2",
-    "rimraf": "~2.2.4",
-    "webdriver-sync": "~0.8.7"
+    "webdriver-sync": "^1.0.0"
   }
 }
