@@ -52,12 +52,7 @@
   "devDependencies": {
     "grunt-release": "~0.7.0"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://testdouble.mit-license.org"
-    }
-  ],
+  "license": "MIT",
   "keywords": [
     "lineman",
     "grunt",
