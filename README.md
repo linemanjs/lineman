@@ -6,7 +6,7 @@
 
 Lineman is a tool to help you build fat-client webapp projects. It requires [node.js](http://nodejs.org) & [npm](http://npmjs.org) and wouldn't be possible without [grunt](http://gruntjs.com/).
 
-Lineman is documented thoroughly at [linemanjs.com](http://linemanjs.com).
+Lineman is documented thoroughly [here](https://github.com/linemanjs/lineman-docs/tree/master/app/pages)
 
 ## Install
 
