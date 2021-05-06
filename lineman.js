@@ -1,4 +1,4 @@
-require('coffee-script');
+require('coffeescript');
 var path = require('path'),
     linemanDir = require('./finds-lineman-dir').find(),
     requiresGrunt = require(path.join(linemanDir, "lib", "requires-grunt")),
