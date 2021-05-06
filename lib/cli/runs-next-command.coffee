@@ -15,24 +15,20 @@ module.exports = class RunsNextCommand
   constructor: (commander, currentCommandName) ->
     @commander = commander
     @currentCommandName = currentCommandName
-    @nextCommand = @findChainedCommand()
-    @overrideLinemanEnv()
 
   run: =>
-    return unless @nextCommand?
-    process.argv = @exciseCurrentCommandFromArgv(process.argv)
-    @commander.parse(process.argv)
+    currentCommandIndex = process.argv.indexOf(@currentCommandName)
+    if nextCommand = @findChainedCommand(process.argv.slice(currentCommandIndex + 1))
+      nextCommandIndex = process.argv.indexOf(nextCommand._name, currentCommandIndex + 1)
+      process.argv = process.argv.slice(0,2).concat(process.argv.slice(nextCommandIndex))
+      @overrideLinemanEnv()
+      @commander.parse(process.argv)
 
   #private
 
-  findChainedCommand: ->
+  findChainedCommand: (args) ->
     _.find @commander.commands, (c) =>
-      _.includes(@commander.args, c._name)
-
-  exciseCurrentCommandFromArgv: (argv) ->
-    currentCommandIndex = process.argv.indexOf(@currentCommandName)
-    nextCommandIndex = process.argv.indexOf(@nextCommand._name, currentCommandIndex + 1)
-    argv.slice(0, currentCommandIndex).concat(argv.slice(nextCommandIndex))
+      _.includes(args, c._name)
 
   overrideLinemanEnv: ->
     return process.env["LINEMAN_ENV"] = "production" if _.includes(process.argv, "build")
