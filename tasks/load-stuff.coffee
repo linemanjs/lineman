@@ -13,6 +13,7 @@ module.exports = (grunt) ->
     "grunt-contrib-clean"
     "grunt-contrib-coffee"
     "grunt-concat-sourcemap"
+    "grunt-contrib-clean"
     "grunt-contrib-copy"
     "grunt-contrib-handlebars"
     "grunt-contrib-jshint"
@@ -31,21 +32,21 @@ module.exports = (grunt) ->
       grunt.log.error("Task module #{module} not found")
 
   otherTaskPathsFor = (taskModule) ->
-    _(pluginTaskModuleLocations(taskModule)).find(fs.existsSync) || resolvesQuietly.resolve(taskModule, basedir: "#{__dirname}/../")
+    _.find(pluginTaskModuleLocations(taskModule), fs.existsSync) || resolvesQuietly.resolve(taskModule, basedir: "#{__dirname}/../")
 
   pluginTaskModuleLocations = (taskModule) ->
-    _(pluginModules).chain()
+    _(pluginModules)
       .map (pluginModule) ->
         resolvesQuietly.resolve(taskModule, basedir: pluginModule.dir)
       .compact()
       .value()
 
-  npmTasks = _(linemanNpmTasks).chain().
-    union("grunt-sass" if config.enableSass).
-    union("grunt-asset-fingerprint" if config.enableAssetFingerprint).
+  npmTasks = _(linemanNpmTasks).
+    union(["grunt-sass"] if config.enableSass).
+    union(["grunt-asset-fingerprint"] if config.enableAssetFingerprint).
     union(config.loadNpmTasks).
     compact().value()
 
-  _(npmTasks).each (taskName) ->
+  _.each npmTasks, (taskName) ->
     loadTask(taskName)
     hooks.trigger("loadNpmTasks.afterLoad.#{taskName}", "afterLoad", taskName)

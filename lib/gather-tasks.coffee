@@ -9,7 +9,6 @@ module.exports = (phase) ->
     config.appTasks?[phase]
     config.appendTasks?[phase]
     (if config.enableAssetFingerprint && phase == "dist" then ["assetFingerprint"] else [])
-  )).chain().
-    difference(config.removeTasks?[phase]).
+  )).difference(config.removeTasks?[phase]).
     compact().
     value()

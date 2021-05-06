@@ -18,14 +18,14 @@ global.lineman = module.exports =
 
   run: (done) ->
     process.env.WEB_PORT = ++currentPort
-    _(exec("run", "--stack", ->)).tap (child) ->
+    _.tap exec("run", "--stack", ->), (child) ->
       setTimeout(done, 4000)
 
   projectPath: -> currentLinemanPath
   baseUrl: -> "http://localhost:#{currentPort}"
 
   kill: ->
-    _(currentLinemanRuns).each (process) ->
+    _.each currentLinemanRuns, (process) ->
       process.kill('SIGKILL')
     currentLinemanRuns = []
 

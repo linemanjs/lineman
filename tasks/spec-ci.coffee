@@ -20,7 +20,7 @@ module.exports = (grunt) ->
 
     try
       done = @async()
-      args = _(["ci"]).chain().
+      args = _(["ci"]).
         concat("-f", path.resolve("#{process.cwd()}/config/spec.json")).
         concat("-p", getRandomPort()).
         concat(findsForwardedArgs.find()).
@@ -43,7 +43,7 @@ module.exports = (grunt) ->
       throw e
 
   getRandomPort = ->
-    _((server = net.createServer()).listen(0).address().port).tap -> server.close()
+    _.tap (server = net.createServer()).listen(0).address().port, -> server.close()
 
   writeReport = (report, dest) ->
     return unless dest?

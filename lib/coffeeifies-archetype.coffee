@@ -4,11 +4,11 @@ js2coffee = require('js2coffee')
 
 module.exports =
   coffeeify: (dest) ->
-    _(grunt.file.expand([
+    _.each grunt.file.expand([
       "#{dest}/**/*.js",
       "!#{dest}/spec/helpers/**/*.js",
       "!#{dest}/vendor/js/**/*.js"
-    ])).each (f) ->
+    ]), (f) ->
       coffee = js2coffee.build(grunt.file.read(f)).
         replace(/# \*/g, '# '). #<-- remove extra asterisks in block comments
         replace(/\s*return\n/g,''). #<-- remove un-implicitification of returns

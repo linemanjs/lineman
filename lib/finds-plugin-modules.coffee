@@ -12,17 +12,16 @@ module.exports =
 
 plugins = (dir = process.cwd(), depth = 0, knownPlugins = []) ->
   return [] unless fs.existsSync(dir)
+
   moduleNames = _(packageDependencies(dir))
-    .chain()
     .keys()
-    .select(isLinemanPlugin)
+    .filter(isLinemanPlugin)
     .map(pluginObjectBuilder(dir, depth))
     .reduce(descendantPluginCollector(depth, knownPlugins), [])
-    .value()
 
 packageDependencies = (dir) ->
   packageJson = require(path.join(dir, "package"))
-  _({}).extend(packageJson.optionalDependencies, packageJson.devDependencies, packageJson.dependencies)
+  _.extend({}, packageJson.optionalDependencies, packageJson.devDependencies, packageJson.dependencies)
 
 isLinemanPlugin = (name) -> _str.startsWith(name, "lineman-")
 
@@ -43,31 +42,29 @@ pluginObjectBuilder = (basedir, depth) ->
 descendantPluginCollector = (depth, knownPlugins) ->
   (deps, dep) ->
     allDeps = knownPlugins.concat(deps)
-    known = _(allDeps).any(knownPluginFinder(dep, depth))
+    known = _.some(allDeps, knownPluginFinder(dep, depth))
     descendants = plugins(dep.dir, depth + 1, allDeps) unless known
-    tidyUnion(deps, descendants, dep)
+    tidyUnion(deps, descendants, [dep])
 
 knownPluginFinder = (dep, depth) ->
   (plugin) -> plugin.name == dep.name && plugin.depth <= depth
 
 prune = (plugins) ->
   _(plugins)
-    .chain()
     .groupBy("name")
     .map(shallowestDepthAndHighestVersion)
     .value()
 
 shallowestDepthAndHighestVersion = (plugins) ->
-  _(plugins).chain()
+  _(plugins)
     .selectMin("depth")
     .reduce (highest, plugin) ->
       if semver.gt(plugin.version, highest.version) then plugin else highest
-    .value()
 
 tidyUnion = (array, moreArrays...) ->
-  _(array).chain().union(moreArrays...).compact().value()
+  _(array).union(moreArrays...).compact().value()
 
 _.mixin
   selectMin: (items, property) ->
-    min = _(items).chain().pluck(property).min((val) -> val).value()
-    _(items).select (item) -> item[property] == min
+    min = _(items).map(property).min((val) -> val)
+    _.filter items, (item) -> item[property] == min

@@ -63,7 +63,7 @@ module.exports = ->
     command("config").
     description(" - get a value from lineman's configuration").
     action ->
-      configPropertyPath = if _(@args[0]).isString() then @args[0] else undefined
+      configPropertyPath = if _.isString(@args[0]) then @args[0] else undefined
       value = new ReadsConfiguration().read(configPropertyPath, commander.process)
       console.log(prettyPrintsValue.prettyPrint(value))
 
@@ -79,7 +79,7 @@ module.exports = ->
     description("Run a grunt command with lineman's version of grunt").
     action ->
       cli.options.base = process.cwd()
-      cli.tasks = _(arguments).chain().toArray().initial().without("grunt").value()
+      cli.tasks = _(arguments).toArray().initial().without("grunt").value()
       invokeGrunt
         options:
           gruntfile: "#{__dirname}/../../Gruntfile.coffee"
@@ -88,7 +88,7 @@ module.exports = ->
     command('fetch').
     description("Fetch a library and add it to your Lineman project").
     action ->
-      recipes = _(@args).filter(_.isString)
+      recipes = _.filter(@args, _.isString)
       recipeRepo = buildsAppConfig.withUserOverrides().application.fetcher?.recipeRepo
       if recipeRepo
         require('./lineman-fetch')(recipes, recipeRepo)
@@ -106,4 +106,4 @@ invokeGrunt = (config = {}) ->
   done = new RunsNextCommand(commander, config.name).run if config.chainable?
   grunt.cli(config.options || {}, done)
 
-noCommandWasGiven = -> _(process.argv[2]).isEmpty()
+noCommandWasGiven = -> _.isEmpty(process.argv[2])

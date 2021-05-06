@@ -26,8 +26,8 @@ module.exports = class RunsNextCommand
   #private
 
   findChainedCommand: ->
-    _(@commander.commands).find (c) =>
-      _(@commander.args).include(c._name)
+    _.find @commander.commands, (c) =>
+      _.includes(@commander.args, c._name)
 
   exciseCurrentCommandFromArgv: (argv) ->
     currentCommandIndex = process.argv.indexOf(@currentCommandName)
@@ -35,5 +35,5 @@ module.exports = class RunsNextCommand
     argv.slice(0, currentCommandIndex).concat(argv.slice(nextCommandIndex))
 
   overrideLinemanEnv: ->
-    return process.env["LINEMAN_ENV"] = "production" if _(process.argv).include("build")
-    return process.env["LINEMAN_ENV"] = "test" if _(process.argv).include("spec") || _(process.argv).include("spec-ci")
+    return process.env["LINEMAN_ENV"] = "production" if _.includes(process.argv, "build")
+    return process.env["LINEMAN_ENV"] = "test" if _.includes(process.argv, "spec") || _.includes(process.argv, "spec-ci")

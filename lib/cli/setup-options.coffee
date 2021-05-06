@@ -7,7 +7,7 @@ module.exports = (commander, gruntCli) ->
   commander.option("--process", "lineman config - Process the grunt options, interpolating <%= %> template variables")
   commander.option("--coffee", "lineman new - Create default files in CoffeeScript instead of JavaScript.")
 
-  _(gruntCli.optlist).each (option, name) ->
+  _.each gruntCli.optlist, (option, name) ->
     unless name in ["help", "version"]
       desc = if option.negate then "--no-#{name}" else "--#{name}"
       desc = "-#{option.short}, #{desc}" if option.short

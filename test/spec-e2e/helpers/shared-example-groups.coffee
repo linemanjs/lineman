@@ -12,5 +12,5 @@ root.itBehavesLike = (name) ->
   throw "No shared examples named `#{name}` found!" unless examples?
   describe("Shared examples for #{name}", examples)
 
-_(grunt.file.expand("#{__dirname}/shared-example-groups/**/*.{js,coffee}")).each (f) ->
+_.each grunt.file.expand("#{__dirname}/shared-example-groups/**/*.{js,coffee}"), (f) ->
   require(f).registerExamples()

@@ -16,7 +16,7 @@ module.exports = (projectName, shouldNpmInstall, shouldSkipExamples, shouldCoffe
     printWelcome(projectName)
 
 ensureNotEmpty = (projectName) ->
-  fail("Usage: `lineman new <name>`") if _(projectName).isEmpty() || !_(projectName).isString()
+  fail("Usage: `lineman new <name>`") if _.isEmpty(projectName) || !_.isString(projectName)
 
 ensureNew = (dest) ->
   fail("Uh oh, it looks like `#{dest}` already exists! Exiting.") if fs.existsSync(dest)
@@ -42,14 +42,14 @@ convertJs2Coffee = (dest) ->
   require("./../coffeeifies-archetype").coffeeify(dest)
 
 deleteExampleFiles = (dest) ->
-  _([
+  _.each [
     "app/css/style.css",
     "app/js/hello.js",
     "app/templates/hello.us",
     "app/static/favicon.ico",
     "spec/hello-spec.js",
     "vendor/js/underscore.js"
-  ]).each (path) ->
+  ], (path) ->
     fs.unlink("#{dest}/#{path}")
 
 npmInstallTo = (dest, projectName) ->

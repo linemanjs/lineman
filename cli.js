@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('coffeescript');
+require('coffeescript/register');
 var path = require('path'),
     linemanDir = require('./finds-lineman-dir').find();
 

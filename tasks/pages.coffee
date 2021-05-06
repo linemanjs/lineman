@@ -37,11 +37,11 @@ module.exports = (grunt) ->
         grunt.log.writeln("#{dest} generated from #{src}")
 
   extensionOf = (fileName) ->
-    _(fileName.match(/[^.]*$/)).last()
+    _.last(fileName.match(/[^.]*$/))
 
   htmlFor = (format, source, context) ->
     if format in ["underscore", "us", "jst"]
-      _(source).template()(context)
+      _.template(source)(context)
     else if format in ["handlebar", "hb", "hbs", "handlebars"]
       locateHandlebars().compile(source)(context)
     else
@@ -60,4 +60,4 @@ module.exports = (grunt) ->
       require("handlebars")
 
   buildTemplateContext = (task) ->
-    _(grunt.config.get()).extend(task.data.context)
+    _.extend(grunt.config.get(), task.data.context)

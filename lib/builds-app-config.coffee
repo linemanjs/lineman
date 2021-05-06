@@ -12,14 +12,14 @@ module.exports =
       files: require("./../config/files")
 
   withPlugins: _.memoize ->
-    _(@default()).extendTap (config) ->
-      _(pluginFiles()).each (pluginPath) ->
+    extendTap @default(), (config) ->
+      _.each pluginFiles(), (pluginPath) ->
         plugin = requirePlugin(pluginPath, config)
         overrideAppConfig(plugin?.config, config)
         overrideFilesConfig(plugin?.files, config)
 
   withUserOverrides: _.memoize ->
-    _(@withPlugins()).extendTap (config) =>
+    extendTap @withPlugins(), (config) =>
       overrideAppConfig(loadUserOverride("application", config), config)
       overrideFilesConfig(loadUserOverride("files", config), config)
 
@@ -30,10 +30,10 @@ module.exports =
 freshExtend = (extensions...) ->
   extend(true, {}, extensions...)
 
-_.mixin
-  extendTap: (object, tap) ->
-    _(freshExtend(object)).tap(tap)
-
+extendTap = (object, tapper) ->
+  config = freshExtend(object)
+  tapper(config)
+  config
 
 pluginFiles = ->
   grunt.file.expand(pluginFilesFromLinemanCore().concat(pluginModulesFromNpm(), pluginFilesFromUserProject()))
@@ -56,7 +56,7 @@ loadUserOverride = (name, config) ->
   requirePlugin("#{process.cwd()}/config/#{name}", config)
 
 linemanWithPluginConfigSoFar = (config) ->
-  _(require('./../lineman')).tap (lineman) ->
+  _.tap require('./../lineman'), (lineman) ->
     lineman.config.application = config.application
     lineman.config.files = config.files
 

@@ -11,5 +11,5 @@ _ = require("lodash")
 
 module.exports =
   find: (args = process.argv) ->
-    return [] unless _(args).include("--")
-    _(args).rest(_(args).lastIndexOf("--") + 1)
+    return [] unless _.includes(args, "--")
+    _.drop(args, _.lastIndexOf(args, "--") + 1)

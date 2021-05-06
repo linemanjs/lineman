@@ -43,27 +43,26 @@ module.exports = (grunt) ->
 
     userConfig.modifyHttpServer?(server)
 
-    app.configure ->
-      app.use(express.compress())
-      configureLiveReloadMiddleware(app)
-      app.use(express.static("#{process.cwd()}/#{webRoot}"))
-      mountUserStaticRoutes(app, webRoot, staticRoutes)
+    app.use(express.compress())
+    configureLiveReloadMiddleware(app)
+    app.use(express.static("#{process.cwd()}/#{webRoot}"))
+    mountUserStaticRoutes(app, webRoot, staticRoutes)
 
-      userConfig.drawRoutes?(app)
-      addBodyParserCallbackToRoutes(app)
+    userConfig.drawRoutes?(app)
+    addBodyParserCallbackToRoutes(app)
 
-      if apiProxyEnabled
-        if pushStateEnabled
-          grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
-          app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyUseSsl, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
-        else
-          grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
-          app.use(apiProxy(apiProxyHost, apiPort, apiProxyUseSsl, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
+    if apiProxyEnabled
+      if pushStateEnabled
+        grunt.log.writeln("Proxying API requests prefixed with '#{apiProxyPrefix}' to #{apiProxyHost}:#{apiPort}")
+        app.use(prefixMatchingApiProxy(apiProxyPrefix, apiProxyHost, apiPort, apiProxyUseSsl, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
+      else
+        grunt.log.writeln("Proxying API requests to #{apiProxyHost}:#{apiPort}")
+        app.use(apiProxy(apiProxyHost, apiPort, apiProxyUseSsl, apiProxyChangeOrigin, relativeUrlRoot, new httpProxy.RoutingProxy()))
 
-      app.use(express.bodyParser())
-      app.use(express.errorHandler())
-      userConfig.drawRoutes?(app)
-      app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
+    app.use(express.bodyParser())
+    app.use(express.errorHandler())
+    userConfig.drawRoutes?(app)
+    app.use(pushStateSimulator(process.cwd(),webRoot)) if pushStateEnabled
 
     grunt.log.writeln("Starting express web server in '#{webRoot}' on port #{webPort}")
     grunt.log.writeln("Simulating HTML5 pushState: Serving up '#{webRoot}/index.html' for all other unmatched paths") if pushStateEnabled
@@ -74,7 +73,7 @@ module.exports = (grunt) ->
   applyRelativeUrlRoot = (app, relativeUrlRoot) ->
     return app unless relativeUrlRoot?
     grunt.log.writeln("Mounting application at path '#{relativeUrlRoot}'.")
-    _(express()).tap (otherApp) ->
+    _.tap express(), (otherApp) ->
       otherApp.use(relativeUrlRoot, app)
 
   configureLiveReloadMiddleware = (app) ->
@@ -85,7 +84,7 @@ module.exports = (grunt) ->
     app.use(require('connect-livereload')({port}))
 
   mountUserStaticRoutes = (app, webRoot, staticRoutes) ->
-    _(staticRoutes).each (src, dest) ->
+    _.each staticRoutes, (src, dest) ->
       path = if fs.existsSync(src) then src else "#{process.cwd()}/#{webRoot}/#{src}"
       grunt.log.writeln("Mounting static assets found in `#{path}` to route `#{dest}`")
       app.use(dest, express.static(path))
@@ -121,16 +120,16 @@ module.exports = (grunt) ->
 
   addBodyParserCallbackToRoutes = (app) ->
     bodyParser = express.bodyParser()
-    _(["get", "post", "patch", "put", "delete", "options", "head"]).each (verb) ->
-      _(app.routes[verb]).each (route) ->
+    _.each ["get", "post", "patch", "put", "delete", "options", "head"], (verb) ->
+      _.each app.routes[verb], (route) ->
         route.callbacks.unshift(bodyParser)
 
   resetRoutesOnServerConfigChange = (app) ->
     watchr grunt.file.expand('config/server.*'), (err, watcher) ->
       watcher.on 'change', (contexts) ->
-        _(contexts).each (context) ->
+        _.each contexts, (context) ->
           userConfig = fileUtils.reloadConfigurationFile("server")
           if userConfig.drawRoutes?
-            _(app.routes).each (route, name) -> app.routes[name] = []
+            _.each app.routes, (route, name) -> app.routes[name] = []
             userConfig.drawRoutes(app)
             addBodyParserCallbackToRoutes(app)

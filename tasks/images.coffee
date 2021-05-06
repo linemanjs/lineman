@@ -29,8 +29,8 @@ module.exports = (grunt) ->
                  """
 
     grunt.log.writeln("Copying images to '#{destinationPath}'")
-    _(taskConfig.files).each (files, basePath) ->
-      _(grunt.file.expand(files)).each (src) ->
+    _.each taskConfig.files, (files, basePath) ->
+      _.each grunt.file.expand(files), (src) ->
         dest = "#{destinationPath}/#{src.replace(basePath, "")}"
         copy(src, dest)
 

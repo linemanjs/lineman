@@ -14,9 +14,9 @@ module.exports = class ReadsConfiguration
   traverse: (paths, value) ->
     if !value? || !paths? || paths.length == 0
       value
-    else if _(paths[0]).include("[")
+    else if _.includes(paths[0], "[")
       [path, prop, index] = paths[0].match(/(.*)\[(\d+)\]/)
-      @traverse(_(paths).rest(), value[prop][index])
+      @traverse(_.tail(paths), value[prop][index])
     else
-      @traverse(_(paths).rest(), value[paths[0]])
+      @traverse(_.tail(paths), value[paths[0]])
 

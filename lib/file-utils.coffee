@@ -15,7 +15,7 @@ module.exports = fileUtils =
   copyDir: (src, dest) ->
     mkdirIfNecessary(src, dest)
     paths = fs.readdirSync(src)
-    _(paths).each (path) ->
+    _.each paths, (path) ->
       fileUtils.copy("#{src}/#{path}", "#{dest}/#{path}")
 
   loadConfigurationFile: (name) ->
@@ -32,18 +32,18 @@ module.exports = fileUtils =
 
   reloadConfigurationFile: (name) ->
     configName = configurationFileForName(name)
-    _(require.cache).each (entry, path) ->
+    _.each require.cache, (entry, path) ->
       if path.indexOf(configName) == 0
         delete require.cache[path]
     fileUtils.loadConfigurationFile(name)
 
   overwritePackageJson: (src, name) ->
     linemanPackageJson = grunt.file.readJSON("#{__dirname}/../package.json")
-    newPackageJson = _(grunt.file.read(src)).template(
+    newPackageJson = _.template grunt.file.read(src),
       name: _str.dasherize(name)
       versions:
         lineman: "~" + linemanPackageJson["version"]
-    )
+
     grunt.file.write(src, newPackageJson)
 
 mkdirIfNecessary = (src, dest) ->
