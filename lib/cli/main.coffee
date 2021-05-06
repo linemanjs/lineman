@@ -103,7 +103,7 @@ module.exports = ->
   commander.parse(process.argv)
 
 invokeGrunt = (config = {}) ->
-  done = new RunsNextCommand(commander, config.name).run if config.chainable?
+  done = new RunsNextCommand(commander, config.name).run if config.chainable
   grunt.cli(config.options || {}, done)
 
 noCommandWasGiven = -> _.isEmpty(process.argv[2])
