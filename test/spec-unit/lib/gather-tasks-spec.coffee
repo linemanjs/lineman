@@ -2,7 +2,9 @@ describe 'gatherTasks', ->
   Given -> @buildsAppConfig =
     forGrunt: jasmine.createSpy('forGrunt').andCallFake => @config
   Given -> @subject = requireSubject "lib/gather-tasks",
-    './../lib/builds-app-config': @buildsAppConfig
+    'lib/builds-app-config': @buildsAppConfig
+
+  afterEach -> require("testdouble").reset()
 
   describe "general phase behavior", ->
     When -> @result = @subject('foo')

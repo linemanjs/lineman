@@ -4,11 +4,10 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-jasmine-bundle": ">= 0.1.4",
-    "sandboxed-module": "~0.2.2",
-    "underscore": "~1.5.2",
-    "rimraf": "~2.2.4",
-    "webdriver-sync": "~0.8.7"
+    "grunt": "~1.4.0",
+    "grunt-jasmine-bundle": ">=0.4.0",
+    "rimraf": "~3.0.2",
+    "testdouble": "^3.16.1",
+    "underscore": "~1.13.1"
   }
 }
