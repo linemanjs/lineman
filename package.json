@@ -27,7 +27,7 @@
     "express": "3.21.2",
     "fetcher": "~0.2.0",
     "grunt": "1.4.0",
-    "grunt-asset-fingerprint": "~0.3.2",
+    "grunt-asset-fingerprint": "~0.4.0",
     "grunt-concat-sourcemap": "~0.4.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-coffee": "2.1.0",
