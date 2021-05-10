@@ -9,7 +9,7 @@
  * You can also ask about Lineman's  config from the command line:
  *
  *   $ lineman config #=> to print the entire config
- *   $ lineman config concat_sourcemap.js #=> to see the JS config for the concat task.
+ *   $ lineman config images.files #=> to see the files config for the image task.
  */
 module.exports = function(lineman) {
   //Override application configuration here. Common examples follow in the comments.

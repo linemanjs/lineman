@@ -7,23 +7,23 @@ module.exports = (lineman) ->
 
       js:
         files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
-        tasks: ["concat_sourcemap:js"]
+        tasks: ["concat:js"]
 
       coffee:
         files: "<%= files.coffee.app %>"
-        tasks: ["coffee", "concat_sourcemap:js"]
+        tasks: ["coffee", "concat:js"]
 
       jsSpecs:
         files: ["<%= files.js.specHelpers %>", "<%= files.js.spec %>"]
-        tasks: ["concat_sourcemap:spec"]
+        tasks: ["concat:spec"]
 
       coffeeSpecs:
         files: ["<%= files.coffee.specHelpers %>", "<%= files.coffee.spec %>"]
-        tasks: ["coffee", "concat_sourcemap:spec"]
+        tasks: ["coffee", "concat:spec"]
 
       css:
         files: ["<%= files.css.vendor %>", "<%= files.css.app %>"]
-        tasks: ["concat_sourcemap:css"]
+        tasks: ["concat:css"]
 
       less:
         files: ["app/css/**/*.less", "vendor/css/**/*.less"]
@@ -31,7 +31,7 @@ module.exports = (lineman) ->
 
       sass:
         files: ["<%= files.sass.vendor %>", "<%= files.sass.app %>"]
-        tasks: ["sass", "concat_sourcemap:css"]
+        tasks: ["sass", "concat:css"]
 
       pages:
         files: ["<%= files.pages.source %>", "app/templates/homepage.us"]
@@ -39,11 +39,11 @@ module.exports = (lineman) ->
 
       handlebars:
         files: "<%= files.template.handlebars %>"
-        tasks: ["handlebars", "concat_sourcemap:js"]
+        tasks: ["handlebars", "concat:js"]
 
       underscore:
         files: "<%= files.template.underscore %>"
-        tasks: ["jst", "concat_sourcemap:js"]
+        tasks: ["jst", "concat:js"]
 
       images:
         files: ["<%= files.img.app %>", "<%= files.img.vendor %>"]

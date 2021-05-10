@@ -1,10 +1,12 @@
 module.exports = (lineman) ->
   config:
-    concat_sourcemap:
+    concat:
       options:
-        sourcesContent: true
+        sourceMap: true
 
       js:
+        options:
+          separator: ";\n"
         src: [
           "<%= files.js.vendor %>"
           "<%= files.template.generated %>"
