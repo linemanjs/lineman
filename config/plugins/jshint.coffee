@@ -15,3 +15,5 @@ module.exports = (lineman) ->
         sub: true
         # environment/globals
         browser: true
+        # Toggle on support for recent JavaScript
+        esversion: 6
