@@ -3,7 +3,7 @@ module.exports = (lineman) ->
     watch:
       options:
         spawn: false
-        module: "grunt-watch-nospawn"
+        module: "grunt-contrib-watch"
 
       js:
         files: ["<%= files.js.vendor %>", "<%= files.js.app %>"]
