@@ -125,7 +125,7 @@ module.exports = (grunt) ->
         route.callbacks.unshift(bodyParser)
 
   resetRoutesOnServerConfigChange = (app) ->
-    watchr grunt.file.expand('config/server.*'), (err, watcher) ->
+    watchr grunt.file.expand('config/server.*', 'config/stubs/**/*'), (err, watcher) ->
       watcher.on 'change', (contexts) ->
         _.each contexts, (context) ->
           userConfig = fileUtils.reloadConfigurationFile("server")
